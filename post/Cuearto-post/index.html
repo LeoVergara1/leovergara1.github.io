@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Cuearto post</title>
+  <title>Problemas con temas de goHugo</title>
 
-  <meta name="description" content="Cuearto post"/>
+  <meta name="description" content="Problemas con temas de goHugo"/>
   <meta name="author" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <base href="https://leovergara1.github.io/Actual/" />
@@ -42,13 +42,29 @@
     
 
   </p>
-  <h1>Cuearto post</h1>
+  <h1>Problemas con temas de goHugo</h1>
 </div>
 
 
 
 <div class="post">
-  <p>Hola como estas</p>
+  <p>Problemas con temas de hugo</p>
+
+<p>Al iniciar mi viaje con el framework hugo,  no tuve problemas para crear el sitio con sus carpetas predeterminadas y con sus correspondientes post, pero a la hora de levantar el servidor para ver un ejemplo de lo que estaba creando, levantaba correctamente pero sin cargar el tema.</p>
+
+<p>El comando ejecutado era el siguiente:
+$ hugo server &ndash;theme=”hurock” &ndash;buildDrafs
+Dicho problema ocasiona que los elementos no se mostrarán  correctamente o simplemente no se veían. La verdad fue que este inconveniente me demoro un par de horas y el problema solo radicaba en la configuración del archivo config.toml en la línea correspondiente:</p>
+
+<pre><code>1. basurl = &quot;https://localhost:1313/&quot;
+</code></pre>
+
+<p>Bastaba con arreglar un simple detalle, el cual era el siguiente:</p>
+
+<pre><code>1. https: -&gt; http: 
+</code></pre>
+
+<p>Así es solo quitamos la letra “s” y el problema se habrá solucionado.</p>
 
 </div>
 

@@ -7,8 +7,72 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© 2015 Copyright Text</copyright>
-    <lastBuildDate>Tue, 17 Jan 2017 09:38:42 -0600</lastBuildDate>
+    <lastBuildDate>Wed, 18 Jan 2017 13:38:40 -0600</lastBuildDate>
     <atom:link href="https://leovergara1.github.io/Actual/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Groovy Programming</title>
+      <link>https://leovergara1.github.io/Actual/post/groovy/</link>
+      <pubDate>Wed, 18 Jan 2017 13:38:40 -0600</pubDate>
+      
+      <guid>https://leovergara1.github.io/Actual/post/groovy/</guid>
+      <description>
+
+&lt;p&gt;Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, &lt;em&gt;“Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.&lt;/p&gt;
+
+&lt;p&gt;Realmente es increíble la simplificación que se logra hacer al lenguaje java, agilizando nuestros proyectos y dando un mejor entendimiento al problema para así realizar una óptima solución.&lt;/p&gt;
+
+&lt;p&gt;Al principio estuve un poco desconcertado, por lo complejo que pudiera ser aprender este nuevo lenguaje, sin embargo con un poco de explicación entendí que prácticamente es lo mismo que java pero suprimiendo partes del código innecesario.&lt;/p&gt;
+
+&lt;p&gt;Un claro ejemplo es el siguiente.&lt;/p&gt;
+
+&lt;h2 id=&#34;hola-mundo-en-java&#34;&gt;Hola Mundo en JAVA&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    public class HolaMundo {
+  private String nombre;
+  public String getNombre() {
+    return nombre;
+  }
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+  public String saluda() {
+    return &amp;quot;Hola &amp;quot; + this.nombre + &amp;quot; !!!&amp;quot;;
+  }
+  public static void main(String[] args) {
+    HolaMundo objeto = new HolaMundo();
+    objeto.setNombre(&amp;quot;@grailsmx&amp;quot;);
+    System.out.println(objeto.saluda());
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;hola-mundo-en-groovy&#34;&gt;Hola Mundo en GROOVY&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;class HolaMundo {
+  String nombre
+  def saluda() { &amp;quot;Hola  ${this.nombre} !!!&amp;quot; }
+}
+
+def objeto = new HolaMundo(nombre:&amp;quot;@grailsmx&amp;quot;)
+println(objeto.saluda())
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Realmente después de una series de pasos es impresionante la cantidad de código que nos logramos ahorrar con el uso de este lenguaje.&lt;/p&gt;
+
+&lt;p&gt;Para finalizar es importante mencionar las siguientes características del lenguaje.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Admite el lenguaje tal cual de java dentro del código en caso de que no sepamos cómo escribirlo en groovy.&lt;/li&gt;
+&lt;li&gt;Groovy es capaz de emigrar todo el proyecto al código de java junto consus “.class” necesarios para correr desde la consola.&lt;/li&gt;
+&lt;li&gt;Con el uso de los cluseres dinámicos, definitivamente nuestra vida programando sera mas facil y obteniendo un nivel de programació con mejor nivel de tecnología.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Comandos en Unix y Linux</title>
@@ -18,8 +82,6 @@
       <guid>https://leovergara1.github.io/Actual/post/Comandos/</guid>
       <description>
 
-&lt;p&gt;&lt;center&gt;&lt;img src=&#34;images/comandos.png&#34; alt=&#34;Comnados&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
-
 &lt;p&gt;De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.&lt;/p&gt;
 
 &lt;h1 id=&#34;un-poco-de-historia&#34;&gt;Un poco de historia…&lt;/h1&gt;
@@ -28,7 +90,30 @@
 
 &lt;p&gt;La historia de UNIX  se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos. Variantes de UNIX más modernos conocidos actualmente tienen licencia versiones de una de las ediciones originales de UNIX.&lt;/p&gt;
 
-&lt;p&gt;&lt;IMG src=&#34;images/comandos.png&#34; width=&#34;100&#34; height=&#34;100&#34;/&gt;&lt;/p&gt;
+&lt;h1 id=&#34;linux&#34;&gt;Linux&lt;/h1&gt;
+
+&lt;p&gt;Precisamente linux nació como una alternativa de software libre para los entornos Unix comerciales. Cuya historia inicia en 1983, cuando el proyecto GNU, donde el original tiene que ofrecer una alternativa libre a Unix, se introdujo. Linux se ejecuta en una gama mucho más amplia de plataformas que la mayoría de los entornos Unix, tales como la Intel  / AMD llevó plataforma x86. La mayoría de las variantes de Unix ejecutan en una sola arquitectura.&lt;/p&gt;
+
+&lt;h1 id=&#34;tipo-de-shell&#34;&gt;Tipo de Shell&lt;/h1&gt;
+
+&lt;p&gt;Shell Bourne (sh). Creado por S. Bourne, es el más utilizado en la actualidad. Su símbolo del sistema es $. Es el shell estándar y el que se monta en casi todos los sistemas UNIX/Linux.
+Es un software que forma parte del sistema operativo, sirve para interpretar órdenes expresadas por líneas de comandos.
+En Unix es conocido como bash y en linux como ksh&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;IMG src=&#34;images/unixS.jpg&#34;/&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;diferencias-entre-estas-dos-shell&#34;&gt;Diferencias entre estas dos shell&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ksh soporta arreglos asociativos&lt;/li&gt;
+&lt;li&gt;ksh permite acceder el valor de una variable usada en un loop fuera del mismo&lt;/li&gt;
+&lt;li&gt;bash maneja los códigos de salida &amp;ldquo;exit&amp;rdquo; a través de tuberías (pipes) de una manera mas clara.&lt;/li&gt;
+&lt;li&gt;ksh soporta el comando &amp;ldquo;print&amp;rdquo; el cual es más completo que el comando &amp;ldquo;echo&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;bash soporta completar nombres de archivos y comandos usando la tecla &amp;ldquo;tab&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;ksh soporta una sintaxis del comando &amp;ldquo;cd&amp;rdquo; que permite moverse entre directorios de una manera más eficiente.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;images/comandos.png&#34; alt=&#34;Comnados&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -88,12 +173,28 @@
     </item>
     
     <item>
-      <title>Cuearto post</title>
+      <title>Problemas con temas de goHugo</title>
       <link>https://leovergara1.github.io/Actual/post/Cuearto-post/</link>
       <pubDate>Thu, 12 Jan 2017 09:37:34 -0600</pubDate>
       
       <guid>https://leovergara1.github.io/Actual/post/Cuearto-post/</guid>
-      <description>&lt;p&gt;Hola como estas&lt;/p&gt;
+      <description>&lt;p&gt;Problemas con temas de hugo&lt;/p&gt;
+
+&lt;p&gt;Al iniciar mi viaje con el framework hugo,  no tuve problemas para crear el sitio con sus carpetas predeterminadas y con sus correspondientes post, pero a la hora de levantar el servidor para ver un ejemplo de lo que estaba creando, levantaba correctamente pero sin cargar el tema.&lt;/p&gt;
+
+&lt;p&gt;El comando ejecutado era el siguiente:
+$ hugo server &amp;ndash;theme=”hurock” &amp;ndash;buildDrafs
+Dicho problema ocasiona que los elementos no se mostrarán  correctamente o simplemente no se veían. La verdad fue que este inconveniente me demoro un par de horas y el problema solo radicaba en la configuración del archivo config.toml en la línea correspondiente:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1. basurl = &amp;quot;https://localhost:1313/&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Bastaba con arreglar un simple detalle, el cual era el siguiente:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1. https: -&amp;gt; http: 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Así es solo quitamos la letra “s” y el problema se habrá solucionado.&lt;/p&gt;
 </description>
     </item>
     

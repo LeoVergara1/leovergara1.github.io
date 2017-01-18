@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Comandos en Unix y Linux</title>
+  <title>Groovy Programming</title>
 
-  <meta name="description" content="Comandos en Unix y Linux"/>
+  <meta name="description" content="Groovy Programming"/>
   <meta name="author" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <base href="https://leovergara1.github.io/Actual/" />
@@ -38,11 +38,11 @@
 
 <div id="post-header">
   <p class="post-infos">
-    <time>2017-01-17 09:38</time>
+    <time>2017-01-18 13:38</time>
     
 
   </p>
-  <h1>Comandos en Unix y Linux</h1>
+  <h1>Groovy Programming</h1>
 </div>
 
 
@@ -50,38 +50,59 @@
 <div class="post">
   
 
-<p>De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.</p>
+<p>Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, <em>“Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)</em></p>
 
-<h1 id="un-poco-de-historia">Un poco de historia…</h1>
+<p>La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</p>
 
-<h3 id="unix">Unix</h3>
+<p>Realmente es increíble la simplificación que se logra hacer al lenguaje java, agilizando nuestros proyectos y dando un mejor entendimiento al problema para así realizar una óptima solución.</p>
 
-<p>La historia de UNIX  se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos. Variantes de UNIX más modernos conocidos actualmente tienen licencia versiones de una de las ediciones originales de UNIX.</p>
+<p>Al principio estuve un poco desconcertado, por lo complejo que pudiera ser aprender este nuevo lenguaje, sin embargo con un poco de explicación entendí que prácticamente es lo mismo que java pero suprimiendo partes del código innecesario.</p>
 
-<h1 id="linux">Linux</h1>
+<p>Un claro ejemplo es el siguiente.</p>
 
-<p>Precisamente linux nació como una alternativa de software libre para los entornos Unix comerciales. Cuya historia inicia en 1983, cuando el proyecto GNU, donde el original tiene que ofrecer una alternativa libre a Unix, se introdujo. Linux se ejecuta en una gama mucho más amplia de plataformas que la mayoría de los entornos Unix, tales como la Intel  / AMD llevó plataforma x86. La mayoría de las variantes de Unix ejecutan en una sola arquitectura.</p>
+<h2 id="hola-mundo-en-java">Hola Mundo en JAVA</h2>
 
-<h1 id="tipo-de-shell">Tipo de Shell</h1>
+<pre><code class="language-java">    public class HolaMundo {
+  private String nombre;
+  public String getNombre() {
+    return nombre;
+  }
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+  public String saluda() {
+    return &quot;Hola &quot; + this.nombre + &quot; !!!&quot;;
+  }
+  public static void main(String[] args) {
+    HolaMundo objeto = new HolaMundo();
+    objeto.setNombre(&quot;@grailsmx&quot;);
+    System.out.println(objeto.saluda());
+  }
+}
 
-<p>Shell Bourne (sh). Creado por S. Bourne, es el más utilizado en la actualidad. Su símbolo del sistema es $. Es el shell estándar y el que se monta en casi todos los sistemas UNIX/Linux.
-Es un software que forma parte del sistema operativo, sirve para interpretar órdenes expresadas por líneas de comandos.
-En Unix es conocido como bash y en linux como ksh</p>
+</code></pre>
 
-<p><center><IMG src="images/unixS.jpg"/></center></p>
+<h2 id="hola-mundo-en-groovy">Hola Mundo en GROOVY</h2>
 
-<h1 id="diferencias-entre-estas-dos-shell">Diferencias entre estas dos shell</h1>
+<pre><code class="language-groovy">class HolaMundo {
+  String nombre
+  def saluda() { &quot;Hola  ${this.nombre} !!!&quot; }
+}
+
+def objeto = new HolaMundo(nombre:&quot;@grailsmx&quot;)
+println(objeto.saluda())
+
+</code></pre>
+
+<p>Realmente después de una series de pasos es impresionante la cantidad de código que nos logramos ahorrar con el uso de este lenguaje.</p>
+
+<p>Para finalizar es importante mencionar las siguientes características del lenguaje.</p>
 
 <ul>
-<li>ksh soporta arreglos asociativos</li>
-<li>ksh permite acceder el valor de una variable usada en un loop fuera del mismo</li>
-<li>bash maneja los códigos de salida &ldquo;exit&rdquo; a través de tuberías (pipes) de una manera mas clara.</li>
-<li>ksh soporta el comando &ldquo;print&rdquo; el cual es más completo que el comando &ldquo;echo&rdquo;.</li>
-<li>bash soporta completar nombres de archivos y comandos usando la tecla &ldquo;tab&rdquo;</li>
-<li>ksh soporta una sintaxis del comando &ldquo;cd&rdquo; que permite moverse entre directorios de una manera más eficiente.</li>
+<li>Admite el lenguaje tal cual de java dentro del código en caso de que no sepamos cómo escribirlo en groovy.</li>
+<li>Groovy es capaz de emigrar todo el proyecto al código de java junto consus “.class” necesarios para correr desde la consola.</li>
+<li>Con el uso de los cluseres dinámicos, definitivamente nuestra vida programando sera mas facil y obteniendo un nivel de programació con mejor nivel de tecnología.</li>
 </ul>
-
-<p><center><img src="images/comandos.png" alt="Comnados" /></center></p>
 
 </div>
 
