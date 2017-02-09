@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://leovergara1.github.io/post/android/</loc>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leovergara1.github.io/post/groovy/</loc>
     <lastmod>2017-01-18T13:38:40-06:00</lastmod>
   </url>
@@ -28,13 +33,47 @@
   
   <url>
     <loc>https://leovergara1.github.io/</loc>
-    <lastmod>2017-01-18T13:38:40-06:00</lastmod>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/development/</loc>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/development/</loc>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/golang/</loc>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/golang/</loc>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/post/</loc>
-    <lastmod>2017-01-18T13:38:40-06:00</lastmod>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   

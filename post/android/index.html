@@ -1,10 +1,10 @@
-    <!DOCTYPE html>
+  <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title> Posts &middot; Brandon Vergara </title>
+    <title> Inicio en Android &middot; Brandon Vergara </title>
     
     <link rel="stylesheet" type="text/css" href="https://leovergara1.github.io//css/uno.min.css" />
     <link rel="stylesheet" type="text/css" href="https://leovergara1.github.io//css/lightGallery.css" />
@@ -12,24 +12,22 @@
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://leovergara1.github.io/apple-touch-icon-144-precomposed.png">
     <link rel="shortcut icon" href="https://leovergara1.github.io/favicon.ico">
     
-    <link href="https://leovergara1.github.io/post/index.xml" rel="alternate" type="application/rss+xml" title="Brandon Vergara" />
+    <link href="" rel="alternate" type="application/rss+xml" title="Brandon Vergara" />
     
     <script src="https://leovergara1.github.io//js/jquery.min.js"></script>
     <script src="https://leovergara1.github.io//js/main.min.js">
     </script>
 </head>
 
-    <body>
-        <div id="scriptHeader">
+  <body>
+    <div id="scriptHeader">
     <span class="mobile btn-mobile-menu">
             <i class="fa fa-bars btn-mobile-menu__icon"></i>
             <i class="fa fa-times btn-mobile-close__icon hidden"> </i>
     </span>
     <header class="
         
-        
             panel-cover panel-cover--collapsed
-        
         "  style="background-image: url(https://raw.githubusercontent.com/LeoVergara1/Actual/master/images/background-cover.jpg)" >
     <div class="panel-main">
         <div class="panel-main__inner panel-inverted">
@@ -120,46 +118,124 @@
     </header>
 </noscript>
 
-        <div class="content-wrapper">
-            <div class="content-wrapper__inner">
-                
-                <h2>2017</h2>
-                <ul id="list">
-                    
-                    <li>
-                        <a href="https://leovergara1.github.io/post/android/">Inicio en Android </a>
-                        <div class="meta">Thu, Jan 26, 2017</div>
-                    </li>
-                    
-                    <li>
-                        <a href="https://leovergara1.github.io/post/groovy/">Groovy Programming </a>
-                        <div class="meta">Wed, Jan 18, 2017</div>
-                    </li>
-                    
-                    <li>
-                        <a href="https://leovergara1.github.io/post/Comandos/">Comandos en Unix y Linux </a>
-                        <div class="meta">Tue, Jan 17, 2017</div>
-                    </li>
-                    
-                    <li>
-                        <a href="https://leovergara1.github.io/post/Inicio-en-goHugo/">Inicio en goHugo </a>
-                        <div class="meta">Thu, Jan 12, 2017</div>
-                    </li>
-                    
-                    <li>
-                        <a href="https://leovergara1.github.io/post/Cuearto-post/">Problemas con temas de goHugo </a>
-                        <div class="meta">Thu, Jan 12, 2017</div>
-                    </li>
-                    
-                    <li>
-                        <a href="https://leovergara1.github.io/post/Primer-post/">Inicio en Makings Devs </a>
-                        <div class="meta">Wed, Jan 11, 2017</div>
-                    </li>
-                    
-                </ul>
-                
-            </div>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <div class="post">
+          <h1>Inicio en Android</h1>
+          <span class="post-date">Thu, Jan 26, 2017</span>
+          
+
+<p>En este tema hablare sobre como realice y primer aplicación en android, la cual fue iniciada en java como convencionalmente se hace, para posteriormente ser trasladada a groovy.
+Programa necesarios para desarrollar en Android:</p>
+
+<ul>
+<li>Android Studio</li>
+<li>Genymotion</li>
+<li>Virtual Box</li>
+</ul>
+
+<p>Una vez instaladas las aplicaciones, continue a realizar una maquina virtual en Genymotion emulando android 6, ya que tuve este paso, procedí a realizar mi aplicación en Android studio.</p>
+
+<h3 id="para-esto-tenemos-2-apartados-importantes">Para esto tenemos 2 apartados importantes.</h3>
+
+<p>MainActivity.xml -&gt; En el cual realizaremos toda la parte de diseño para la aplicación.
+MainActivity. java -&gt; Se realiza toda la parte del controlador (controller).</p>
+
+<p>Al iniciar el proyecto en Android Studio realice un análisis de los componentes y opciones que tenia en frente para poco a poco ir entendiendo el funcionamiento del IDE y para iniciarme en este lenguaje se realizara una pequeña aplicación donde se podrá ver el uso de botones, colores, diseños, metodos, multimedia.</p>
+
+<p>Finalmente explicaré el código realizado en XML para obtener una retroalimentación de lo adquirido</p>
+
+<h3 id="vista-del-xml">Vista del XML</h3>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout android:orientation=&quot;vertical&quot;
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:gravity=&quot;center&quot;&gt;
+
+    &lt;ImageView
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:src=&quot;@mipmap/ic_launcher&quot;
+        android:id=&quot;@+id/photo&quot;/&gt;
+    &lt;TextView
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;Hello World!&quot;
+        android:id=&quot;@+id/photoName&quot;/&gt;
+    &lt;LinearLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:gravity=&quot;center&quot;&gt;
+        &lt;Button
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:text=&quot;false&quot;
+            android:id=&quot;@+id/button_false&quot;
+            android:textColor=&quot;@color/colorAccent&quot;/&gt;
+        &lt;Button
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:text=&quot;True&quot;
+            android:id=&quot;@+id/button_true&quot;
+            android:textColor=&quot;@color/colorPrimaryDark&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+&lt;/LinearLayout&gt;
+
+</code></pre>
+
+<p><strong>&lt;<em>LinearLayout</em>&gt;</strong> Diseño de la vista a implementar.</p>
+
+<p><strong>&lt;<em>XMLS</em>&gt;</strong> Dirección de Android y sus funciones.</p>
+
+<p>Android:.</p>
+
+<p><strong>&lt;<em>ImageView</em>&gt;</strong> TAG para definir componentes de una imagen determinada</p>
+
+<p><strong>&lt;<em>TextView</em>&gt;</strong> TAG para definir componentes de un texto.</p>
+
+<p><strong>&lt;<em>Button</em>&gt;</strong> TAG para definir los componentes de un botón.</p>
+
         </div>
-    </body>
-    
+        <div class="sharing">
+<a href="https://twitter.com/intent/tweet?status=Inicio%20en%20Android-https%3a%2f%2fleovergara1.github.io%2fpost%2fandroid%2f" target="_blank" title="Follow me on Twitter" class="twitter">
+<span class="fa fa-twitter-square fa-3x"></span></a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fandroid%2f" target="_blank" title="Join me on Facebook" class="facebook">
+<span class="fa fa-facebook-square fa-3x"></span></a>
+<a href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fandroid%2f" target="_blank" title="Google+" class="googleplus">
+<span class="fa fa-google-plus-square fa-3x"></span></a>
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fleovergara1.github.io%2fpost%2fandroid%2f&title=Inicio%20en%20Android" target="_blank" title="LinkedIn" class="linkedin">
+<span class="fa fa-linkedin-square fa-3x"></span></a>
+<a href="http://www.reddit.com/submit?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fandroid%2f" target="_blank" title="Reddit" class="reddit"><span class="fa fa-reddit-square fa-3x"></span></a>
+<a href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fandroid%2f" target="_blank" title="StumbleUpon" class="stumbleupon"><span class="fa fa-stumbleupon fa-3x">
+</span></a>
+</div>
+        
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript">
+  var disqusUsername = "https-leovergara1-github-io";
+
+  (function() { 
+  var d = document, s = d.createElement('script');
+
+  s.src = '//' + disqusUsername + '.disqus.com/embed.js';
+
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+    </div>
+
+  </body>
+  
 </html>

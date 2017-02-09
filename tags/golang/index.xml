@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Golang on Brandon Vergara </title>
+      <generator uri="https://gohugo.io">Hugo</generator>
+    <link>https://leovergara1.github.io/tags/golang/index.xml</link>
+    <language>en-us</language>
+    
+    <copyright>Aprendiendo</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    
+    <item>
+      <title>Inicio en Android</title>
+      <link>https://leovergara1.github.io/post/android/</link>
+      <pubDate>Thu, 26 Jan 2017 09:18:40 CST</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/android/</guid>
+      <description>
+
+&lt;p&gt;En este tema hablare sobre como realice y primer aplicación en android, la cual fue iniciada en java como convencionalmente se hace, para posteriormente ser trasladada a groovy.
+Programa necesarios para desarrollar en Android:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Android Studio&lt;/li&gt;
+&lt;li&gt;Genymotion&lt;/li&gt;
+&lt;li&gt;Virtual Box&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Una vez instaladas las aplicaciones, continue a realizar una maquina virtual en Genymotion emulando android 6, ya que tuve este paso, procedí a realizar mi aplicación en Android studio.&lt;/p&gt;
+
+&lt;h3 id=&#34;para-esto-tenemos-2-apartados-importantes&#34;&gt;Para esto tenemos 2 apartados importantes.&lt;/h3&gt;
+
+&lt;p&gt;MainActivity.xml -&amp;gt; En el cual realizaremos toda la parte de diseño para la aplicación.
+MainActivity. java -&amp;gt; Se realiza toda la parte del controlador (controller).&lt;/p&gt;
+
+&lt;p&gt;Al iniciar el proyecto en Android Studio realice un análisis de los componentes y opciones que tenia en frente para poco a poco ir entendiendo el funcionamiento del IDE y para iniciarme en este lenguaje se realizara una pequeña aplicación donde se podrá ver el uso de botones, colores, diseños, metodos, multimedia.&lt;/p&gt;
+
+&lt;p&gt;Finalmente explicaré el código realizado en XML para obtener una retroalimentación de lo adquirido&lt;/p&gt;
+
+&lt;h3 id=&#34;vista-del-xml&#34;&gt;Vista del XML&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
+&amp;lt;LinearLayout android:orientation=&amp;quot;vertical&amp;quot;
+    xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;
+    xmlns:tools=&amp;quot;http://schemas.android.com/tools&amp;quot;
+    android:layout_width=&amp;quot;match_parent&amp;quot;
+    android:layout_height=&amp;quot;match_parent&amp;quot;
+    android:gravity=&amp;quot;center&amp;quot;&amp;gt;
+
+    &amp;lt;ImageView
+        android:layout_width=&amp;quot;wrap_content&amp;quot;
+        android:layout_height=&amp;quot;wrap_content&amp;quot;
+        android:src=&amp;quot;@mipmap/ic_launcher&amp;quot;
+        android:id=&amp;quot;@+id/photo&amp;quot;/&amp;gt;
+    &amp;lt;TextView
+        android:layout_width=&amp;quot;wrap_content&amp;quot;
+        android:layout_height=&amp;quot;wrap_content&amp;quot;
+        android:text=&amp;quot;Hello World!&amp;quot;
+        android:id=&amp;quot;@+id/photoName&amp;quot;/&amp;gt;
+    &amp;lt;LinearLayout
+        android:layout_width=&amp;quot;match_parent&amp;quot;
+        android:layout_height=&amp;quot;wrap_content&amp;quot;
+        android:gravity=&amp;quot;center&amp;quot;&amp;gt;
+        &amp;lt;Button
+            android:layout_width=&amp;quot;wrap_content&amp;quot;
+            android:layout_height=&amp;quot;match_parent&amp;quot;
+            android:text=&amp;quot;false&amp;quot;
+            android:id=&amp;quot;@+id/button_false&amp;quot;
+            android:textColor=&amp;quot;@color/colorAccent&amp;quot;/&amp;gt;
+        &amp;lt;Button
+            android:layout_width=&amp;quot;wrap_content&amp;quot;
+            android:layout_height=&amp;quot;match_parent&amp;quot;
+            android:text=&amp;quot;True&amp;quot;
+            android:id=&amp;quot;@+id/button_true&amp;quot;
+            android:textColor=&amp;quot;@color/colorPrimaryDark&amp;quot;/&amp;gt;
+
+    &amp;lt;/LinearLayout&amp;gt;
+&amp;lt;/LinearLayout&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;LinearLayout&lt;/em&gt;&amp;gt;&lt;/strong&gt; Diseño de la vista a implementar.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;XMLS&lt;/em&gt;&amp;gt;&lt;/strong&gt; Dirección de Android y sus funciones.&lt;/p&gt;
+
+&lt;p&gt;Android:.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;ImageView&lt;/em&gt;&amp;gt;&lt;/strong&gt; TAG para definir componentes de una imagen determinada&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;TextView&lt;/em&gt;&amp;gt;&lt;/strong&gt; TAG para definir componentes de un texto.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;Button&lt;/em&gt;&amp;gt;&lt;/strong&gt; TAG para definir los componentes de un botón.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
