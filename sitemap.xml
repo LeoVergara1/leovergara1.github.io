@@ -43,25 +43,25 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/categories/development/</loc>
-    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://leovergara1.github.io/tags/development/</loc>
     <lastmod>2017-01-26T09:18:40-06:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/categories/golang/</loc>
+    <loc>https://leovergara1.github.io/categories/development/</loc>
     <lastmod>2017-01-26T09:18:40-06:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/tags/golang/</loc>
+    <lastmod>2017-01-26T09:18:40-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/golang/</loc>
     <lastmod>2017-01-26T09:18:40-06:00</lastmod>
     <priority>0</priority>
   </url>
