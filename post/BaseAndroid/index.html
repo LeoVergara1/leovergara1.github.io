@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title> Groovy Programming &middot; Brandon Vergara </title>
+    <title> Base de Datos en Android (Java SQLiteHelper) &middot; Brandon Vergara </title>
     
     <link rel="stylesheet" type="text/css" href="https://leovergara1.github.io//css/uno.min.css" />
     <link rel="stylesheet" type="text/css" href="https://leovergara1.github.io//css/lightGallery.css" />
@@ -121,76 +121,64 @@
     <div class="content-wrapper">
       <div class="content-wrapper__inner">
         <div class="post">
-          <h1>Groovy Programming</h1>
-          <span class="post-date">Wed, Jan 18, 2017</span>
-          
+          <h1>Base de Datos en Android (Java SQLiteHelper)</h1>
+          <span class="post-date">Mon, Feb 20, 2017</span>
+          <p>Primero debemos saber que es muy importante realizar ciertas abstracciones de nuestro código, implementando interfaces lo que hará de nuestra aplicación de mejor calidad.</p>
 
-<p>Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, <em>“Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)</em></p>
+<p>Por buenas practicas yo decidí crear un esquema de nuestra base de datos en una clase a diferencia de los demás sitios que por lo regular no hacen, la cual nombre como &ldquo;AccountDBSchema&rdquo;</p>
 
-<p>La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</p>
+<p><img src="https://leovergara1.github.io/images/esquemaBase.png" alt="Estructura" /></p>
 
-<p>Realmente es increíble la simplificación que se logra hacer al lenguaje java, agilizando nuestros proyectos y dando un mejor entendimiento al problema para así realizar una óptima solución.</p>
+<p>Cómo se logra observar es una simple estructura de una base de datos sencilla.</p>
 
-<p>Al principio estuve un poco desconcertado, por lo complejo que pudiera ser aprender este nuevo lenguaje, sin embargo con un poco de explicación entendí que prácticamente es lo mismo que java pero suprimiendo partes del código innecesario.</p>
+<p>Ahora proseguire a crear la base de datos de la siguiente manera.
+El String DATABASE_NAME se indicará el nombre de la base de datos, la versión será la 1 y por ùltimo en la parte que dice String SQL_CREATE_ENTRIES, colocaremos el formato en sql para la creación de la tabla, en la imagen se muestran dos formas de hacerlo pero nosotros ocuparemos la primera, en donde se hace referencia a nuestra clase estructura, falta con ver las dos imágenes y lograremos entender cómo es que está funcionando la referencia a la estructura ya antes creada.
+Para dar un poco mas de detalles estamos haciendo referencia a la clase después a  una subclase estática que tiene como nombre un string y posteriormente las columnas.</p>
 
-<p>Un claro ejemplo es el siguiente.</p>
+<p>Por último en el constructor de nuestra clase Helper colocaremos los datos antes definidos que son la, DATABASE_NAME, y la versión.</p>
 
-<h2 id="hola-mundo-en-java">Hola Mundo en JAVA</h2>
+<p><img src="https://leovergara1.github.io/images/SeCreaBase.png" alt="Creación" /></p>
 
-<pre><code class="language-java">    public class HolaMundo {
-  private String nombre;
-  public String getNombre() {
-    return nombre;
-  }
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-  public String saluda() {
-    return &quot;Hola &quot; + this.nombre + &quot; !!!&quot;;
-  }
-  public static void main(String[] args) {
-    HolaMundo objeto = new HolaMundo();
-    objeto.setNombre(&quot;@grailsmx&quot;);
-    System.out.println(objeto.saluda());
-  }
-}
+<p>No pongamos atención al String que dice llamar &ldquo;segundo&rdquo; ya que no  es importante lo use para ciertas pruebas de compilación.
+Siguiendo con la explicación como se puede ver en la imagen se realiza una clase para el helper como referencia y le heredamos los atributos de la clase SQLiteOpenHelper en el momento de la herencia nos marcara un error que dá significado a que necesitamos unas clase SQLite para compilar, que son los de &ldquo;onCreate&rdquo;, &ldquo;onUpgrade&rdquo;.
+No se logra apreciar de manera correcta el constructor así que lo coloco nuevamente:
+public AccountBaseHelper(Context context){
+    super(context, DATABASE_NAME, null, VERSION);}
+En el cual estamos indicando el contexto y así mismo pasando los parámetros anteriores ya definidos que son la DATABASE_NAME y la VERSIÓN</p>
 
-</code></pre>
+<p>En el siguiente método llamado onCreate mandaremos el String con la instrucción sql para crear la tabla y no hay más detalles.
+Ahora en el método de onUpgrade enviaremos una instrucción sql en la cual mencionaremos que si no existe la tabla la creé, así como se muestra en la imagen.</p>
 
-<h2 id="hola-mundo-en-groovy">Hola Mundo en GROOVY</h2>
+<p>Explicaré rápidamente como se realizaron los siguientes archivos.
+Se implementa una interfaz la cual nos manejara los metodos necesarios para manejar nuestra base de datos, de momento solo necesitaremos el método de añadir ya que la finalidad es saber como hacer todo el proceso de conexión, una vez sabiendo eso, el resto es simplemente SQL o en su defecto podemos implementar cursores.</p>
 
-<pre><code class="language-groovy">class HolaMundo {
-  String nombre
-  def saluda() { &quot;Hola  ${this.nombre} !!!&quot; }
-}
+<p><img src="https://leovergara1.github.io/images/Interface.png" alt="Creación" /></p>
 
-def objeto = new HolaMundo(nombre:&quot;@grailsmx&quot;)
-println(objeto.saluda())
+<p>En esta imagen estoy definiendo la interface que voy a implementar. cabe resaltar que solo usare el metodo de &ldquo;databaseAdd&rdquo; de momento para la explicación.</p>
 
-</code></pre>
+<p>Como se puede observar se encuentra en la &ldquo;Package Services&rdquo; para una mejor estructura, posteriormente se crea una clase que se encargara de implementar los metodos de la interface que realizamos. La cual lleva el nombre de &ldquo;ManejaInterface&rdquo;</p>
 
-<p>Realmente después de una series de pasos es impresionante la cantidad de código que nos logramos ahorrar con el uso de este lenguaje.</p>
+<p><img src="https://leovergara1.github.io/images/EstructuraCodigo.png" alt="Creación" /></p>
 
-<p>Para finalizar es importante mencionar las siguientes características del lenguaje.</p>
+<p>Es importante saber que cuando creamos la clase que implementa la interface, nos marcara un error de compilación debido a que debemos implementar todos los metodos de la interface, como se puede apreciar en la imagen. Lo más importante de esto es tener bien en claro cómo va funcionar el contexto de la aplicación ya que como repito lo necesitaremos en todo momento, en la imagen podemos hacer acercaciones para visualizar descripciones por las líneas de código.
+Se logra observar que tenemos dos constructores uno encargado de obtener el contexto de la aplicación para posteriormente pasarlo al helper de la base de datos, ya que esta la requiere para su correcto funcionamiento.</p>
 
-<ul>
-<li>Admite el lenguaje tal cual de java dentro del código en caso de que no sepamos cómo escribirlo en groovy.</li>
-<li>Groovy es capaz de emigrar todo el proyecto al código de java junto consus “.class” necesarios para correr desde la consola.</li>
-<li>Con el uso de los cluseres dinámicos, definitivamente nuestra vida programando sera mas facil y obteniendo un nivel de programació con mejor nivel de tecnología del momento.</li>
-</ul>
+<p><img src="https://leovergara1.github.io/images/AnadirBase.png" alt="Creación" /></p>
+
+<p>En esta imagen se realiza toda la función de insert, tengamos muy en claro cómo se lleva acabo el acceso a la base de datos y es muy importante no perder el hilo, para entender cómo llegamos a los datos de ella. Usamos el COntenValues crear un elemento con el cual logremos enviar los datos capturados a la base de datos por medio de la instrucción &ldquo;Put&rdquo; y despues ultilizamos una función del sql llamada Insert la cual se encarga de realizar la inserción en la base de datos indicando la tabla y los elementos del elemento.</p>
 
         </div>
         <div class="sharing">
-<a href="https://twitter.com/intent/tweet?status=Groovy%20Programming-https%3a%2f%2fleovergara1.github.io%2fpost%2fgroovy%2f" target="_blank" title="Follow me on Twitter" class="twitter">
+<a href="https://twitter.com/intent/tweet?status=Base%20de%20Datos%20en%20Android%20%28Java%20SQLiteHelper%29-https%3a%2f%2fleovergara1.github.io%2fpost%2fBaseAndroid%2f" target="_blank" title="Follow me on Twitter" class="twitter">
 <span class="fa fa-twitter-square fa-3x"></span></a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fgroovy%2f" target="_blank" title="Join me on Facebook" class="facebook">
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fBaseAndroid%2f" target="_blank" title="Join me on Facebook" class="facebook">
 <span class="fa fa-facebook-square fa-3x"></span></a>
-<a href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fgroovy%2f" target="_blank" title="Google+" class="googleplus">
+<a href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fBaseAndroid%2f" target="_blank" title="Google+" class="googleplus">
 <span class="fa fa-google-plus-square fa-3x"></span></a>
-<a href="http://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fleovergara1.github.io%2fpost%2fgroovy%2f&title=Groovy%20Programming" target="_blank" title="LinkedIn" class="linkedin">
+<a href="http://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fleovergara1.github.io%2fpost%2fBaseAndroid%2f&title=Base%20de%20Datos%20en%20Android%20%28Java%20SQLiteHelper%29" target="_blank" title="LinkedIn" class="linkedin">
 <span class="fa fa-linkedin-square fa-3x"></span></a>
-<a href="http://www.reddit.com/submit?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fgroovy%2f" target="_blank" title="Reddit" class="reddit"><span class="fa fa-reddit-square fa-3x"></span></a>
-<a href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fgroovy%2f" target="_blank" title="StumbleUpon" class="stumbleupon"><span class="fa fa-stumbleupon fa-3x">
+<a href="http://www.reddit.com/submit?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fBaseAndroid%2f" target="_blank" title="Reddit" class="reddit"><span class="fa fa-reddit-square fa-3x"></span></a>
+<a href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fBaseAndroid%2f" target="_blank" title="StumbleUpon" class="stumbleupon"><span class="fa fa-stumbleupon fa-3x">
 </span></a>
 </div>
         
