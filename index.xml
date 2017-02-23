@@ -7,7 +7,122 @@
     <language>en-us</language>
     
     <copyright>Aprendiendo</copyright>
-    <updated>Mon, 20 Feb 2017 09:16:40 CST</updated>
+    <updated>Thu, 23 Feb 2017 13:19:00 CST</updated>
+    
+    <item>
+      <title>String Calculator</title>
+      <link>https://leovergara1.github.io/post/StringCalculator/</link>
+      <pubDate>Thu, 23 Feb 2017 13:19:00 CST</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/StringCalculator/</guid>
+      <description>&lt;p&gt;Este es un ejercicio de refactor para las pruebas que realizamos a nuestro código, así mismo prueba nuestros conocimientos en los diferentes strings que nos pueden mandar en una cadena y también prueba nuestra lógica para entender las pruebas y aplicarlas, también nos da una selección que dice &amp;ldquo;No confies en una prueba que no falla&amp;rdquo;, con esto me refiero a que debemos hacer pruebas en las que debemos fallar.&lt;/p&gt;
+
+&lt;p&gt;Empezaré por mostrar el problema planteado:&lt;/p&gt;
+
+&lt;p&gt;String Calculator
+The following is a TDD Kata- an exercise in coding, refactoring and test-first, that you should apply daily for at least 15 minutes (I do 30).&lt;/p&gt;
+
+&lt;p&gt;Before you start:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Try not to read ahead.&lt;/li&gt;
+&lt;li&gt;Do one task at a time. The trick is to learn to work incrementally.&lt;/li&gt;
+&lt;li&gt;Make sure you only test for correct inputs. there is no need to test for invalid inputs for this kata&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;String Calculator&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create a simple String calculator with a method int Add(string numbers)
+
+&lt;ul&gt;
+&lt;li&gt;The method can take 0, 1 or 2 numbers, and will return their sum (for an empty string it will return 0) for example “” or “1” or “1,2”&lt;/li&gt;
+&lt;li&gt;Start with the simplest test case of an empty string and move to 1 and two numbers&lt;/li&gt;
+&lt;li&gt;Remember to solve things as simply as possible so that you force yourself to write tests you did not think about&lt;/li&gt;
+&lt;li&gt;Remember to refactor after each passing test&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Allow the Add method to handle an unknown amount of numbers&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Allow the Add method to handle new lines between numbers (instead of commas).&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;the following input is ok:  “1\n2,3”  (will equal 6)&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;the following input is NOT ok:  “1,\n” (not need to prove it - just clarifying)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Support different delimiters&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;to change a delimiter, the beginning of the string will contain a separate line that looks like this:   “//[delimiter]\n[numbers…]” for example “//;\n1;2” should return three where the default delimiter is ‘;’ .&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;the first line is optional. all existing scenarios should still be supported&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Calling Add with a negative number will throw an exception “negatives not allowed” - and the negative that was passed.if there are multiple negatives, show all of them in the exception message
+stop here if you are a beginner. Continue if you can finish the steps so far in less than 30 minutes.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Numbers bigger than 1000 should be ignored, so adding 2 + 1001  = 2&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Delimiters can be of any length with the following format:  “//[delimiter]\n” for example: “//[&lt;strong&gt;&lt;em&gt;]\n1&lt;/em&gt;&lt;/strong&gt;2***3” should return 6&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Allow multiple delimiters like this:  “//[delim1][delim2]\n” for example “//[*][%]\n1*2%3” should return 6.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;make sure you can also handle multiple delimiters with length longer than one char&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Link de referencia = &lt;a href=&#34;http://osherove.com/tdd-kata-1/&#34;&gt;http://osherove.com/tdd-kata-1/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Cuando llegue a la cuarta prueba tuve la siguiente característica:
+Lo primero que se me ocurrio para dar solución al problema fue lo siguiente&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;if(numbers.size()&amp;gt;1){
+numbers = numbers.replace(&amp;quot;\n&amp;quot;,&amp;quot;,&amp;quot;)
+Integer e = 0
+def lista = numbers.split(&amp;quot;,&amp;quot;)
+for(int i=0; i&amp;lt;lista.size();i++){
+e = e + lista[i].toInteger()
+numbers = e
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;En el cual lograba observar que mi código estaba deficiente ya que era un poco complejo de entender y estaba utilizando un for para iterar la lista.&lt;/p&gt;
+
+&lt;p&gt;Posteriormente tuve un segundo acercamiento, buscando una manera diferente de realizarlo&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;if(numbers.size()&amp;gt;1){
+numbers = numbers.replace(&amp;quot;\n&amp;quot;,&amp;quot;,&amp;quot;)
+def lista = numbers.split(&amp;quot;,&amp;quot;)
+int e = 0
+numbers.eachLine(){
+  for(e=0; e &amp;lt; numbers.split(&amp;quot;,&amp;quot;).size();e++) {
+  lista &amp;lt;&amp;lt; it.split(&amp;quot;,&amp;quot;)[e].toInteger()}
+}
+numbers = lista.sum()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Este fragmento de código para ser sincero parecería que fui de mal a peor, sin embargo me dió la pauta para leer bien los conceptos de listas y darme cuenta de que no era necesario el for, dando como resultado el siguiente código.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;if(numbers.size()&amp;gt;1){
+numbers = numbers.replace(&amp;quot;\n&amp;quot;,&amp;quot;,&amp;quot;)
+def lista = numbers.split(&amp;quot;,&amp;quot;).collect() {it.toInteger()}
+return lista.sum()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Y de esta manera se va mas elegante y entendible.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Es importante saber que un concepto básico para empezar esto es el de decir solo haz lo que pide la prueba y no supongas
+En lo personal decidí irme por el lado de las expresiones regulares con el lenguaje groovy y este fue mi primer acercamiento a la solución del problema:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/firstCode.png&#34; alt=&#34;FirstCode&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Ahora trataré de mejorar mi código haciendo más entendible y mejor orientado&lt;/p&gt;
+
+&lt;p&gt;Una vez visualizado el Código, logré hacer refactor a unas cuantas de linéas y el resultado fue el siguiente:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/secondCode.png&#34; alt=&#34;SecondCode&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Base de Datos en Android (Java SQLiteHelper)</title>
