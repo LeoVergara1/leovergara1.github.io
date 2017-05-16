@@ -1,495 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Brandon Vergara on Brandon Vergara </title>
-      <generator uri="https://gohugo.io">Hugo</generator>
-    <link>https://leovergara1.github.io/index.xml</link>
+    <title>Brandon Vergara</title>
+    <link>https://leovergara1.github.io/</link>
+    <description>Recent content on Brandon Vergara</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 14 May 2017 00:00:00 +0000</lastBuildDate>
     
-    <copyright>Aprendiendo</copyright>
-    <updated>Thu, 23 Feb 2017 13:19:00 CST</updated>
+	<atom:link href="https://leovergara1.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    <item>
-      <title>String Calculator</title>
-      <link>https://leovergara1.github.io/post/StringCalculator/</link>
-      <pubDate>Thu, 23 Feb 2017 13:19:00 CST</pubDate>
-      
-      <guid>https://leovergara1.github.io/post/StringCalculator/</guid>
-      <description>&lt;p&gt;Este es un ejercicio de refactor para las pruebas que realizamos a nuestro código, así mismo prueba nuestros conocimientos en los diferentes strings que nos pueden mandar en una cadena y también prueba nuestra lógica para entender las pruebas y aplicarlas, también nos da una selección que dice &amp;ldquo;No confies en una prueba que no falla&amp;rdquo;, con esto me refiero a que debemos hacer pruebas en las que debemos fallar.&lt;/p&gt;
-
-&lt;p&gt;Empezaré por mostrar el problema planteado:&lt;/p&gt;
-
-&lt;p&gt;String Calculator
-The following is a TDD Kata- an exercise in coding, refactoring and test-first, that you should apply daily for at least 15 minutes (I do 30).&lt;/p&gt;
-
-&lt;p&gt;Before you start:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Try not to read ahead.&lt;/li&gt;
-&lt;li&gt;Do one task at a time. The trick is to learn to work incrementally.&lt;/li&gt;
-&lt;li&gt;Make sure you only test for correct inputs. there is no need to test for invalid inputs for this kata&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;String Calculator&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Create a simple String calculator with a method int Add(string numbers)
-
-&lt;ul&gt;
-&lt;li&gt;The method can take 0, 1 or 2 numbers, and will return their sum (for an empty string it will return 0) for example “” or “1” or “1,2”&lt;/li&gt;
-&lt;li&gt;Start with the simplest test case of an empty string and move to 1 and two numbers&lt;/li&gt;
-&lt;li&gt;Remember to solve things as simply as possible so that you force yourself to write tests you did not think about&lt;/li&gt;
-&lt;li&gt;Remember to refactor after each passing test&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;Allow the Add method to handle an unknown amount of numbers&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Allow the Add method to handle new lines between numbers (instead of commas).&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;the following input is ok:  “1\n2,3”  (will equal 6)&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;the following input is NOT ok:  “1,\n” (not need to prove it - just clarifying)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Support different delimiters&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;to change a delimiter, the beginning of the string will contain a separate line that looks like this:   “//[delimiter]\n[numbers…]” for example “//;\n1;2” should return three where the default delimiter is ‘;’ .&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;the first line is optional. all existing scenarios should still be supported&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Calling Add with a negative number will throw an exception “negatives not allowed” - and the negative that was passed.if there are multiple negatives, show all of them in the exception message
-stop here if you are a beginner. Continue if you can finish the steps so far in less than 30 minutes.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Numbers bigger than 1000 should be ignored, so adding 2 + 1001  = 2&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Delimiters can be of any length with the following format:  “//[delimiter]\n” for example: “//[&lt;strong&gt;&lt;em&gt;]\n1&lt;/em&gt;&lt;/strong&gt;2***3” should return 6&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Allow multiple delimiters like this:  “//[delim1][delim2]\n” for example “//[*][%]\n1*2%3” should return 6.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;make sure you can also handle multiple delimiters with length longer than one char&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Link de referencia = &lt;a href=&#34;http://osherove.com/tdd-kata-1/&#34;&gt;http://osherove.com/tdd-kata-1/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Cuando llegue a la cuarta prueba tuve la siguiente característica:
-Lo primero que se me ocurrio para dar solución al problema fue lo siguiente&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;if(numbers.size()&amp;gt;1){
-numbers = numbers.replace(&amp;quot;\n&amp;quot;,&amp;quot;,&amp;quot;)
-Integer e = 0
-def lista = numbers.split(&amp;quot;,&amp;quot;)
-for(int i=0; i&amp;lt;lista.size();i++){
-e = e + lista[i].toInteger()
-numbers = e
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;En el cual lograba observar que mi código estaba deficiente ya que era un poco complejo de entender y estaba utilizando un for para iterar la lista.&lt;/p&gt;
-
-&lt;p&gt;Posteriormente tuve un segundo acercamiento, buscando una manera diferente de realizarlo&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;if(numbers.size()&amp;gt;1){
-numbers = numbers.replace(&amp;quot;\n&amp;quot;,&amp;quot;,&amp;quot;)
-def lista = numbers.split(&amp;quot;,&amp;quot;)
-int e = 0
-numbers.eachLine(){
-  for(e=0; e &amp;lt; numbers.split(&amp;quot;,&amp;quot;).size();e++) {
-  lista &amp;lt;&amp;lt; it.split(&amp;quot;,&amp;quot;)[e].toInteger()}
-}
-numbers = lista.sum()
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Este fragmento de código para ser sincero parecería que fui de mal a peor, sin embargo me dió la pauta para leer bien los conceptos de listas y darme cuenta de que no era necesario el for, dando como resultado el siguiente código.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;if(numbers.size()&amp;gt;1){
-numbers = numbers.replace(&amp;quot;\n&amp;quot;,&amp;quot;,&amp;quot;)
-def lista = numbers.split(&amp;quot;,&amp;quot;).collect() {it.toInteger()}
-return lista.sum()
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;Y de esta manera se va mas elegante y entendible.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Es importante saber que un concepto básico para empezar esto es el de decir solo haz lo que pide la prueba y no supongas
-En lo personal decidí irme por el lado de las expresiones regulares con el lenguaje groovy y este fue mi primer acercamiento a la solución del problema:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/firstCode.png&#34; alt=&#34;FirstCode&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Ahora trataré de mejorar mi código haciendo más entendible y mejor orientado&lt;/p&gt;
-
-&lt;p&gt;Una vez visualizado el Código, logré hacer refactor a unas cuantas de líneas y el resultado fue el siguiente:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/secondCode.png&#34; alt=&#34;SecondCode&#34; /&gt;&lt;/p&gt;
-</description>
-    </item>
     
     <item>
-      <title>Base de Datos en Android (Java SQLiteHelper)</title>
-      <link>https://leovergara1.github.io/post/BaseAndroid/</link>
-      <pubDate>Mon, 20 Feb 2017 09:16:40 CST</pubDate>
+      <title>Experiencia con Wonder Code</title>
+      <link>https://leovergara1.github.io/post/wonderwoman/</link>
+      <pubDate>Sun, 14 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://leovergara1.github.io/post/BaseAndroid/</guid>
-      <description>&lt;p&gt;Primero debemos saber que es muy importante realizar ciertas abstracciones de nuestro código, implementando interfaces lo que hará de nuestra aplicación de mejor calidad.&lt;/p&gt;
-
-&lt;p&gt;Por buenas practicas yo decidí crear un esquema de nuestra base de datos en una clase a diferencia de los demás sitios que por lo regular no hacen, la cual nombre como &amp;ldquo;AccountDBSchema&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/esquemaBase.png&#34; alt=&#34;Estructura&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Cómo se logra observar es una simple estructura de una base de datos sencilla.&lt;/p&gt;
-
-&lt;p&gt;Ahora proseguire a crear la base de datos de la siguiente manera.
-El String DATABASE_NAME se indicará el nombre de la base de datos, la versión será la 1 y por ùltimo en la parte que dice String SQL_CREATE_ENTRIES, colocaremos el formato en sql para la creación de la tabla, en la imagen se muestran dos formas de hacerlo pero nosotros ocuparemos la primera, en donde se hace referencia a nuestra clase estructura, falta con ver las dos imágenes y lograremos entender cómo es que está funcionando la referencia a la estructura ya antes creada.
-Para dar un poco mas de detalles estamos haciendo referencia a la clase después a  una subclase estática que tiene como nombre un string y posteriormente las columnas.&lt;/p&gt;
-
-&lt;p&gt;Por último en el constructor de nuestra clase Helper colocaremos los datos antes definidos que son la, DATABASE_NAME, y la versión.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/SeCreaBase.png&#34; alt=&#34;Creación&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;No pongamos atención al String que dice llamar &amp;ldquo;segundo&amp;rdquo; ya que no  es importante lo use para ciertas pruebas de compilación.
-Siguiendo con la explicación como se puede ver en la imagen se realiza una clase para el helper como referencia y le heredamos los atributos de la clase SQLiteOpenHelper en el momento de la herencia nos marcara un error que dá significado a que necesitamos unas clase SQLite para compilar, que son los de &amp;ldquo;onCreate&amp;rdquo;, &amp;ldquo;onUpgrade&amp;rdquo;.
-No se logra apreciar de manera correcta el constructor así que lo coloco nuevamente:
-public AccountBaseHelper(Context context){
-    super(context, DATABASE_NAME, null, VERSION);}
-En el cual estamos indicando el contexto y así mismo pasando los parámetros anteriores ya definidos que son la DATABASE_NAME y la VERSIÓN&lt;/p&gt;
-
-&lt;p&gt;En el siguiente método llamado onCreate mandaremos el String con la instrucción sql para crear la tabla y no hay más detalles.
-Ahora en el método de onUpgrade enviaremos una instrucción sql en la cual mencionaremos que si no existe la tabla la creé, así como se muestra en la imagen.&lt;/p&gt;
-
-&lt;p&gt;Explicaré rápidamente como se realizaron los siguientes archivos.
-Se implementa una interfaz la cual nos manejara los metodos necesarios para manejar nuestra base de datos, de momento solo necesitaremos el método de añadir ya que la finalidad es saber como hacer todo el proceso de conexión, una vez sabiendo eso, el resto es simplemente SQL o en su defecto podemos implementar cursores.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/Interface.png&#34; alt=&#34;Creación&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;En esta imagen estoy definiendo la interface que voy a implementar. cabe resaltar que solo usare el metodo de &amp;ldquo;databaseAdd&amp;rdquo; de momento para la explicación.&lt;/p&gt;
-
-&lt;p&gt;Como se puede observar se encuentra en la &amp;ldquo;Package Services&amp;rdquo; para una mejor estructura, posteriormente se crea una clase que se encargara de implementar los metodos de la interface que realizamos. La cual lleva el nombre de &amp;ldquo;ManejaInterface&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/EstructuraCodigo.png&#34; alt=&#34;Creación&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Es importante saber que cuando creamos la clase que implementa la interface, nos marcara un error de compilación debido a que debemos implementar todos los metodos de la interface, como se puede apreciar en la imagen. Lo más importante de esto es tener bien en claro cómo va funcionar el contexto de la aplicación ya que como repito lo necesitaremos en todo momento, en la imagen podemos hacer acercaciones para visualizar descripciones por las líneas de código.
-Se logra observar que tenemos dos constructores uno encargado de obtener el contexto de la aplicación para posteriormente pasarlo al helper de la base de datos, ya que esta la requiere para su correcto funcionamiento.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/AnadirBase.png&#34; alt=&#34;Creación&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;En esta imagen se realiza toda la función de insert, tengamos muy en claro cómo se lleva acabo el acceso a la base de datos y es muy importante no perder el hilo, para entender cómo llegamos a los datos de ella. Usamos el COntenValues crear un elemento con el cual logremos enviar los datos capturados a la base de datos por medio de la instrucción &amp;ldquo;Put&amp;rdquo; y despues ultilizamos una función del sql llamada Insert la cual se encarga de realizar la inserción en la base de datos indicando la tabla y los elementos del elemento.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Inicio en Android</title>
-      <link>https://leovergara1.github.io/post/android/</link>
-      <pubDate>Thu, 26 Jan 2017 09:18:40 CST</pubDate>
-      
-      <guid>https://leovergara1.github.io/post/android/</guid>
-      <description>
-
-&lt;p&gt;En este tema hablare sobre como realice y primer aplicación en android, la cual fue iniciada en java como convencionalmente se hace, para posteriormente ser trasladada a groovy.
-Programa necesarios para desarrollar en Android:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Android Studio&lt;/li&gt;
-&lt;li&gt;Genymotion&lt;/li&gt;
-&lt;li&gt;Virtual Box&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Una vez instaladas las aplicaciones, continue a realizar una maquina virtual en Genymotion emulando android 6, ya que tuve este paso, procedí a realizar mi aplicación en Android studio.&lt;/p&gt;
-
-&lt;h3 id=&#34;para-esto-tenemos-2-apartados-importantes&#34;&gt;Para esto tenemos 2 apartados importantes.&lt;/h3&gt;
-
-&lt;p&gt;MainActivity.xml -&amp;gt; En el cual realizaremos toda la parte de diseño para la aplicación.
-MainActivity. java -&amp;gt; Se realiza toda la parte del controlador (controller).&lt;/p&gt;
-
-&lt;p&gt;Al iniciar el proyecto en Android Studio realice un análisis de los componentes y opciones que tenia en frente para poco a poco ir entendiendo el funcionamiento del IDE y para iniciarme en este lenguaje se realizara una pequeña aplicación donde se podrá ver el uso de botones, colores, diseños, metodos, multimedia.&lt;/p&gt;
-
-&lt;p&gt;Finalmente explicaré el código realizado en XML para obtener una retroalimentación de lo adquirido&lt;/p&gt;
-
-&lt;h3 id=&#34;vista-del-xml&#34;&gt;Vista del XML&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;
-&amp;lt;LinearLayout android:orientation=&amp;quot;vertical&amp;quot;
-    xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;
-    xmlns:tools=&amp;quot;http://schemas.android.com/tools&amp;quot;
-    android:layout_width=&amp;quot;match_parent&amp;quot;
-    android:layout_height=&amp;quot;match_parent&amp;quot;
-    android:gravity=&amp;quot;center&amp;quot;&amp;gt;
-
-    &amp;lt;ImageView
-        android:layout_width=&amp;quot;wrap_content&amp;quot;
-        android:layout_height=&amp;quot;wrap_content&amp;quot;
-        android:src=&amp;quot;@mipmap/ic_launcher&amp;quot;
-        android:id=&amp;quot;@+id/photo&amp;quot;/&amp;gt;
-    &amp;lt;TextView
-        android:layout_width=&amp;quot;wrap_content&amp;quot;
-        android:layout_height=&amp;quot;wrap_content&amp;quot;
-        android:text=&amp;quot;Hello World!&amp;quot;
-        android:id=&amp;quot;@+id/photoName&amp;quot;/&amp;gt;
-    &amp;lt;LinearLayout
-        android:layout_width=&amp;quot;match_parent&amp;quot;
-        android:layout_height=&amp;quot;wrap_content&amp;quot;
-        android:gravity=&amp;quot;center&amp;quot;&amp;gt;
-        &amp;lt;Button
-            android:layout_width=&amp;quot;wrap_content&amp;quot;
-            android:layout_height=&amp;quot;match_parent&amp;quot;
-            android:text=&amp;quot;false&amp;quot;
-            android:id=&amp;quot;@+id/button_false&amp;quot;
-            android:textColor=&amp;quot;@color/colorAccent&amp;quot;/&amp;gt;
-        &amp;lt;Button
-            android:layout_width=&amp;quot;wrap_content&amp;quot;
-            android:layout_height=&amp;quot;match_parent&amp;quot;
-            android:text=&amp;quot;True&amp;quot;
-            android:id=&amp;quot;@+id/button_true&amp;quot;
-            android:textColor=&amp;quot;@color/colorPrimaryDark&amp;quot;/&amp;gt;
-
-    &amp;lt;/LinearLayout&amp;gt;
-&amp;lt;/LinearLayout&amp;gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;LinearLayout&lt;/em&gt;&amp;gt;&lt;/strong&gt; Diseño de la vista a implementar.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;XMLS&lt;/em&gt;&amp;gt;&lt;/strong&gt; Dirección de Android y sus funciones.&lt;/p&gt;
-
-&lt;p&gt;Android:.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;ImageView&lt;/em&gt;&amp;gt;&lt;/strong&gt; TAG para definir componentes de una imagen determinada&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;TextView&lt;/em&gt;&amp;gt;&lt;/strong&gt; TAG para definir componentes de un texto.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&amp;lt;&lt;em&gt;Button&lt;/em&gt;&amp;gt;&lt;/strong&gt; TAG para definir los componentes de un botón.&lt;/p&gt;
-</description>
+      <guid>https://leovergara1.github.io/post/wonderwoman/</guid>
+      <description></description>
     </item>
     
     <item>
       <title>Groovy Programming</title>
       <link>https://leovergara1.github.io/post/groovy/</link>
-      <pubDate>Wed, 18 Jan 2017 13:38:40 CST</pubDate>
+      <pubDate>Wed, 18 Jan 2017 13:38:40 -0600</pubDate>
       
       <guid>https://leovergara1.github.io/post/groovy/</guid>
-      <description>
-
-&lt;p&gt;Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, &lt;em&gt;“Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.&lt;/p&gt;
-
-&lt;p&gt;Realmente es increíble la simplificación que se logra hacer al lenguaje java, agilizando nuestros proyectos y dando un mejor entendimiento al problema para así realizar una óptima solución.&lt;/p&gt;
-
-&lt;p&gt;Al principio estuve un poco desconcertado, por lo complejo que pudiera ser aprender este nuevo lenguaje, sin embargo con un poco de explicación entendí que prácticamente es lo mismo que java pero suprimiendo partes del código innecesario.&lt;/p&gt;
-
-&lt;p&gt;Un claro ejemplo es el siguiente.&lt;/p&gt;
-
-&lt;h2 id=&#34;hola-mundo-en-java&#34;&gt;Hola Mundo en JAVA&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;    public class HolaMundo {
-  private String nombre;
-  public String getNombre() {
-    return nombre;
-  }
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-  public String saluda() {
-    return &amp;quot;Hola &amp;quot; + this.nombre + &amp;quot; !!!&amp;quot;;
-  }
-  public static void main(String[] args) {
-    HolaMundo objeto = new HolaMundo();
-    objeto.setNombre(&amp;quot;@grailsmx&amp;quot;);
-    System.out.println(objeto.saluda());
-  }
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;hola-mundo-en-groovy&#34;&gt;Hola Mundo en GROOVY&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-groovy&#34;&gt;class HolaMundo {
-  String nombre
-  def saluda() { &amp;quot;Hola  ${this.nombre} !!!&amp;quot; }
-}
-
-def objeto = new HolaMundo(nombre:&amp;quot;@grailsmx&amp;quot;)
-println(objeto.saluda())
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Realmente después de una series de pasos es impresionante la cantidad de código que nos logramos ahorrar con el uso de este lenguaje.&lt;/p&gt;
-
-&lt;p&gt;Para finalizar es importante mencionar las siguientes características del lenguaje.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Admite el lenguaje tal cual de java dentro del código en caso de que no sepamos cómo escribirlo en groovy.&lt;/li&gt;
-&lt;li&gt;Groovy es capaz de emigrar todo el proyecto al código de java junto consus “.class” necesarios para correr desde la consola.&lt;/li&gt;
-&lt;li&gt;Con el uso de los cluseres dinámicos, definitivamente nuestra vida programando sera mas facil y obteniendo un nivel de programació con mejor nivel de tecnología del momento.&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
+La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</description>
     </item>
     
     <item>
       <title>Comandos en Unix y Linux</title>
-      <link>https://leovergara1.github.io/post/Comandos/</link>
-      <pubDate>Tue, 17 Jan 2017 09:38:42 CST</pubDate>
+      <link>https://leovergara1.github.io/post/comandos/</link>
+      <pubDate>Tue, 17 Jan 2017 09:38:42 -0600</pubDate>
       
-      <guid>https://leovergara1.github.io/post/Comandos/</guid>
-      <description>
-
-&lt;p&gt;De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.&lt;/p&gt;
-
-&lt;h1 id=&#34;un-poco-de-historia&#34;&gt;Un poco de historia…&lt;/h1&gt;
-
-&lt;h3 id=&#34;unix&#34;&gt;Unix&lt;/h3&gt;
-
-&lt;p&gt;La historia de UNIX  se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos. Variantes de UNIX más modernos conocidos actualmente tienen licencia versiones de una de las ediciones originales de UNIX.&lt;/p&gt;
-
-&lt;h1 id=&#34;linux&#34;&gt;Linux&lt;/h1&gt;
-
-&lt;p&gt;Precisamente linux nació como una alternativa de software libre para los entornos Unix comerciales. Cuya historia inicia en 1983, cuando el proyecto GNU, donde el original tiene que ofrecer una alternativa libre a Unix, se introdujo. Linux se ejecuta en una gama mucho más amplia de plataformas que la mayoría de los entornos Unix, tales como la Intel  / AMD llevó plataforma x86. La mayoría de las variantes de Unix ejecutan en una sola arquitectura.&lt;/p&gt;
-
-&lt;h1 id=&#34;tipo-de-shell&#34;&gt;Tipo de Shell&lt;/h1&gt;
-
-&lt;p&gt;Shell Bourne (sh). Creado por S. Bourne, es el más utilizado en la actualidad. Su símbolo del sistema es $. Es el shell estándar y el que se monta en casi todos los sistemas UNIX/Linux.
-Es un software que forma parte del sistema operativo, sirve para interpretar órdenes expresadas por líneas de comandos.
-En Unix es conocido como bash y en linux como ksh&lt;/p&gt;
-
-&lt;p&gt;&lt;center&gt;&lt;IMG src=&#34;https://leovergara1.github.io/images/unixS.jpg&#34;/&gt;&lt;/center&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;diferencias-entre-estas-dos-shell&#34;&gt;Diferencias entre estas dos shell&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;ksh soporta arreglos asociativos&lt;/li&gt;
-&lt;li&gt;ksh permite acceder el valor de una variable usada en un loop fuera del mismo&lt;/li&gt;
-&lt;li&gt;bash maneja los códigos de salida &amp;ldquo;exit&amp;rdquo; a través de tuberías (pipes) de una manera mas clara.&lt;/li&gt;
-&lt;li&gt;ksh soporta el comando &amp;ldquo;print&amp;rdquo; el cual es más completo que el comando &amp;ldquo;echo&amp;rdquo;.&lt;/li&gt;
-&lt;li&gt;bash soporta completar nombres de archivos y comandos usando la tecla &amp;ldquo;tab&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;ksh soporta una sintaxis del comando &amp;ldquo;cd&amp;rdquo; que permite moverse entre directorios de una manera más eficiente.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;center&gt;&lt;img src=&#34;https://leovergara1.github.io/images/comandos.png&#34; alt=&#34;Comnados&#34; /&gt;&lt;/center&gt;&lt;/p&gt;
-</description>
+      <guid>https://leovergara1.github.io/post/comandos/</guid>
+      <description>De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.
+Un poco de historia… Unix La historia de UNIX se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos.</description>
     </item>
     
     <item>
       <title>Inicio en goHugo</title>
-      <link>https://leovergara1.github.io/post/Inicio-en-goHugo/</link>
-      <pubDate>Thu, 12 Jan 2017 15:07:41 CST</pubDate>
+      <link>https://leovergara1.github.io/post/inicio-en-gohugo/</link>
+      <pubDate>Thu, 12 Jan 2017 15:07:41 -0600</pubDate>
       
-      <guid>https://leovergara1.github.io/post/Inicio-en-goHugo/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/hugo1.png&#34; alt=&#34;Hugo&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Prácticamente es un framework que sirve para realizar sitios estáticos.  A diferencia de otros sistemas que construyen dinámicamente una página cada vez que un visitante solicita una. Dado que los sitios web son vistos con mucha más frecuencia de lo que se editan, Hugo está optimizado para la visualización de página web al tiempo que proporciona una gran experiencia de la escritura.&lt;/p&gt;
-
-&lt;p&gt;Primero que nada visite la siguiente página para realizar la instalación y de igual manera familiarizarme con el framework ya que en ella se encuentra un pequeño tutorial de inicio rápido.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/hugo2_opt.jpg&#34; alt=&#34;Hugo&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;De la siguiente manera seguí los pasos correspondientes.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Crear el proyecto en hugo con el siguiente comando &lt;strong&gt;$hugo new site BlogLeo&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;Despues Agregar un pos de la siguiente manera &lt;strong&gt;$hugo new post/primero.md&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;em&gt;En este apartado debo comentar que en momentos tenía problemas a la hora de crear los post, ya que siempre se debe estar en la carpeta raíz del proyecto.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;3.Agregar un tema al proyecto para después ser publicado, esté se debe guardar en la carpeta “themes” o de lo contrario no funcionara.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Aquí fue un de los momentos donde tuve mayores problema ya que a la hora de tratar de llamar al tema había que hacer ciertas configuración en el config.tom para que funcionara.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;4.Finalmente se nos menciona como levantar un servidor local para visualizar nuestro sitio en la aplicación del navegador&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/captura1.png&#34; alt=&#34;Captura&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;En lo personal, pienso que al principio fue complicado de entender, principalmente la parte de los temas ya que si me tomo mucho tiempo lograr configurarlos a mi gusto, pero ya una vez hecho esto logre, hacer uso de ciertas herramientas de manera más sencilla.&lt;/p&gt;
-
-&lt;p&gt;Otro problema con el que me encontré fue con el de subir el sitio ya de manera pública, ya que tuve muchos problemas con las configuraciones para lograr hacer este proceso.&lt;/p&gt;
-
-&lt;p&gt;primero que nada tuve que realizar un proyecto con control de versiones mediante Git para así dejar una versión funcionando de manera local y en otra rama realizar las modificaciones correspondientes para subir el sitio a la red. Los problemas que encontré fueron:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Cargar el tema&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Cargar imágenes&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Modificar los vínculos de los post que el tema tenía predeterminados&lt;/strong&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Usar un tema correspondiente a la versión de hugo instalada&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Conceptos básicos de Git para la conexión remota&lt;/strong&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;En esta parte mi problema fue que confundí el origen del repositorio lo que no me permitia hacer un “git push” de manera correcta, posteriormente después de unos ejemplos con mis compañeros esto quedó de manera más clara así como las 3 formas de hacer el acceso remoto.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Clonar el repositorio y bajarlo a la pc&lt;/li&gt;
-&lt;li&gt;Subir al repositorio una carpeta ya creada&lt;/li&gt;
-&lt;li&gt;Crear un repositorio nuevo&lt;/li&gt;
-&lt;/ol&gt;
-</description>
+      <guid>https://leovergara1.github.io/post/inicio-en-gohugo/</guid>
+      <description>Prácticamente es un framework que sirve para realizar sitios estáticos. A diferencia de otros sistemas que construyen dinámicamente una página cada vez que un visitante solicita una. Dado que los sitios web son vistos con mucha más frecuencia de lo que se editan, Hugo está optimizado para la visualización de página web al tiempo que proporciona una gran experiencia de la escritura.
+Primero que nada visite la siguiente página para realizar la instalación y de igual manera familiarizarme con el framework ya que en ella se encuentra un pequeño tutorial de inicio rápido.</description>
     </item>
     
     <item>
       <title>Problemas con temas de goHugo</title>
-      <link>https://leovergara1.github.io/post/Cuearto-post/</link>
-      <pubDate>Thu, 12 Jan 2017 09:37:34 CST</pubDate>
+      <link>https://leovergara1.github.io/post/cuearto-post/</link>
+      <pubDate>Thu, 12 Jan 2017 09:37:34 -0600</pubDate>
       
-      <guid>https://leovergara1.github.io/post/Cuearto-post/</guid>
-      <description>&lt;p&gt;Problemas con temas de hugo&lt;/p&gt;
-
-&lt;p&gt;Al iniciar mi viaje con el framework hugo,  no tuve problemas para crear el sitio con sus carpetas predeterminadas y con sus correspondientes post, pero a la hora de levantar el servidor para ver un ejemplo de lo que estaba creando, levantaba correctamente pero sin cargar el tema.&lt;/p&gt;
-
-&lt;p&gt;El comando ejecutado era el siguiente:
-$ hugo server &amp;ndash;theme=”hurock” &amp;ndash;buildDrafs
-Dicho problema ocasiona que los elementos no se mostrarán  correctamente o simplemente no se veían. La verdad fue que este inconveniente me demoro un par de horas y el problema solo radicaba en la configuración del archivo config.toml en la línea correspondiente:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;1. basurl = &amp;quot;https://localhost:1313/&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Bastaba con arreglar un simple detalle, el cual era el siguiente:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;1. https: -&amp;gt; http: 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Así es solo quitamos la letra “s” y el problema se habrá solucionado.&lt;/p&gt;
-</description>
+      <guid>https://leovergara1.github.io/post/cuearto-post/</guid>
+      <description>Problemas con temas de hugo
+Al iniciar mi viaje con el framework hugo, no tuve problemas para crear el sitio con sus carpetas predeterminadas y con sus correspondientes post, pero a la hora de levantar el servidor para ver un ejemplo de lo que estaba creando, levantaba correctamente pero sin cargar el tema.
+El comando ejecutado era el siguiente: $ hugo server &amp;ndash;theme=”hurock” &amp;ndash;buildDrafs Dicho problema ocasiona que los elementos no se mostrarán correctamente o simplemente no se veían.</description>
     </item>
     
     <item>
       <title>Inicio en Makings Devs</title>
-      <link>https://leovergara1.github.io/post/Primer-post/</link>
-      <pubDate>Wed, 11 Jan 2017 16:08:27 CST</pubDate>
+      <link>https://leovergara1.github.io/post/primer-post/</link>
+      <pubDate>Wed, 11 Jan 2017 16:08:27 -0600</pubDate>
       
-      <guid>https://leovergara1.github.io/post/Primer-post/</guid>
-      <description>&lt;p&gt;En el día de mi entrevista pude darme cuenta, estaba entrando a un gran reto ya que aquí se tiene la ideología diciendo que se debe tener una buena base teórica de los conceptos  para llevar a cabo un correcto desempeño en el desarrollo.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://leovergara1.github.io/images/teoria.png&#34; alt=&#34;Teoria&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;En primeros días en making devs, me logre dar cuenta que existían varias tecnología de las cuales apenas había escuchado y de otras no tenía ni la menor idea como son:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;        1. Git
-        2. GitHub
-        3. CoffeeScript
-        4. Grails
-        5. GoHugo
-        6. Vertx
-        7. Groovy
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Sin embargo el concepto que más claro me quedó fue el de &lt;strong&gt;Integración continua&lt;/strong&gt; el cual nos garantiza que las pruebas de una aplicación serán estables, dicho concepto se refiere a lo siguientes puntos:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Conjunción de sistemas -&amp;gt; Control de versiones como Git&lt;/li&gt;
-&lt;li&gt;Trigger de ejecución -&amp;gt;&lt;/li&gt;
-&lt;li&gt;Componente de ejecución -&amp;gt; jenkins&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Después de investigar una serie de conceptos y teorías que me hacían falta reforzar para un conocimiento básico de las herramientas que en un futuro utilizaré, realice el siguiente documento como guía de estudio.&lt;/p&gt;
-
-&lt;iframe width=&#34;600px&#34; height=&#34;600px&#34; src=&#34;https://drive.google.com/open?id=1cnFEzMq8ghtzGYwAAsyEa-O6OOZbdzgKQUw9TMZ7ps4&#34;&gt;
-  &lt;p&gt;Your browser does not support iframes.&lt;/p&gt;
-&lt;/iframe&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://drive.google.com/open?id=1cnFEzMq8ghtzGYwAAsyEa-O6OOZbdzgKQUw9TMZ7ps4&#34;&gt;&lt;img src=&#34;https://leovergara1.github.io/images/doc.png&#34; alt=&#34;doc Logo&#34; /&gt;&lt;/a&gt; &lt;strong&gt;Dar clic en la imagen para ver documento&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;En el documento se tratan conceptos en general desde que es orientación a objetos hasta tipos de shell o diferencias entre unix y linux y sus origines a grandes rasgos.&lt;/p&gt;
-
-&lt;p&gt;Personalmente esta tarea de iniciación me hizo darme cuenta de los elementos básicos que me hacían falta y que jamás debo de despreciar la teoría ya que es importante para el correcto entendimiento de las herramientas.
-Siempre he sido una persona que confía en sus habilidades y que se cree capaz, aún cuando la entrevista me hizo ver que me faltaba un largo camino que recorrer, no me desanimo al contrario mes gusta verlo como un reto y me motiva saber lo mucho que tengo que aprender para tener como primer fin lograr contribuir a mi equipo de trabajo.&lt;/p&gt;
-</description>
+      <guid>https://leovergara1.github.io/post/primer-post/</guid>
+      <description>En el día de mi entrevista pude darme cuenta, estaba entrando a un gran reto ya que aquí se tiene la ideología diciendo que se debe tener una buena base teórica de los conceptos para llevar a cabo un correcto desempeño en el desarrollo.
+En primeros días en making devs, me logre dar cuenta que existían varias tecnología de las cuales apenas había escuchado y de otras no tenía ni la menor idea como son:</description>
     </item>
     
   </channel>
