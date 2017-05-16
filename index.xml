@@ -32,6 +32,16 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
     
     <item>
       <title>Comandos en Unix y Linux</title>
+      <link>https://leovergara1.github.io/post/comandos/</link>
+      <pubDate>Tue, 17 Jan 2017 09:38:42 -0600</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/comandos/</guid>
+      <description>De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.
+Un poco de historia… Unix La historia de UNIX se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos.</description>
+    </item>
+    
+    <item>
+      <title>Comandos en Unix y Linux</title>
       <link>https://leovergara1.github.io/post/test/</link>
       <pubDate>Sat, 14 Jan 2017 00:00:00 +0000</pubDate>
       
@@ -68,16 +78,6 @@ El comando ejecutado era el siguiente: $ hugo server &amp;ndash;theme=”hurock�
       <guid>https://leovergara1.github.io/post/primer-post/</guid>
       <description>En el día de mi entrevista pude darme cuenta, estaba entrando a un gran reto ya que aquí se tiene la ideología diciendo que se debe tener una buena base teórica de los conceptos para llevar a cabo un correcto desempeño en el desarrollo.
 En primeros días en making devs, me logre dar cuenta que existían varias tecnología de las cuales apenas había escuchado y de otras no tenía ni la menor idea como son:</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://leovergara1.github.io/post/comandos/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/post/comandos/</guid>
-      <description>De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.
-Un poco de historia… Unix La historia de UNIX se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos.</description>
     </item>
     
   </channel>
