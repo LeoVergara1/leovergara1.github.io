@@ -71,5 +71,14 @@ El comando ejecutado era el siguiente: $ hugo server &amp;ndash;theme=”hurock�
 En primeros días en making devs, me logre dar cuenta que existían varias tecnología de las cuales apenas había escuchado y de otras no tenía ni la menor idea como son:</description>
     </item>
     
+    <item>
+      <title>New Post</title>
+      <link>https://leovergara1.github.io/post/test/</link>
+      <pubDate>Thu, 28 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/test/</guid>
+      <description>&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
   </channel>
 </rss>
