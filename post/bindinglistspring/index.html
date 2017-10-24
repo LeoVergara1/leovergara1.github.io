@@ -1,5 +1,9 @@
 
 
+  
+    
+  
+
 
   
 
@@ -17,25 +21,254 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.20.7">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
-    <title>Projects</title>
+    <title>Mapear lista dinámica con spring 4</title>
     <meta name="author" content="Brandon Vergara">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="disqus, google, gravatar">
 
     <link rel="icon" href="https://leovergara1.github.io/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://leovergara1.github.io/categories/projects/index.xml">
-    
 
     
-    <meta name="description" content="Blog de Leo">
-    <meta property="og:description" content="Blog de Leo">
+    <meta name="description" content="Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.
+
+Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.
+
+package mx.edu.ebc.api.pojo
+
+class Commissions{
+  Integer rolId
+  Integer credit
+  Integer cash
+}
+
+
+Posteriormente a esto crearemos un segundo pojo donde crearemos a lista de comandos.
+
+package mx.edu.ebc.api.command
+import mx.edu.ebc.api.pojo.Commissions
+
+class ListCommissionsCommand {
+  List&lt;Commissions&gt; commands = []
+
+}
+
+
+Una vez tenido esto pasaremos al mapeo de la lista en con controller, lo cual debe quedar de la siguiente manera, para que spring sepa que va recibir una lista de comandos que hemos ya declarado con anterioridad.
+
+@RequestMapping(value = &quot;/update&quot;, method = RequestMethod.POST )
+  ModelAndView saveCommission(@ModelAttribute(&quot;commissions&quot;) ListCommissionsCommand commissionsList) {
+  commissionsList.commands.each{ commission -&gt;
+  commissionsService.update(commission)
+  }
+  return new ModelAndView(&quot;redirect:&quot;);
+}
+
+
+Es necesario que cuando declaremos el modelo de atributo este sea el mismo que utilizemos en el formulario para que así pueda ser ligado(Binding) de mandera exitosa, de tal forma que dicho formulario quede de la siguiente manera.
+
+  &lt;form th:object=&quot;${commissionsList}&quot; th:action=&quot;@{/commissions/update}&quot; method=&quot;post&quot; id=&quot;formCommissions&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot;&gt;
+  &lt;table class=&quot;table table-bordered&quot;&gt;
+  &lt;tbody&gt;
+  &lt;tr style=&quot;background-color:#0b6c99; color:white;&quot;&gt;
+  &lt;th&gt;Rol&lt;/th&gt;
+  &lt;th colspan=&quot;2&quot; class=&quot;text-center&quot;&gt;Porcentaje de comisión&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+  &lt;td&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f9f9f9;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Crédito&lt;/b&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f2f2f2;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Contado&lt;/b&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr th:each= &quot;commission, element: ${commissionsList.commands}&quot; &gt;
+  &lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f9f9f9;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].credit|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.credit}&quot; pattern=&quot;[0-9]{1,2}&quot; /&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f2f2f2;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].cash|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.cash}&quot;/&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;br class=&quot;clear&quot;/&gt;
+  &lt;hr/&gt;
+  &lt;div class=&quot;col-md-9 col-lg-9&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;col-md-3 col-lg-3&quot;&gt;
+  &lt;button class=&quot;btn btn-success btn-block btn-sm&quot; id=&quot;buttonSave&quot;&gt;&lt;i class=&quot;fa fa-check&quot; aria-hidden=&quot;true&quot; &gt;&lt;/i&gt; Guardar&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;/form&gt;
+
+
+Como se puede apreciar indicamos nuestro objeto al cual hace referencia y en el each vamos hacer referencia a la lista que tenemos declarada en este pojo en cual es commissionsList.commands,  es importante destacar que el nombre de nuestros inputs debe ser exactamente igual a cada elemento de la lista ejemplo -&gt;
+
+&lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+
+En el navegador se vería de la siguiente manera:
+
+&lt;td&gt;&lt;input name=&quot;commands[0].rolId&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; value=&quot;764&quot; type=&quot;hidden&quot; /&gt;&lt;b  text=&quot;Un mapa que no es importante&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+
+
+Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.
+">
+    <meta property="og:description" content="Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.
+
+Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.
+
+package mx.edu.ebc.api.pojo
+
+class Commissions{
+  Integer rolId
+  Integer credit
+  Integer cash
+}
+
+
+Posteriormente a esto crearemos un segundo pojo donde crearemos a lista de comandos.
+
+package mx.edu.ebc.api.command
+import mx.edu.ebc.api.pojo.Commissions
+
+class ListCommissionsCommand {
+  List&lt;Commissions&gt; commands = []
+
+}
+
+
+Una vez tenido esto pasaremos al mapeo de la lista en con controller, lo cual debe quedar de la siguiente manera, para que spring sepa que va recibir una lista de comandos que hemos ya declarado con anterioridad.
+
+@RequestMapping(value = &quot;/update&quot;, method = RequestMethod.POST )
+  ModelAndView saveCommission(@ModelAttribute(&quot;commissions&quot;) ListCommissionsCommand commissionsList) {
+  commissionsList.commands.each{ commission -&gt;
+  commissionsService.update(commission)
+  }
+  return new ModelAndView(&quot;redirect:&quot;);
+}
+
+
+Es necesario que cuando declaremos el modelo de atributo este sea el mismo que utilizemos en el formulario para que así pueda ser ligado(Binding) de mandera exitosa, de tal forma que dicho formulario quede de la siguiente manera.
+
+  &lt;form th:object=&quot;${commissionsList}&quot; th:action=&quot;@{/commissions/update}&quot; method=&quot;post&quot; id=&quot;formCommissions&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot;&gt;
+  &lt;table class=&quot;table table-bordered&quot;&gt;
+  &lt;tbody&gt;
+  &lt;tr style=&quot;background-color:#0b6c99; color:white;&quot;&gt;
+  &lt;th&gt;Rol&lt;/th&gt;
+  &lt;th colspan=&quot;2&quot; class=&quot;text-center&quot;&gt;Porcentaje de comisión&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+  &lt;td&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f9f9f9;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Crédito&lt;/b&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f2f2f2;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Contado&lt;/b&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr th:each= &quot;commission, element: ${commissionsList.commands}&quot; &gt;
+  &lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f9f9f9;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].credit|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.credit}&quot; pattern=&quot;[0-9]{1,2}&quot; /&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f2f2f2;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].cash|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.cash}&quot;/&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;br class=&quot;clear&quot;/&gt;
+  &lt;hr/&gt;
+  &lt;div class=&quot;col-md-9 col-lg-9&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;col-md-3 col-lg-3&quot;&gt;
+  &lt;button class=&quot;btn btn-success btn-block btn-sm&quot; id=&quot;buttonSave&quot;&gt;&lt;i class=&quot;fa fa-check&quot; aria-hidden=&quot;true&quot; &gt;&lt;/i&gt; Guardar&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;/form&gt;
+
+
+Como se puede apreciar indicamos nuestro objeto al cual hace referencia y en el each vamos hacer referencia a la lista que tenemos declarada en este pojo en cual es commissionsList.commands,  es importante destacar que el nombre de nuestros inputs debe ser exactamente igual a cada elemento de la lista ejemplo -&gt;
+
+&lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+
+En el navegador se vería de la siguiente manera:
+
+&lt;td&gt;&lt;input name=&quot;commands[0].rolId&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; value=&quot;764&quot; type=&quot;hidden&quot; /&gt;&lt;b  text=&quot;Un mapa que no es importante&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+
+
+Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.
+">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Projects">
-    <meta property="og:url" content="/categories/projects/">
+    <meta property="og:title" content="Mapear lista dinámica con spring 4">
+    <meta property="og:url" content="/post/bindinglistspring/">
     <meta property="og:site_name" content="Brandon Vergara">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
-    <meta name="twitter:description" content="Blog de Leo">
+    <meta name="twitter:description" content="Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.
+
+Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.
+
+package mx.edu.ebc.api.pojo
+
+class Commissions{
+  Integer rolId
+  Integer credit
+  Integer cash
+}
+
+
+Posteriormente a esto crearemos un segundo pojo donde crearemos a lista de comandos.
+
+package mx.edu.ebc.api.command
+import mx.edu.ebc.api.pojo.Commissions
+
+class ListCommissionsCommand {
+  List&lt;Commissions&gt; commands = []
+
+}
+
+
+Una vez tenido esto pasaremos al mapeo de la lista en con controller, lo cual debe quedar de la siguiente manera, para que spring sepa que va recibir una lista de comandos que hemos ya declarado con anterioridad.
+
+@RequestMapping(value = &quot;/update&quot;, method = RequestMethod.POST )
+  ModelAndView saveCommission(@ModelAttribute(&quot;commissions&quot;) ListCommissionsCommand commissionsList) {
+  commissionsList.commands.each{ commission -&gt;
+  commissionsService.update(commission)
+  }
+  return new ModelAndView(&quot;redirect:&quot;);
+}
+
+
+Es necesario que cuando declaremos el modelo de atributo este sea el mismo que utilizemos en el formulario para que así pueda ser ligado(Binding) de mandera exitosa, de tal forma que dicho formulario quede de la siguiente manera.
+
+  &lt;form th:object=&quot;${commissionsList}&quot; th:action=&quot;@{/commissions/update}&quot; method=&quot;post&quot; id=&quot;formCommissions&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot;&gt;
+  &lt;table class=&quot;table table-bordered&quot;&gt;
+  &lt;tbody&gt;
+  &lt;tr style=&quot;background-color:#0b6c99; color:white;&quot;&gt;
+  &lt;th&gt;Rol&lt;/th&gt;
+  &lt;th colspan=&quot;2&quot; class=&quot;text-center&quot;&gt;Porcentaje de comisión&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+  &lt;td&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f9f9f9;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Crédito&lt;/b&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f2f2f2;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Contado&lt;/b&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr th:each= &quot;commission, element: ${commissionsList.commands}&quot; &gt;
+  &lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f9f9f9;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].credit|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.credit}&quot; pattern=&quot;[0-9]{1,2}&quot; /&gt;&lt;/td&gt;
+  &lt;td style=&quot;background-color:#f2f2f2;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].cash|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.cash}&quot;/&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;br class=&quot;clear&quot;/&gt;
+  &lt;hr/&gt;
+  &lt;div class=&quot;col-md-9 col-lg-9&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;col-md-3 col-lg-3&quot;&gt;
+  &lt;button class=&quot;btn btn-success btn-block btn-sm&quot; id=&quot;buttonSave&quot;&gt;&lt;i class=&quot;fa fa-check&quot; aria-hidden=&quot;true&quot; &gt;&lt;/i&gt; Guardar&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;/form&gt;
+
+
+Como se puede apreciar indicamos nuestro objeto al cual hace referencia y en el each vamos hacer referencia a la lista que tenemos declarada en este pojo en cual es commissionsList.commands,  es importante destacar que el nombre de nuestros inputs debe ser exactamente igual a cada elemento de la lista ejemplo -&gt;
+
+&lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+
+En el navegador se vería de la siguiente manera:
+
+&lt;td&gt;&lt;input name=&quot;commands[0].rolId&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; value=&quot;764&quot; type=&quot;hidden&quot; /&gt;&lt;b  text=&quot;Un mapa que no es importante&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+
+
+Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.
+">
     
     
 
@@ -47,6 +280,10 @@
     
 
     
+      <meta property="og:image" content="https://leovergara1.github.io/images/frameworks/Spring.png">
+    
+    
+      <meta property="og:image" content="https://leovergara1.github.io/images/frameworks/Spring2.png">
     
     
 
@@ -226,41 +463,19 @@ ga('send', 'pageview');
 </nav>
 
       
-        
-
-      
-      <div id="main" data-behavior="4"
-        class="
-               hasCoverMetaIn
-               ">
-        
-          <section class="postShorten-group main-content-wrap">
-            
-            
-              
-  
+  <div class="post-header-cover
+              text-center
+              "
+       style="background-image:url('/images/frameworks/Spring2.png')"
+       data-behavior="4">
     
+      <div class="post-header main-content-wrap text-center">
   
-
-
+    <h1 class="post-title" itemprop="headline">
+      Mapear lista dinámica con spring 4
+    </h1>
   
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/bindinglistspring/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/frameworks/Spring.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-          Mapear lista dinámica con spring 4
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
+  <div class="postShorten-meta post-meta">
   
     <time itemprop="datePublished" datetime="2017-06-14T00:00:00Z">
       
@@ -286,10 +501,21 @@ ga('send', 'pageview');
 
 </div>
 
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
+</div>
+    
+  </div>
+
+
+      <div id="main" data-behavior="4"
+        class="hasCover
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
 
 <p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
 
@@ -366,80 +592,101 @@ En el navegador se vería de la siguiente manera:
 </code></pre>
 
 <p>Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.
+</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small"></span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/responsive/">responsive</a>
 
-        <br>
-        <a href="https://leovergara1.github.io/post/bindinglistspring/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/experience/">Experience</a>
+
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/help/">help</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  <nav>
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+            <i class="fa fa-angle-left"></i>
+            <span class="hide-xs hide-sm text-small icon-ml"></span>
+          </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://leovergara1.github.io/post/wonderwoman/" data-tooltip="Experiencia con Wonder Code">
+          
+            <span class="hide-xs hide-sm text-small icon-mr"></span>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+  <ul class="post-actions post-action-share">
+    
+      <li class="post-action hide-lg hide-md hide-sm">
+        <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+          <i class="fa fa-share-alt"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+          <i class="fa fa-google-plus"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+          <i class="fa fa-facebook-official"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+    
+    
+      <li class="post-action">
+        <a class="post-action-btn btn btn--default" href="#disqus_thread">
+          <i class="fa fa-comment-o"></i>
+        </a>
+      </li>
+    
+    <li class="post-action">
+      
+        <a class="post-action-btn btn btn--default" href="#">
+      
+        <i class="fa fa-list"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
 
             
               
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/wonderwoman/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/wonder2.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-          Experiencia con Wonder Code
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-05-14T00:00:00Z">
-      
-   14, 2017
-
-    </time>
-  
-  
-  
-  
-    <span></span>
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/projects">projects</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/releases">releases</a>
-    
-  
-
-
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        
-        <br>
-        <a href="https://leovergara1.github.io/post/wonderwoman/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
+              
             
-            
-
-          </section>
-        
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2017 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
@@ -447,6 +694,92 @@ En el navegador se vería de la siguiente manera:
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  <nav>
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+            <i class="fa fa-angle-left"></i>
+            <span class="hide-xs hide-sm text-small icon-ml"></span>
+          </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://leovergara1.github.io/post/wonderwoman/" data-tooltip="Experiencia con Wonder Code">
+          
+            <span class="hide-xs hide-sm text-small icon-mr"></span>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+  <ul class="post-actions post-action-share">
+    
+      <li class="post-action hide-lg hide-md hide-sm">
+        <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+          <i class="fa fa-share-alt"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+          <i class="fa fa-google-plus"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+          <i class="fa fa-facebook-official"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+    
+    
+      <li class="post-action">
+        <a class="post-action-btn btn btn--default" href="#disqus_thread">
+          <i class="fa fa-comment-o"></i>
+        </a>
+      </li>
+    
+    <li class="post-action">
+      
+        <a class="post-action-btn btn btn--default" href="#">
+      
+        <i class="fa fa-list"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <ul class="share-options">
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+        <i class="fa fa-google-plus"></i><span></span>
+      </a>
+    </li>
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+        <i class="fa fa-facebook-official"></i><span></span>
+      </a>
+    </li>
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fleovergara1.github.io%2fpost%2fbindinglistspring%2f">
+        <i class="fa fa-twitter"></i><span></span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -762,6 +1095,32 @@ $(document).ready(function() {
   });
 });
 </script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/leovergara1.github.io\/post\/bindinglistspring\/';
+          
+            this.page.identifier = '\/post\/bindinglistspring\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'https-leovergara1-github-io';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
 
 
 

@@ -6,10 +6,96 @@
     <description>Recent content on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jun 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mapear lista dinámica con spring 4</title>
+      <link>https://leovergara1.github.io/post/bindinglistspring/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/bindinglistspring/</guid>
+      <description>&lt;p&gt;Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.&lt;/p&gt;
+
+&lt;p&gt;Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;package mx.edu.ebc.api.pojo
+
+class Commissions{
+  Integer rolId
+  Integer credit
+  Integer cash
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Posteriormente a esto crearemos un segundo pojo donde crearemos a lista de comandos.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;package mx.edu.ebc.api.command
+import mx.edu.ebc.api.pojo.Commissions
+
+class ListCommissionsCommand {
+  List&amp;lt;Commissions&amp;gt; commands = []
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Una vez tenido esto pasaremos al mapeo de la lista en con controller, lo cual debe quedar de la siguiente manera, para que spring sepa que va recibir una lista de comandos que hemos ya declarado con anterioridad.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@RequestMapping(value = &amp;quot;/update&amp;quot;, method = RequestMethod.POST )
+  ModelAndView saveCommission(@ModelAttribute(&amp;quot;commissions&amp;quot;) ListCommissionsCommand commissionsList) {
+  commissionsList.commands.each{ commission -&amp;gt;
+  commissionsService.update(commission)
+  }
+  return new ModelAndView(&amp;quot;redirect:&amp;quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Es necesario que cuando declaremos el modelo de atributo este sea el mismo que utilizemos en el formulario para que así pueda ser ligado(Binding) de mandera exitosa, de tal forma que dicho formulario quede de la siguiente manera.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;  &amp;lt;form th:object=&amp;quot;${commissionsList}&amp;quot; th:action=&amp;quot;@{/commissions/update}&amp;quot; method=&amp;quot;post&amp;quot; id=&amp;quot;formCommissions&amp;quot;&amp;gt;
+  &amp;lt;div class=&amp;quot;col-lg-12&amp;quot;&amp;gt;
+  &amp;lt;table class=&amp;quot;table table-bordered&amp;quot;&amp;gt;
+  &amp;lt;tbody&amp;gt;
+  &amp;lt;tr style=&amp;quot;background-color:#0b6c99; color:white;&amp;quot;&amp;gt;
+  &amp;lt;th&amp;gt;Rol&amp;lt;/th&amp;gt;
+  &amp;lt;th colspan=&amp;quot;2&amp;quot; class=&amp;quot;text-center&amp;quot;&amp;gt;Porcentaje de comisión&amp;lt;/th&amp;gt;
+  &amp;lt;/tr&amp;gt;
+  &amp;lt;tr&amp;gt;
+  &amp;lt;td&amp;gt;&amp;lt;/td&amp;gt;
+  &amp;lt;td style=&amp;quot;background-color:#f9f9f9;&amp;quot; class=&amp;quot;text-center&amp;quot;&amp;gt;&amp;lt;b&amp;gt;Crédito&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;
+  &amp;lt;td style=&amp;quot;background-color:#f2f2f2;&amp;quot; class=&amp;quot;text-center&amp;quot;&amp;gt;&amp;lt;b&amp;gt;Contado&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;
+  &amp;lt;/tr&amp;gt;
+  &amp;lt;tr th:each= &amp;quot;commission, element: ${commissionsList.commands}&amp;quot; &amp;gt;
+  &amp;lt;td&amp;gt;&amp;lt;input th:name=&amp;quot;|commands[${element.index}].rolId|&amp;quot; class=&amp;quot;form-control&amp;quot; id=&amp;quot;exampleInputAmount&amp;quot; placeholder=&amp;quot;&amp;quot; th:value=&amp;quot;${commission.rolId}&amp;quot; type=&amp;quot;hidden&amp;quot; /&amp;gt;&amp;lt;b th:text=&amp;quot;${mapRol[commission.rolId]}&amp;quot; &amp;gt;&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;
+  &amp;lt;td style=&amp;quot;background-color:#f9f9f9;&amp;quot;&amp;gt;&amp;lt;input th:name=&amp;quot;|commands[${element.index}].credit|&amp;quot; type=&amp;quot;number&amp;quot; max=&amp;quot;99&amp;quot; maxlength=&amp;quot;2&amp;quot; class=&amp;quot;form-control&amp;quot; placeholder=&amp;quot;&amp;quot; th:value=&amp;quot;${commission.credit}&amp;quot; pattern=&amp;quot;[0-9]{1,2}&amp;quot; /&amp;gt;&amp;lt;/td&amp;gt;
+  &amp;lt;td style=&amp;quot;background-color:#f2f2f2;&amp;quot;&amp;gt;&amp;lt;input th:name=&amp;quot;|commands[${element.index}].cash|&amp;quot; type=&amp;quot;number&amp;quot; max=&amp;quot;99&amp;quot; maxlength=&amp;quot;2&amp;quot; class=&amp;quot;form-control&amp;quot; placeholder=&amp;quot;&amp;quot; th:value=&amp;quot;${commission.cash}&amp;quot;/&amp;gt;&amp;lt;/td&amp;gt;
+  &amp;lt;/tr&amp;gt;
+  &amp;lt;/tbody&amp;gt;
+  &amp;lt;/table&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;br class=&amp;quot;clear&amp;quot;/&amp;gt;
+  &amp;lt;hr/&amp;gt;
+  &amp;lt;div class=&amp;quot;col-md-9 col-lg-9&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+  &amp;lt;div class=&amp;quot;col-md-3 col-lg-3&amp;quot;&amp;gt;
+  &amp;lt;button class=&amp;quot;btn btn-success btn-block btn-sm&amp;quot; id=&amp;quot;buttonSave&amp;quot;&amp;gt;&amp;lt;i class=&amp;quot;fa fa-check&amp;quot; aria-hidden=&amp;quot;true&amp;quot; &amp;gt;&amp;lt;/i&amp;gt; Guardar&amp;lt;/button&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;/form&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Como se puede apreciar indicamos nuestro objeto al cual hace referencia y en el each vamos hacer referencia a la lista que tenemos declarada en este pojo en cual es commissionsList.commands,  es importante destacar que el nombre de nuestros inputs debe ser exactamente igual a cada elemento de la lista ejemplo -&amp;gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;td&amp;gt;&amp;lt;input th:name=&amp;quot;|commands[${element.index}].rolId|&amp;quot; class=&amp;quot;form-control&amp;quot; id=&amp;quot;exampleInputAmount&amp;quot; placeholder=&amp;quot;&amp;quot; th:value=&amp;quot;${commission.rolId}&amp;quot; type=&amp;quot;hidden&amp;quot; /&amp;gt;&amp;lt;b th:text=&amp;quot;${mapRol[commission.rolId]}&amp;quot; &amp;gt;&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;
+
+En el navegador se vería de la siguiente manera:
+
+&amp;lt;td&amp;gt;&amp;lt;input name=&amp;quot;commands[0].rolId&amp;quot; class=&amp;quot;form-control&amp;quot; id=&amp;quot;exampleInputAmount&amp;quot; placeholder=&amp;quot;&amp;quot; value=&amp;quot;764&amp;quot; type=&amp;quot;hidden&amp;quot; /&amp;gt;&amp;lt;b  text=&amp;quot;Un mapa que no es importante&amp;quot; &amp;gt;&amp;lt;/b&amp;gt;&amp;lt;/td&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.
+&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Experiencia con Wonder Code</title>
