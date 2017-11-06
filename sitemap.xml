@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://leovergara1.github.io/post/scrum_master_agil/</loc>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
+  </url>
   
   <url>
     <loc>https://leovergara1.github.io/post/bindinglistspring/</loc>
@@ -37,18 +43,31 @@
   </url>
   
   <url>
+    <loc>https://leovergara1.github.io/tags/agil/</loc>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/agil/</loc>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://leovergara1.github.io/archives/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/categories/</loc>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -60,7 +79,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/tags/experience/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -78,7 +97,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/post/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -90,19 +109,31 @@
   
   <url>
     <loc>https://leovergara1.github.io/categories/projects/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/categories/releases/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/tags/responsive/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/scrum/</loc>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/scrummaster/</loc>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -114,7 +145,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/tags/</loc>
-    <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -6,9 +6,19 @@
     <description>Recent content in Categories on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Thu, 05 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Agil</title>
+      <link>https://leovergara1.github.io/categories/agil/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/agil/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Code</title>
@@ -22,7 +32,7 @@
     <item>
       <title>Projects</title>
       <link>https://leovergara1.github.io/categories/projects/</link>
-      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/projects/</guid>
       <description></description>
@@ -31,9 +41,18 @@
     <item>
       <title>Releases</title>
       <link>https://leovergara1.github.io/categories/releases/</link>
-      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/releases/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scrummaster</title>
+      <link>https://leovergara1.github.io/categories/scrummaster/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/scrummaster/</guid>
       <description></description>
     </item>
     
