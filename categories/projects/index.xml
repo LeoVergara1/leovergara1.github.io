@@ -12,7 +12,16 @@
     
     
     <item>
-      <title>Agil - Scrum Master (Por Makingdevs)</title>
+      <title>Quartz Scheduler  con spring (Java)</title>
+      <link>https://leovergara1.github.io/post/add_quartz_spring/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/add_quartz_spring/</guid>
+      <description>&lt;p&gt;Tarea que se ejecutan automáticamente en algún momento del día.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ágil - Scrum Master (Por Makingdevs)</title>
       <link>https://leovergara1.github.io/post/scrum_master_agil/</link>
       <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
       
