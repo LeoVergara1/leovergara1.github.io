@@ -30,9 +30,27 @@
     </item>
     
     <item>
+      <title>Gpars</title>
+      <link>https://leovergara1.github.io/categories/gpars/</link>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/gpars/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Groovy</title>
+      <link>https://leovergara1.github.io/categories/groovy/</link>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/groovy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Help</title>
       <link>https://leovergara1.github.io/categories/help/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/help/</guid>
       <description></description>
@@ -41,7 +59,7 @@
     <item>
       <title>Java</title>
       <link>https://leovergara1.github.io/categories/java/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/java/</guid>
       <description></description>
@@ -89,6 +107,15 @@
       <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/spring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://leovergara1.github.io/categories/tutorial/</link>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/tutorial/</guid>
       <description></description>
     </item>
     
