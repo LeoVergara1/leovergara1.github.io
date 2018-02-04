@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Groovy on Brandon Vergara</title>
-    <link>https://leovergara1.github.io/categories/groovy/</link>
-    <description>Recent content in Groovy on Brandon Vergara</description>
+    <title>Vertx on Brandon Vergara</title>
+    <link>https://leovergara1.github.io/tags/vertx/</link>
+    <description>Recent content in Vertx on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 03 Feb 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://leovergara1.github.io/categories/groovy/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://leovergara1.github.io/tags/vertx/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,17 +19,6 @@
       <guid>https://leovergara1.github.io/post/springwithvertx/</guid>
       <description>&lt;p&gt;Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&amp;hellip;.
 (Spring 4.3, Vertx 3.5)&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Gpars Paralelismo con Groovy (Java)</title>
-      <link>https://leovergara1.github.io/post/gpars/</link>
-      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/post/gpars/</guid>
-      <description>&lt;p&gt;Una forma sencilla de manejar el paralelismo en groovy (Java)&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

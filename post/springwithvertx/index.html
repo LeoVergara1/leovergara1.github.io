@@ -1,5 +1,9 @@
 
 
+  
+    
+  
+
 
   
 
@@ -17,25 +21,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.31.1">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
-    <title>Posts</title>
+    <title>Spring con vertx</title>
     <meta name="author" content="Brandon Vergara">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="disqus, google, gravatar, Groovy, Vertx, Spring, Hepl">
 
     <link rel="icon" href="https://leovergara1.github.io/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://leovergara1.github.io/post/index.xml">
-    
 
     
-    <meta name="description" content="Blog de Leo">
-    <meta property="og:description" content="Blog de Leo">
+    <meta name="description" content="Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
+(Spring 4.3, Vertx 3.5)
+
+">
+    <meta property="og:description" content="Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
+(Spring 4.3, Vertx 3.5)
+
+">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Posts">
-    <meta property="og:url" content="/post/">
+    <meta property="og:title" content="Spring con vertx">
+    <meta property="og:url" content="/post/springwithvertx/">
     <meta property="og:site_name" content="Brandon Vergara">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
-    <meta name="twitter:description" content="Blog de Leo">
+    <meta name="twitter:description" content="Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
+(Spring 4.3, Vertx 3.5)
+
+">
     
     
 
@@ -47,6 +58,10 @@
     
 
     
+      <meta property="og:image" content="https://leovergara1.github.io/images/Vertx/vextxLogoMin.png">
+    
+    
+      <meta property="og:image" content="https://leovergara1.github.io/images/Vertx/vextxLogo.png">
     
     
 
@@ -226,38 +241,19 @@ ga('send', 'pageview');
 </nav>
 
       
-
-      <div id="main" data-behavior="4"
-        class="
-               hasCoverMetaIn
-               ">
-        <section class="postShorten-group main-content-wrap">
-          
-          
-            
-  
+  <div class="post-header-cover
+              text-center
+              "
+       style="background-image:url('/images/Vertx/vextxLogo.png')"
+       data-behavior="4">
     
+      <div class="post-header main-content-wrap text-center">
   
-
-
+    <h1 class="post-title" itemprop="headline">
+      Spring con vertx
+    </h1>
   
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/springwithvertx/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/Vertx/vextxLogoMin.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/springwithvertx/">
-          Spring con vertx
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
+  <div class="postShorten-meta post-meta">
   
     <time itemprop="datePublished" datetime="2018-02-03T00:00:00Z">
       
@@ -287,512 +283,351 @@ ga('send', 'pageview');
 
 </div>
 
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        <p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
+</div>
+    
+  </div>
+
+
+      <div id="main" data-behavior="4"
+        class="hasCover
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
 (Spring 4.3, Vertx 3.5)</p>
 
 <p></p>
 
-        <br>
-        <a href="https://leovergara1.github.io/post/springwithvertx/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
+<p>Primero quisiera decir que no es un tema fácil de entender así que daré por hecho ciertos conocimientos y me centraré únicamente en la implementación.</p>
 
-          
+<p>Puntos importantes:</p>
+
+<ul>
+<li>Configuración Boostrap de Spring</li>
+<li>Uso de Spring Factory</li>
+<li>Configuración de puertos</li>
+<li>Anotaciones importantes @Component, @Aoutowire,@PostConstructor, @Scope(&ldquo;SCOPE_PROTOTYPE&rdquo;)</li>
+</ul>
+
+<p>Primero que nada empezaremos con la configuración de Spring Factory. Si te preguntas porque la necesitamos es porque ciertamente necesitamos los servicios de Spring dentro de Vertx y como ya debemos saber Vertx crea múltiples instancias a contrario de Spring que crea singletons para sus servicios y es por eso que muchas veces tenemos conflictos a la hora de implementar Vertx en Spring, Un vez mencionado esto entendemos que necesitamos el &ldquo;ApplicationContext&rdquo; de Spring dentro de las clases de que usará Vertx para tener un deploy.</p>
+
+<pre><code class="language-groovy">package mx.edu.ebc.core.init
+
+import io.vertx.core.Verticle
+import io.vertx.core.spi.VerticleFactory
+import org.springframework.beans.BeansException
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContextAware
+import org.springframework.stereotype.Component
+
+@Component
+class SpringVerticleFactory implements VerticleFactory, ApplicationContextAware {
+
+  ApplicationContext applicationContext;
+
+  @Override
+  public boolean blockingCreate() {
+    return true;
+  }
+
+  @Override
+  public String prefix() {
+    return &quot;ebc&quot;; // Nombre para tomar la referencia de tus clases
+  }
+
+  @Override
+  public Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception {
+    String clazz = VerticleFactory.removePrefix(verticleName);
+    return (Verticle) applicationContext.getBean(Class.forName(clazz));
+  }
+
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    this.applicationContext = applicationContext;
+  }
+}
+</code></pre>
+
+<p>Posterior a esto pasaremos a la creación de la clase boostrap la cual en donde lograremos definir los verticles que ocuparemos a lo largo de nuestra aplicación, así como sus opciones de despliegue. Lo importante de esta clase es que la haremos como un componente de spring el cual se ejecutara justo de haber levantado la aplicacion junto con el contexto ya que es requerido.</p>
+
+<p><strong>Shell</strong></p>
+
+<p>Si queremos utilizar la shell de vertx basta con añadir el siguiente código a la clase Bootstrap:</p>
+
+<pre><code class="language-groovy">  ShellService service = ShellService.create(vertx,
+  new ShellServiceOptions().setTelnetOptions(
+    new TelnetTermOptions().
+      setHost(&quot;localhost&quot;).
+      setPort(4000)
+    )
+  )
+  service.start()
+</code></pre>
+
+<p>En la clase mencionada se debe de hacer la anotación  @PostConstruct al metodo que tiene que construir en este caso el encargado de hacer nuestros despliegues del verticle mientras de igual manera se inyecta el VerticleFactory el cual correspopnde a la interfaz implementada en nuestra clase SpringVerticleFactory.</p>
+
+<p>Despliegue de un verticle</p>
+
+<p>Para hacer un despliegue de un verticle se deberá realizar de la siguiente manera.</p>
+
+<pre><code class="language-groovy">vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${CourseVerticle.class.name}&quot;)
+</code></pre>
+
+<p>A continuación dejo el código completo de la clase Bootstrap.</p>
+
+<pre><code class="language-groovy">package mx.edu.ebc.core.init
+
+import javax.annotation.PostConstruct
+import mx.edu.ebc.core.verticle.*
+import org.springframework.context.ApplicationContext
+import io.vertx.core.Vertx
+import io.vertx.core.spi.VerticleFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
+import org.springframework.context.annotation.Scope
+import io.vertx.core.DeploymentOptions
+import io.vertx.ext.web.handler.StaticHandler
+import io.vertx.ext.web.Router
+import io.vertx.ext.web.handler.sockjs.SockJSHandler
+import io.vertx.ext.web.handler.sockjs.BridgeOptions
+import io.vertx.ext.web.handler.sockjs.PermittedOptions
+
+import io.vertx.ext.shell.*
+import io.vertx.ext.shell.term.*
+
+@Component
+class Bootstrap {
+
+  @Autowired
+  VerticleFactory verticleFactory
+
+  @PostConstruct
+  void deployVerticles(){
+    println &quot;*&quot;*100
+    Vertx vertx = Vertx.vertx()
+
+    ShellService service = ShellService.create(vertx,
+        new ShellServiceOptions().setTelnetOptions(
+          new TelnetTermOptions().
+          setHost(&quot;localhost&quot;).
+          setPort(4000)
+        )
+      );
+    service.start();
+
+    vertx.registerVerticleFactory(verticleFactory)
+
+    DeploymentOptions opts_1 = new DeploymentOptions()
+    opts_1.setWorker(true)
+    opts_1.setInstances(5)
+
+    DeploymentOptions opts_2 = new DeploymentOptions()
+    opts_2.setWorker(true)
+    opts_2.setInstances(50)
+
+    vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${CourseVerticle.class.name}&quot;, opts_1)
+    vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${ProcessVerticle.class.name}&quot;, opts_1)
+    vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${EnrollmentCourseVerticle.class.name}&quot;, opts_2)
+    //vertx.deployVerticle(new CourseVerticle(applicationContext), options)
+    //vertx.deployVerticle(new MainVerticle(applicationContext))
+    //vertx.deployVerticle(new ProcessVerticle(applicationContext))
+    //vertx.deployVerticle(new PingVerticle(applicationContext))
+    //vertx.deployVerticle(new PongVerticle(applicationContext))
+    def verticles = vertx.deploymentIDs()
+    println &quot;Verticles: ${verticles.dump()}&quot;
+
+    def server = vertx.createHttpServer()
+    def router = Router.router(vertx)
+
+    BridgeOptions bridgeOptions = new BridgeOptions()
+    bridgeOptions.addOutboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.create.course&quot;))
+    .addOutboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.list.course&quot;))
+
+    bridgeOptions.addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.create.course&quot;))
+    .addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.list.course&quot;))
+
+    bridgeOptions.addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.warn.course&quot;))
+    bridgeOptions.addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.finish&quot;))
+    .addOutboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.finish&quot;));
+
+
+
+    def ebHandler = SockJSHandler.create(vertx).bridge(bridgeOptions)
+
+    router.route(&quot;/eventbus/*&quot;).handler(ebHandler)
+
+    server.requestHandler(router.&amp;accept).listen(9090)
+    println &quot;Vert.x is deployed &quot;
+  }
+
+}
+</code></pre>
+
+<p>Servidor para web sockets js</p>
+
+<p>Si deseas levantar un servidor para la comunicación de tu front deberás hacerlo en la clase mencionada antes como se muestra en el código.</p>
+
+<p>Ejemplo de clase para desplegar:</p>
+
+<p>Importante mencionar que estas clases deberán llevar la anotación  @Scope(SCOPE_PROTOTYPE)
+para que Spring logre hacer múltiples instancias ya que así lo requiere vertx.</p>
+
+<pre><code class="language-groovy">package mx.edu.ebc.core.verticle
+
+import io.vertx.core.AbstractVerticle
+
+
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
+import groovy.json.JsonSlurper
+import mx.edu.ebc.api.service.EnrollmentService
+import mx.edu.ebc.moodle.model.MoodleCourse
+
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.*
+
+import io.vertx.core.DeploymentOptions
+
+@Component
+@Scope(SCOPE_PROTOTYPE)
+class EnrollmentCourseVerticle extends AbstractVerticle {
+
+  @Autowired
+  EnrollmentService enrollmentService
+
+  @Override
+  void start() throws Exception {
+    super.start()
+    vertx.eventBus().consumer(&quot;mx.edu.ebc.moodle.enrollment.course&quot;) { message -&gt;
+      println message.body().shortname
+      List&lt;MoodleCourse&gt; moodleCourse = []
+        moodleCourse &lt;&lt; new MoodleCourse(
+          shortname: &quot;${message.body().shortname}+T10&quot;,
+          idnumber:&quot;${message.body().shortname}+T10&quot;,
+          category: &quot;Vertx-test&quot;,
+          fullname: message.body().subject,
+          summary:&quot;&quot;,
+          format:&quot;&quot;,
+          startdate:&quot;&quot;,
+          groupmode:&quot;&quot;,
+          enablecompletion:&quot;&quot;,
+          coursetemplate:&quot;MER23432-P&quot;
+        )
+       enrollmentService.createCoursesInMoodle(moodleCourse)
+       vertx.eventBus().send(&quot;mx.edu.ebc.moodle.bulid&quot;,&quot;Termine el curso ${message.body().shortname} &quot;)
+    }
+  }
+
+}
+</code></pre>
+
+<p><strong>Conclusión</strong></p>
+
+<p>La verdad es que esta implementan me agrado bastante ya que al principio tuve muchas complicaciones para hacer las instancias de vertx ya que todo se ejecutaba de manera secuencial, lo cual no era el punto de la tecnología. Pero finalmente una vez ya trabajando me sorprendió su funcionamiento.</p>
+
+<p>Pd: Si usas java, ya dejalo!!! usa groovy y descubre una forma más divertida de programar 😃</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
             
-  
-    
-  
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small"></span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/makingdevs/">Makingdevs</a>
 
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/experience/">Experience</a>
 
-  
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/groovy/">Groovy</a>
 
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/gpars/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/gpars/groovyTitle.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/gpars/">
-          Gpars Paralelismo con Groovy (Java)
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-12-30T00:00:00Z">
-      
-   30, 2017
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/spring/">Spring</a>
 
-    </time>
-  
-  
-  
-  
-    <span></span>
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/tutorial">Tutorial</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/gpars">Gpars</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/help">Help</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/groovy">Groovy</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/java">Java</a>
-    
-  
+  <a class="tag tag--primary tag--small" href="https://leovergara1.github.io//tags/vertx/">Vertx</a>
 
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        <p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p>
-
-        <br>
-        <a href="https://leovergara1.github.io/post/gpars/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
+                  </div>
+                
+              
             
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/add_quartz_spring/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/Quartz/quartz.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/add_quartz_spring/">
-          Quartz Scheduler  con spring (Java)
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-10-05T00:00:00Z">
+            <div class="post-actions-wrap">
+  <nav>
+    <ul class="post-actions post-action-nav">
       
-   5, 2017
-
-    </time>
-  
-  
-  
-  
-    <span></span>
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/projects">projects</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/releases">releases</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/help">Help</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/quartz">Quartz</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/java">Java</a>
-    
-  
-
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        Tarea que se ejecutan automáticamente en algún momento del día.
-        <br>
-        <a href="https://leovergara1.github.io/post/add_quartz_spring/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
+        <li class="post-action">
           
-            
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/scrum_master_agil/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/Agil/Agil.jpg"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/scrum_master_agil/">
-          Ágil - Scrum Master (Por Makingdevs)
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-10-05T00:00:00Z">
-      
-   5, 2017
-
-    </time>
-  
-  
-  
-  
-    <span></span>
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/projects">projects</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/releases">releases</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/agil">Agil</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/scrummaster">ScrumMaster</a>
-    
-  
-
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        <p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p>
-
-        <br>
-        <a href="https://leovergara1.github.io/post/scrum_master_agil/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
+            <a class="post-action-btn btn btn--disabled">
           
-            
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/bindinglistspring/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/frameworks/Spring.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-          Mapear lista dinámica con spring 4
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-06-14T00:00:00Z">
-      
-   14, 2017
-
-    </time>
-  
-  
-  
-  
-    <span></span>
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/projects">projects</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/releases">releases</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/code">code</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/spring">spring</a>
-    
-  
-
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        <p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p>
-
-        <br>
-        <a href="https://leovergara1.github.io/post/bindinglistspring/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
+            <i class="fa fa-angle-left"></i>
+            <span class="hide-xs hide-sm text-small icon-ml"></span>
+          </a>
+        </li>
+        <li class="post-action">
           
-            
-  
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-top" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-      <a href="https://leovergara1.github.io/post/wonderwoman/">
-        <div class="postShorten-thumbnailimg">
-          <img alt="" itemprop="image" src="https://leovergara1.github.io/images/wonder2.png"/>
-        </div>
-      </a>
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-          Experiencia con Wonder Code
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-05-14T00:00:00Z">
-      
-   14, 2017
-
-    </time>
-  
-  
-  
-  
-    <span></span>
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/projects">projects</a>, 
-    
-      <a class="category-link" href="https://leovergara1.github.io/categories/releases">releases</a>
-    
-  
-
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        
-        <br>
-        <a href="https://leovergara1.github.io/post/wonderwoman/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://leovergara1.github.io/post/gpars/" data-tooltip="Gpars Paralelismo con Groovy (Java)">
           
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-          Groovy Programming
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-01-18T13:38:40-06:00">
-      
-   18, 2017
-
-    </time>
-  
-  
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.
-        <br>
-        <a href="https://leovergara1.github.io/post/groovy/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/comandos/">
-          Comandos en Unix y Linux
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-01-17T09:38:42-06:00">
-      
-   17, 2017
-
-    </time>
-  
-  
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.
-Un poco de historia… Unix La historia de UNIX se remonta a 1969. A través de los años, se ha desarrollado y ha evolucionado a través de una serie de versiones distintas situaciones y entornos.
-        <br>
-        <a href="https://leovergara1.github.io/post/comandos/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-            
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://leovergara1.github.io/post/inicio-en-gohugo/">
-          Inicio en goHugo
-        </a>
-      </h1>
-      <div class="postShorten-meta post-meta">
-  
-    <time itemprop="datePublished" datetime="2017-01-12T15:07:41-06:00">
-      
-   12, 2017
-
-    </time>
-  
-  
-
-</div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      <p>
-        Prácticamente es un framework que sirve para realizar sitios estáticos. A diferencia de otros sistemas que construyen dinámicamente una página cada vez que un visitante solicita una. Dado que los sitios web son vistos con mucha más frecuencia de lo que se editan, Hugo está optimizado para la visualización de página web al tiempo que proporciona una gran experiencia de la escritura.
-Primero que nada visite la siguiente página para realizar la instalación y de igual manera familiarizarme con el framework ya que en ella se encuentra un pequeño tutorial de inicio rápido.
-        <br>
-        <a href="https://leovergara1.github.io/post/inicio-en-gohugo/" class="postShorten-excerpt_link link"></a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-          
-          
-  <div class="pagination-bar">
-    <ul class="pagination">
-      
-      
-        <li class="pagination-next">
-          <a class="btn btn--default btn--small" href="https://leovergara1.github.io/post/page/2/">
-            <span></span>
-            <i class="fa fa-angle-right text-base icon-ml"></i>
+            <span class="hide-xs hide-sm text-small icon-mr"></span>
+            <i class="fa fa-angle-right"></i>
           </a>
         </li>
       
-      <li class="pagination-number"> </li>
     </ul>
-  </div>
+  </nav>
+  <ul class="post-actions post-action-share">
+    
+      <li class="post-action hide-lg hide-md hide-sm">
+        <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+          <i class="fa fa-share-alt"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+          <i class="fa fa-google-plus"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+          <i class="fa fa-facebook-official"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+    
+    
+      <li class="post-action">
+        <a class="post-action-btn btn btn--default" href="#disqus_thread">
+          <i class="fa fa-comment-o"></i>
+        </a>
+      </li>
+    
+    <li class="post-action">
+      
+        <a class="post-action-btn btn btn--default" href="#">
+      
+        <i class="fa fa-list"></i>
+      </a>
+    </li>
+  </ul>
+</div>
 
 
-        </section>
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
     &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
@@ -800,6 +635,92 @@ Primero que nada visite la siguiente página para realizar la instalación y de 
 </footer>
 
       </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  <nav>
+    <ul class="post-actions post-action-nav">
+      
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--disabled">
+          
+            <i class="fa fa-angle-left"></i>
+            <span class="hide-xs hide-sm text-small icon-ml"></span>
+          </a>
+        </li>
+        <li class="post-action">
+          
+            <a class="post-action-btn btn btn--default tooltip--top" href="https://leovergara1.github.io/post/gpars/" data-tooltip="Gpars Paralelismo con Groovy (Java)">
+          
+            <span class="hide-xs hide-sm text-small icon-mr"></span>
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </nav>
+  <ul class="post-actions post-action-share">
+    
+      <li class="post-action hide-lg hide-md hide-sm">
+        <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+          <i class="fa fa-share-alt"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+          <i class="fa fa-google-plus"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+          <i class="fa fa-facebook-official"></i>
+        </a>
+      </li>
+      <li class="post-action hide-xs">
+        <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+    
+    
+      <li class="post-action">
+        <a class="post-action-btn btn btn--default" href="#disqus_thread">
+          <i class="fa fa-comment-o"></i>
+        </a>
+      </li>
+    
+    <li class="post-action">
+      
+        <a class="post-action-btn btn btn--default" href="#">
+      
+        <i class="fa fa-list"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <ul class="share-options">
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+        <i class="fa fa-google-plus"></i><span></span>
+      </a>
+    </li>
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+        <i class="fa fa-facebook-official"></i><span></span>
+      </a>
+    </li>
+    <li class="share-option">
+      <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fleovergara1.github.io%2fpost%2fspringwithvertx%2f">
+        <i class="fa fa-twitter"></i><span></span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
     </div>
     
     <div id="about">
@@ -1082,6 +1003,32 @@ $(document).ready(function() {
   });
 });
 </script>
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/leovergara1.github.io\/post\/springwithvertx\/';
+          
+            this.page.identifier = '\/post\/springwithvertx\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'https-leovergara1-github-io';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
 
 
 

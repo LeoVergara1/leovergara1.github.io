@@ -6,10 +6,22 @@
     <description>Recent content in Spring on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spring con vertx</title>
+      <link>https://leovergara1.github.io/post/springwithvertx/</link>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/springwithvertx/</guid>
+      <description>&lt;p&gt;Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&amp;hellip;.
+(Spring 4.3, Vertx 3.5)&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Quartz Scheduler  con spring (Java)</title>

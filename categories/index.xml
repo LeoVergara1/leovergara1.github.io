@@ -41,7 +41,7 @@
     <item>
       <title>Groovy</title>
       <link>https://leovergara1.github.io/categories/groovy/</link>
-      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/groovy/</guid>
       <description></description>
@@ -50,7 +50,7 @@
     <item>
       <title>Help</title>
       <link>https://leovergara1.github.io/categories/help/</link>
-      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/help/</guid>
       <description></description>
@@ -59,7 +59,7 @@
     <item>
       <title>Java</title>
       <link>https://leovergara1.github.io/categories/java/</link>
-      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/java/</guid>
       <description></description>
@@ -68,7 +68,7 @@
     <item>
       <title>Projects</title>
       <link>https://leovergara1.github.io/categories/projects/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/projects/</guid>
       <description></description>
@@ -86,7 +86,7 @@
     <item>
       <title>Releases</title>
       <link>https://leovergara1.github.io/categories/releases/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/releases/</guid>
       <description></description>
@@ -116,6 +116,15 @@
       <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vertx</title>
+      <link>https://leovergara1.github.io/categories/vertx/</link>
+      <pubDate>Sat, 03 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/vertx/</guid>
       <description></description>
     </item>
     
