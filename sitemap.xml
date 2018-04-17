@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://leovergara1.github.io/post/websockets/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leovergara1.github.io/post/springwithvertx/</loc>
     <lastmod>2018-02-03T00:00:00+00:00</lastmod>
   </url>
@@ -58,13 +63,13 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/tags/agil/</loc>
+    <loc>https://leovergara1.github.io/categories/agil/</loc>
     <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/categories/agil/</loc>
+    <loc>https://leovergara1.github.io/tags/agil/</loc>
     <lastmod>2017-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -76,7 +81,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -94,13 +99,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/tags/experience/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/gpars/</loc>
-    <lastmod>2017-12-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -111,14 +110,26 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/tags/groovy/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <loc>https://leovergara1.github.io/tags/gpars/</loc>
+    <lastmod>2017-12-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/categories/groovy/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/groovy/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/help/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -129,20 +140,14 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/categories/help/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <loc>https://leovergara1.github.io/categories/java/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/tags/java/</loc>
     <lastmod>2017-12-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/categories/java/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -154,13 +159,13 @@
   
   <url>
     <loc>https://leovergara1.github.io/tags/makingdevs/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/post/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -172,7 +177,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/categories/projects/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -184,7 +189,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/categories/releases/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -207,14 +212,20 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/tags/spring/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <loc>https://leovergara1.github.io/tags/socketjs/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/categories/spring/</loc>
     <lastmod>2017-06-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/spring/</loc>
+    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -231,14 +242,20 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/tags/vertx/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <loc>https://leovergara1.github.io/categories/vertx/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/categories/vertx/</loc>
-    <lastmod>2018-02-03T00:00:00+00:00</lastmod>
+    <loc>https://leovergara1.github.io/tags/vertx/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/websockets/</loc>
+    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

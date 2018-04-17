@@ -6,10 +6,21 @@
     <description>Recent content in Projects on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Apr 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/categories/projects/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>WebScokets con Vertx</title>
+      <link>https://leovergara1.github.io/post/websockets/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/websockets/</guid>
+      <description>En este post tratare de da un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
+¿Que es un WebSocket?
+Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido</description>
+    </item>
     
     <item>
       <title>Spring con vertx</title>

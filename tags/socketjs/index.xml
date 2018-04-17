@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Socketjs on Brandon Vergara</title>
+    <link>https://leovergara1.github.io/tags/socketjs/</link>
+    <description>Recent content in Socketjs on Brandon Vergara</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 16 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://leovergara1.github.io/tags/socketjs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WebScokets con Vertx</title>
+      <link>https://leovergara1.github.io/post/websockets/</link>
+      <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/websockets/</guid>
+      <description>En este post tratare de da un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
+¿Que es un WebSocket?
+Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido</description>
+    </item>
+    
+  </channel>
+</rss>
