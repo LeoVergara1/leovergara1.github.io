@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.38.1">
+    <meta name="generator" content="Hugo 0.39">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>WebScokets con Vertx</title>
     <meta name="author" content="Brandon Vergara">
@@ -29,10 +29,10 @@
     
 
     
-    <meta name="description" content="En este post tratare de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
+    <meta name="description" content="En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
 ¿Que es un WebSocket?
 Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido">
-    <meta property="og:description" content="En este post tratare de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
+    <meta property="og:description" content="En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
 ¿Que es un WebSocket?
 Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido">
     <meta property="og:type" content="blog">
@@ -41,7 +41,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
     <meta property="og:site_name" content="Brandon Vergara">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
-    <meta name="twitter:description" content="En este post tratare de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
+    <meta name="twitter:description" content="En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
 ¿Que es un WebSocket?
 Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido">
     
@@ -296,17 +296,17 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>En este post tratare de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.</p>
+              <p>En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.</p>
 
 <p>¿Que es un WebSocket?</p>
 
 <p>Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido</p>
 
-<p>Por ejemplo en el caso de las peticiones por AJAX del método HTTP ya sea GET o POST pasa lo siguiente, cada vez que uno de ellos trata de comunicarse necesitan establecer comunicación lo cual vuelve lento la transferencia de información entre ellos, a diferencia de un socket que sólo hace una única vez para establecer la comunicación y el canal permanece abierto pera así manejar la comunicación de la información de una forma rápida y transparente.</p>
+<p>Por ejemplo en el caso de las peticiones por AJAX del método HTTP ya sea GET o POST pasa lo siguiente, cada vez que uno de ellos trata de comunicarse necesitan establecer comunicación lo cual vuelve lento la transferencia de información entre ellos, a diferencia de un socket que sólo hace una única vez para establecer la comunicación y el canal permanece abierto para así manejar la comunicación de la información de una forma rápida y transparente.</p>
 
 <p>Una vez sabido un poco de lo que se refiere con websocket pasaremos a ver un sencillo ejemplo donde aprovecharemos todo el potencial de ello, así mismo lo que nos ofrece la tecnología de vertx para resolver ciertas cosas.</p>
 
-<p>Problema: Simular la comprar de boletos de manera simultanea donde el boleto estará disponible en tiempo real para N clientes, y así mismo la persona que logre comprarlo primero sera el ganador de él, de tal manera que los demás clientes sepan que ocurre con el boleto en tiempo real.</p>
+<p>Problema: Simular la compra de boletos de manera simultanea donde el boleto estará disponible en tiempo real para N clientes, y así mismo la persona que logre comprarlo primero sera el ganador de él, de tal manera que los demás clientes sepan que ocurre con el boleto en tiempo real.</p>
 
 <p>Lo necesario:</p>
 
@@ -371,7 +371,7 @@ serviceShell.start();
 server.requestHandler(router.&amp;accept).listen(8080)
 </code></pre>
 
-<p>En esta configuración solo estamos desplegandon una pequeña apliación para escuchar nuestro router en un puerto.</p>
+<p>En esta configuración solo estamos desplegando una pequeña apliación para escuchar nuestro router en un puerto.</p>
 
 <p>BridgeOtions</p>
 
@@ -396,7 +396,7 @@ Recibe una dirección la cual será la que deberá hacer match con el consumer c
 <p>Consumer:
 Serán las funciones que estarán disponibles del lado del cliente para que el servidor se comunique con ellos.</p>
 
-<p>Esta instancia podremo crearla en otro archivo de la siguiente manera:</p>
+<p>Esta instancia podremos crearla en otro archivo de la siguiente manera:</p>
 
 <pre><code>varticleManagerSend = VerticleManager.getInstance();
 </code></pre>
@@ -698,7 +698,7 @@ Primero declararemos un consumer del lado del cliente:</p>
                   Apr 4, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">En este post tratare de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
+              <div class="media-content hide-xs font-merryweather">En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
 ¿Que es un WebSocket?
 Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido</div>
             </div>
