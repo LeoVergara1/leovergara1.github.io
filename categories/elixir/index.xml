@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Elixir on Brandon Vergara</title>
+    <link>https://leovergara1.github.io/categories/elixir/</link>
+    <description>Recent content in Elixir on Brandon Vergara</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://leovergara1.github.io/categories/elixir/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deploy elixir</title>
+      <link>https://leovergara1.github.io/post/deploy_elixir/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/deploy_elixir/</guid>
+      <description>Primero que nada es muy importante saber que elixir, construye sobre la maquina virtual de erlang por lo tanto esta trabja en base al hardware que se usa.
+Una vez sambiendo esto lo que debemos hacer es crear una maquina virtual, en este caso la realizaré con vagrant, para realizar los siguiente tenemos que tener instalado:
+Virtual Box Vagrant Ansible (Manejador de tareas)  Esto lo necesitamos porque tenemos que hacer la construcción del proyecto desde la maquina virtual, la cual debe tener la misma arquitectura que nuestro servidor para este caso usaremos centos 7.</description>
+    </item>
+    
+  </channel>
+</rss>

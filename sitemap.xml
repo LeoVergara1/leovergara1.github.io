@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://leovergara1.github.io/post/deploy_elixir/</loc>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leovergara1.github.io/post/websockets/</loc>
     <lastmod>2018-04-16T00:00:00+00:00</lastmod>
   </url>
@@ -81,7 +86,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -98,8 +103,20 @@
   </url>
   
   <url>
+    <loc>https://leovergara1.github.io/categories/elixir/</loc>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/erlang/</loc>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://leovergara1.github.io/tags/experience/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -135,7 +152,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/categories/help/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -159,13 +176,13 @@
   
   <url>
     <loc>https://leovergara1.github.io/tags/makingdevs/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/post/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -177,7 +194,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/categories/projects/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -189,7 +206,7 @@
   
   <url>
     <loc>https://leovergara1.github.io/categories/releases/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
