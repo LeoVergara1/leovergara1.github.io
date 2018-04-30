@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.39">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
-    <title>Deploy elixir</title>
+    <title>Desplegar Elixir con edeliver Phoenix (Deploy Elixir with edeliver Phoenix)</title>
     <meta name="author" content="Brandon Vergara">
     <meta name="keywords" content="disqus, elixir, delivery, edeliver, distillery">
 
@@ -36,7 +36,7 @@ Virtual Box Vagrant Ansible (Manejador de tareas)  Esto lo necesitamos porque te
 Una vez sambiendo esto lo que debemos hacer es crear una maquina virtual, en este caso la realizaré con vagrant, para realizar los siguiente tenemos que tener instalado:
 Virtual Box Vagrant Ansible (Manejador de tareas)  Esto lo necesitamos porque tenemos que hacer la construcción del proyecto desde la maquina virtual, la cual debe tener la misma arquitectura que nuestro servidor para este caso usaremos centos 7.">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Deploy elixir">
+    <meta property="og:title" content="Desplegar Elixir con edeliver Phoenix (Deploy Elixir with edeliver Phoenix)">
     <meta property="og:url" content="/post/deploy_elixir/">
     <meta property="og:site_name" content="Brandon Vergara">
     <meta name="twitter:card" content="summary">
@@ -247,7 +247,7 @@ ga('send', 'pageview');
       <div class="post-header main-content-wrap text-center">
   
     <h1 class="post-title" itemprop="headline">
-      Deploy elixir
+      Desplegar Elixir con edeliver Phoenix (Deploy Elixir with edeliver Phoenix)
     </h1>
   
   <div class="postShorten-meta post-meta">
@@ -305,7 +305,7 @@ Ansible (Manejador de tareas)
 
 <p>Vagrant</p>
 
-<p>Para la mauina virtual usaremos una que previmente ya ha sido configurada por Felipe Juarez, para ello descargaremos el siguiente repositorío:</p>
+<p>Para la maquina virtual usaremos una que previmente ya ha sido configurada por Felipe Juarez, para ello descargaremos el siguiente repositorío:</p>
 
 <p><a href="https://github.com/sohjiro/ansible_elixir">https://github.com/sohjiro/ansible_elixir</a></p>
 
@@ -313,15 +313,15 @@ Ansible (Manejador de tareas)
 
 <p>vagrant up</p>
 
-<p>podemos confimar las mauinas corriendo en VB: ansible_elixir_buid-host y ansible_elixir_test-host</p>
+<p>podemos confimar las maquinas corriendo en VB: ansible_elixir_buid-host y ansible_elixir_test-host</p>
 
 <p><img src="https://leovergara1.github.io/images/deployElixir/virtualBox.png"></p>
 
-<p>Si todo esta en orden, deberemos porder conectarnos a la maquina mediante lo siguiente:</p>
+<p>Si todo esta en orden, deberemos poder conectarnos a la maquina mediante lo siguiente:</p>
 
 <p><strong>ssh vagrant@192.168.60.7</strong></p>
 
-<p>Está es la mauina donde construiremos nuestro proyecto para posteriormente mandar el release a producció</p>
+<p>Está es la maquina donde construiremos nuestro proyecto para posteriormente mandar el release a producción</p>
 
 <p><strong>ssh vagrant@192.168.60.8</strong></p>
 
@@ -419,7 +419,7 @@ export DATABASE_HOST=localhost
 export DATABASE_PORT=5432
 </code></pre>
 
-<p>Para esto necesitas actuliaziar tu archivo de &ldquo;prod.exs&rdquo;</p>
+<p>Para esto necesitas actualizar tu archivo de &ldquo;prod.exs&rdquo;</p>
 
 <pre><code class="language-java">config :ex_typeracer, ExTyperacerWeb.Endpoint,
   load_from_system_env: true,
@@ -460,7 +460,7 @@ Asegurense de terner abierto el puerto 4000 en su server ya que es donde por def
 
 <p>Conslusion:</p>
 
-<p>Realmente no parece ser complicado realizar estos pasos, pero si es necesario tener como al menos bien entendidos los conceptos de vagrant y ansible, así como conocimientos basicos de sus configuraciones o comandos. Me sorprede y me agrada mucho que la elixir compile el proyecto basandose en la maquina que se esta ejecutando para así porder aprovechar el hardware al máximo.</p>
+<p>Realmente no parece ser complicado realizar estos pasos, pero si es necesario tener como al menos bien entendidos los conceptos de vagrant y ansible, así como conocimientos basicos de sus configuraciones o comandos. Me sorprede y me agrada mucho que la elixir compile el proyecto basandose en la maquina que se esta ejecutando para así poder aprovechar el hardware al máximo.</p>
 
 <p>Si quisieran implementar continuso delivery por medio de un jeinkins como consejo se debera tener un script que por medio se ssh sea ejecutado a nuestro servidor de despliegue para evitar cualquier tipo de problema en la comunicación de los comandos y esto es más que nada por el hardware entre las dos maquinas.</p>
 
@@ -708,7 +708,7 @@ Repositorio: <a href="https://medium.com/@Sohjiro/deploying-an-elixir-applicatio
             
             <div class="media-body">
               <a class="link-unstyled" href="https://leovergara1.github.io/post/deploy_elixir/">
-                <h3 class="media-heading">Deploy elixir</h3>
+                <h3 class="media-heading">Desplegar Elixir con edeliver Phoenix (Deploy Elixir with edeliver Phoenix)</h3>
               </a>
               <span class="media-meta">
                 <span class="media-date text-small">
