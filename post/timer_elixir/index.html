@@ -342,6 +342,81 @@ end
 <p><strong>Demo</strong></p>
 
 <script src="https://asciinema.org/a/nNmUebs1toWoPjybvhVWSljwV.js" id="asciicast-nNmUebs1toWoPjybvhVWSljwV" async></script>
+
+<p>If you want to add one communicate for broadcast to channel, you should have to like this:</p>
+
+<ul>
+<li>Subscribe timer server to channel
+<code>elixir
+ExTyperacerWeb.Endpoint.subscribe &quot;timer:start&quot;, []
+</code></li>
+<li>Created a private function to use broadcast</li>
+</ul>
+
+<pre><code class="language-elixir">  defp broadcast(time, response) do
+    IO.inspect response
+    ExTyperacerWeb.Endpoint.broadcast! &quot;timer:update&quot;, &quot;new_time_#{response.uuid}&quot;, %{ response: response.message, time: time}
+  end
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code class="language-elixir">  defmodule ExTyperacer.TimerServer do
+
+  use GenServer
+  require Kernel
+  alias ExTyperacer.Logic.{Game, Player}
+  
+  def start_link() do
+    GenServer.start_link(__MODULE__, %{})
+  end
+  
+  def init(state) do
+    IO.puts &quot;Init timer&quot;
+    ExTyperacerWeb.Endpoint.subscribe &quot;timer:start&quot;, []
+    #timer = Process.send_after(self(), {:work, counter, uuid}, 1_000)
+    {:ok, state}
+  end
+
+  def handle_call({:reset_timer, counter, uuid}, _from, %{timer: timer}) do
+    :timer.cancel(timer)
+    timer = Process.send_after(self(), {:work, counter, uuid}, 1_000)
+    {:reply, :ok, %{timer: timer}}
+  end
+
+  def handle_info({:work, 0, uuid}, state) do
+    IO.puts &quot;Finished proccess&quot;
+    broadcast 0, %{message: &quot;Counting&quot;, uuid: uuid}
+    {:noreply, state}
+  end
+
+  def handle_info({:work, counter, uuid}, state) do
+    IO.puts &quot;Counting...&quot;
+    IO.inspect uuid
+    IO.inspect counter
+    broadcast counter, %{message: &quot;Counting&quot;, uuid: uuid}
+    counter = counter - 1
+    timer = Process.send_after(self(), {:work, counter, uuid},1_000)
+    {:noreply, %{timer: timer}}
+  end
+
+
+  def handle_info({:start_timer, counter, uuid}, state) do
+    timer = Process.send_after(self(), {:work, counter, uuid}, 1_000)
+    {:noreply, %{timer: timer}}
+  end
+    # So that unhanded messages don't error
+  def handle_info(_, state) do
+      {:ok, state}
+  end
+
+  defp broadcast(time, response) do
+    IO.inspect response
+    ExTyperacerWeb.Endpoint.broadcast! &quot;timer:update&quot;,&quot;new_time&quot;, %{ time: time, response: response.message}
+  end
+
+end
+</code></pre>
               
             </div>
           </div>
