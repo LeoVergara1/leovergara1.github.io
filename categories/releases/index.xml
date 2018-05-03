@@ -6,10 +6,19 @@
     <description>Recent content in Releases on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/categories/releases/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Timer with elixir</title>
+      <link>https://leovergara1.github.io/post/timer_elixir/</link>
+      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/timer_elixir/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;How do a simple timer with proccess?&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Desplegar Elixir con edeliver Phoenix (Deploy Elixir with edeliver Phoenix)</title>
