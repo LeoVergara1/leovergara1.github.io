@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.39">
+    <meta name="generator" content="Hugo 0.65.3">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>Spring con vertx</title>
     <meta name="author" content="Brandon Vergara">
@@ -30,13 +30,9 @@
 
     
     <meta name="description" content="Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)
-
-">
+(Spring 4.3, Vertx 3.5)">
     <meta property="og:description" content="Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)
-
-">
+(Spring 4.3, Vertx 3.5)">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Spring con vertx">
     <meta property="og:url" content="/post/springwithvertx/">
@@ -44,9 +40,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
     <meta name="twitter:description" content="Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)
-
-">
+(Spring 4.3, Vertx 3.5)">
     
     
 
@@ -79,14 +73,17 @@
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-90564886-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90564886-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -124,7 +121,7 @@ ga('send', 'pageview');
         </a>
         <h4 class="sidebar-profile-name">Brandon Vergara</h4>
         
-          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis</h5>
+          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></h5>
         
       </div>
     
@@ -299,236 +296,206 @@ ga('send', 'pageview');
             <div class="main-content-wrap">
               <p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
 (Spring 4.3, Vertx 3.5)</p>
-
-<p></p>
-
 <p>Primero quisiera decir que no es un tema fácil de entender así que daré por hecho ciertos conocimientos y me centraré únicamente en la implementación.</p>
-
 <p>Puntos importantes:</p>
-
 <ul>
 <li>Configuración Boostrap de Spring</li>
 <li>Uso de Spring Factory</li>
 <li>Configuración de puertos</li>
 <li>Anotaciones importantes @Component, @Aoutowire,@PostConstructor, @Scope(&ldquo;SCOPE_PROTOTYPE&rdquo;)</li>
 </ul>
-
 <p>Primero que nada empezaremos con la configuración de Spring Factory. Si te preguntas porque la necesitamos es porque ciertamente necesitamos los servicios de Spring dentro de Vertx y como ya debemos saber Vertx crea múltiples instancias a contrario de Spring que crea singletons para sus servicios y es por eso que muchas veces tenemos conflictos a la hora de implementar Vertx en Spring, Un vez mencionado esto entendemos que necesitamos el &ldquo;ApplicationContext&rdquo; de Spring dentro de las clases de que usará Vertx para tener un deploy.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy"><span style="color:#f92672">package</span> mx<span style="color:#f92672">.</span><span style="color:#a6e22e">edu</span><span style="color:#f92672">.</span><span style="color:#a6e22e">ebc</span><span style="color:#f92672">.</span><span style="color:#a6e22e">core</span><span style="color:#f92672">.</span><span style="color:#a6e22e">init</span>
 
-<pre><code class="language-groovy">package mx.edu.ebc.core.init
+<span style="color:#f92672">import</span> io.vertx.core.Verticle
+<span style="color:#f92672">import</span> io.vertx.core.spi.VerticleFactory
+<span style="color:#f92672">import</span> org.springframework.beans.BeansException
+<span style="color:#f92672">import</span> org.springframework.context.ApplicationContext
+<span style="color:#f92672">import</span> org.springframework.context.ApplicationContextAware
+<span style="color:#f92672">import</span> org.springframework.stereotype.Component
 
-import io.vertx.core.Verticle
-import io.vertx.core.spi.VerticleFactory
-import org.springframework.beans.BeansException
-import org.springframework.context.ApplicationContext
-import org.springframework.context.ApplicationContextAware
-import org.springframework.stereotype.Component
+<span style="color:#a6e22e">@Component</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpringVerticleFactory</span> <span style="color:#66d9ef">implements</span> VerticleFactory<span style="color:#f92672">,</span> ApplicationContextAware <span style="color:#f92672">{</span>
 
-@Component
-class SpringVerticleFactory implements VerticleFactory, ApplicationContextAware {
+  ApplicationContext applicationContext<span style="color:#f92672">;</span>
 
-  ApplicationContext applicationContext;
+  <span style="color:#a6e22e">@Override</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">blockingCreate</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
 
-  @Override
-  public boolean blockingCreate() {
-    return true;
-  }
+  <span style="color:#a6e22e">@Override</span>
+  <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">prefix</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;ebc&#34;</span><span style="color:#f92672">;</span> <span style="color:#75715e">// Nombre para tomar la referencia de tus clases
+</span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
 
-  @Override
-  public String prefix() {
-    return &quot;ebc&quot;; // Nombre para tomar la referencia de tus clases
-  }
+  <span style="color:#a6e22e">@Override</span>
+  <span style="color:#66d9ef">public</span> Verticle <span style="color:#a6e22e">createVerticle</span><span style="color:#f92672">(</span>String verticleName<span style="color:#f92672">,</span> ClassLoader classLoader<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+    String clazz <span style="color:#f92672">=</span> VerticleFactory<span style="color:#f92672">.</span><span style="color:#a6e22e">removePrefix</span><span style="color:#f92672">(</span>verticleName<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>Verticle<span style="color:#f92672">)</span> applicationContext<span style="color:#f92672">.</span><span style="color:#a6e22e">getBean</span><span style="color:#f92672">(</span>Class<span style="color:#f92672">.</span><span style="color:#a6e22e">forName</span><span style="color:#f92672">(</span>clazz<span style="color:#f92672">));</span>
+  <span style="color:#f92672">}</span>
 
-  @Override
-  public Verticle createVerticle(String verticleName, ClassLoader classLoader) throws Exception {
-    String clazz = VerticleFactory.removePrefix(verticleName);
-    return (Verticle) applicationContext.getBean(Class.forName(clazz));
-  }
-
-  @Override
-  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-    this.applicationContext = applicationContext;
-  }
-}
-</code></pre>
-
-<p>Posterior a esto pasaremos a la creación de la clase boostrap la cual en donde lograremos definir los verticles que ocuparemos a lo largo de nuestra aplicación, así como sus opciones de despliegue. Lo importante de esta clase es que la haremos como un componente de spring el cual se ejecutara justo de haber levantado la aplicacion junto con el contexto ya que es requerido.</p>
-
+  <span style="color:#a6e22e">@Override</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setApplicationContext</span><span style="color:#f92672">(</span>ApplicationContext applicationContext<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> BeansException <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">applicationContext</span> <span style="color:#f92672">=</span> applicationContext<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Posterior a esto pasaremos a la creación de la clase boostrap la cual en donde lograremos definir los verticles que ocuparemos a lo largo de nuestra aplicación, así como sus opciones de despliegue. Lo importante de esta clase es que la haremos como un componente de spring el cual se ejecutara justo de haber levantado la aplicacion junto con el contexto ya que es requerido.</p>
 <p><strong>Shell</strong></p>
-
 <p>Si queremos utilizar la shell de vertx basta con añadir el siguiente código a la clase Bootstrap:</p>
-
-<pre><code class="language-groovy">  ShellService service = ShellService.create(vertx,
-  new ShellServiceOptions().setTelnetOptions(
-    new TelnetTermOptions().
-      setHost(&quot;localhost&quot;).
-      setPort(4000)
-    )
-  )
-  service.start()
-</code></pre>
-
-<p>En la clase mencionada se debe de hacer la anotación  @PostConstruct al metodo que tiene que construir en este caso el encargado de hacer nuestros despliegues del verticle mientras de igual manera se inyecta el VerticleFactory el cual correspopnde a la interfaz implementada en nuestra clase SpringVerticleFactory.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">  ShellService service <span style="color:#f92672">=</span> ShellService<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">(</span>vertx<span style="color:#f92672">,</span>
+  <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ShellServiceOptions</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setTelnetOptions</span><span style="color:#f92672">(</span>
+    <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TelnetTermOptions</span><span style="color:#f92672">().</span>
+      setHost<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;localhost&#34;</span><span style="color:#f92672">).</span>
+      setPort<span style="color:#f92672">(</span><span style="color:#ae81ff">4000</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">)</span>
+  <span style="color:#f92672">)</span>
+  service<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">()</span>
+</code></pre></div><p>En la clase mencionada se debe de hacer la anotación  @PostConstruct al metodo que tiene que construir en este caso el encargado de hacer nuestros despliegues del verticle mientras de igual manera se inyecta el VerticleFactory el cual correspopnde a la interfaz implementada en nuestra clase SpringVerticleFactory.</p>
 <p>Despliegue de un verticle</p>
-
 <p>Para hacer un despliegue de un verticle se deberá realizar de la siguiente manera.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">deployVerticle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;${verticleFactory.prefix()}:${CourseVerticle.class.name}&#34;</span><span style="color:#f92672">)</span>
+</code></pre></div><p>A continuación dejo el código completo de la clase Bootstrap.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy"><span style="color:#f92672">package</span> mx<span style="color:#f92672">.</span><span style="color:#a6e22e">edu</span><span style="color:#f92672">.</span><span style="color:#a6e22e">ebc</span><span style="color:#f92672">.</span><span style="color:#a6e22e">core</span><span style="color:#f92672">.</span><span style="color:#a6e22e">init</span>
 
-<pre><code class="language-groovy">vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${CourseVerticle.class.name}&quot;)
-</code></pre>
+<span style="color:#f92672">import</span> javax.annotation.PostConstruct
+<span style="color:#f92672">import</span> mx.edu.ebc.core.verticle.*
+<span style="color:#f92672">import</span> org.springframework.context.ApplicationContext
+<span style="color:#f92672">import</span> io.vertx.core.Vertx
+<span style="color:#f92672">import</span> io.vertx.core.spi.VerticleFactory
+<span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired
+<span style="color:#f92672">import</span> org.springframework.stereotype.Component
+<span style="color:#f92672">import</span> org.springframework.context.annotation.Scope
+<span style="color:#f92672">import</span> io.vertx.core.DeploymentOptions
+<span style="color:#f92672">import</span> io.vertx.ext.web.handler.StaticHandler
+<span style="color:#f92672">import</span> io.vertx.ext.web.Router
+<span style="color:#f92672">import</span> io.vertx.ext.web.handler.sockjs.SockJSHandler
+<span style="color:#f92672">import</span> io.vertx.ext.web.handler.sockjs.BridgeOptions
+<span style="color:#f92672">import</span> io.vertx.ext.web.handler.sockjs.PermittedOptions
 
-<p>A continuación dejo el código completo de la clase Bootstrap.</p>
+<span style="color:#f92672">import</span> io.vertx.ext.shell.*
+<span style="color:#f92672">import</span> io.vertx.ext.shell.term.*
 
-<pre><code class="language-groovy">package mx.edu.ebc.core.init
+<span style="color:#a6e22e">@Component</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bootstrap</span> <span style="color:#f92672">{</span>
 
-import javax.annotation.PostConstruct
-import mx.edu.ebc.core.verticle.*
-import org.springframework.context.ApplicationContext
-import io.vertx.core.Vertx
-import io.vertx.core.spi.VerticleFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
-import org.springframework.context.annotation.Scope
-import io.vertx.core.DeploymentOptions
-import io.vertx.ext.web.handler.StaticHandler
-import io.vertx.ext.web.Router
-import io.vertx.ext.web.handler.sockjs.SockJSHandler
-import io.vertx.ext.web.handler.sockjs.BridgeOptions
-import io.vertx.ext.web.handler.sockjs.PermittedOptions
-
-import io.vertx.ext.shell.*
-import io.vertx.ext.shell.term.*
-
-@Component
-class Bootstrap {
-
-  @Autowired
+  <span style="color:#a6e22e">@Autowired</span>
   VerticleFactory verticleFactory
 
-  @PostConstruct
-  void deployVerticles(){
-    println &quot;*&quot;*100
-    Vertx vertx = Vertx.vertx()
+  <span style="color:#a6e22e">@PostConstruct</span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">deployVerticles</span><span style="color:#f92672">(){</span>
+    println <span style="color:#e6db74">&#34;*&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">100</span>
+    Vertx vertx <span style="color:#f92672">=</span> Vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">vertx</span><span style="color:#f92672">()</span>
 
-    ShellService service = ShellService.create(vertx,
-        new ShellServiceOptions().setTelnetOptions(
-          new TelnetTermOptions().
-          setHost(&quot;localhost&quot;).
-          setPort(4000)
-        )
-      );
-    service.start();
+    ShellService service <span style="color:#f92672">=</span> ShellService<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">(</span>vertx<span style="color:#f92672">,</span>
+        <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">ShellServiceOptions</span><span style="color:#f92672">().</span><span style="color:#a6e22e">setTelnetOptions</span><span style="color:#f92672">(</span>
+          <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">TelnetTermOptions</span><span style="color:#f92672">().</span>
+          setHost<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;localhost&#34;</span><span style="color:#f92672">).</span>
+          setPort<span style="color:#f92672">(</span><span style="color:#ae81ff">4000</span><span style="color:#f92672">)</span>
+        <span style="color:#f92672">)</span>
+      <span style="color:#f92672">);</span>
+    service<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span>
 
-    vertx.registerVerticleFactory(verticleFactory)
+    vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">registerVerticleFactory</span><span style="color:#f92672">(</span>verticleFactory<span style="color:#f92672">)</span>
 
-    DeploymentOptions opts_1 = new DeploymentOptions()
-    opts_1.setWorker(true)
-    opts_1.setInstances(5)
+    DeploymentOptions opts_1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DeploymentOptions<span style="color:#f92672">()</span>
+    opts_1<span style="color:#f92672">.</span><span style="color:#a6e22e">setWorker</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>
+    opts_1<span style="color:#f92672">.</span><span style="color:#a6e22e">setInstances</span><span style="color:#f92672">(</span><span style="color:#ae81ff">5</span><span style="color:#f92672">)</span>
 
-    DeploymentOptions opts_2 = new DeploymentOptions()
-    opts_2.setWorker(true)
-    opts_2.setInstances(50)
+    DeploymentOptions opts_2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> DeploymentOptions<span style="color:#f92672">()</span>
+    opts_2<span style="color:#f92672">.</span><span style="color:#a6e22e">setWorker</span><span style="color:#f92672">(</span><span style="color:#66d9ef">true</span><span style="color:#f92672">)</span>
+    opts_2<span style="color:#f92672">.</span><span style="color:#a6e22e">setInstances</span><span style="color:#f92672">(</span><span style="color:#ae81ff">50</span><span style="color:#f92672">)</span>
 
-    vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${CourseVerticle.class.name}&quot;, opts_1)
-    vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${ProcessVerticle.class.name}&quot;, opts_1)
-    vertx.deployVerticle(&quot;${verticleFactory.prefix()}:${EnrollmentCourseVerticle.class.name}&quot;, opts_2)
-    //vertx.deployVerticle(new CourseVerticle(applicationContext), options)
-    //vertx.deployVerticle(new MainVerticle(applicationContext))
-    //vertx.deployVerticle(new ProcessVerticle(applicationContext))
-    //vertx.deployVerticle(new PingVerticle(applicationContext))
-    //vertx.deployVerticle(new PongVerticle(applicationContext))
-    def verticles = vertx.deploymentIDs()
-    println &quot;Verticles: ${verticles.dump()}&quot;
+    vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">deployVerticle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;${verticleFactory.prefix()}:${CourseVerticle.class.name}&#34;</span><span style="color:#f92672">,</span> opts_1<span style="color:#f92672">)</span>
+    vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">deployVerticle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;${verticleFactory.prefix()}:${ProcessVerticle.class.name}&#34;</span><span style="color:#f92672">,</span> opts_1<span style="color:#f92672">)</span>
+    vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">deployVerticle</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;${verticleFactory.prefix()}:${EnrollmentCourseVerticle.class.name}&#34;</span><span style="color:#f92672">,</span> opts_2<span style="color:#f92672">)</span>
+    <span style="color:#75715e">//vertx.deployVerticle(new CourseVerticle(applicationContext), options)
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//vertx.deployVerticle(new MainVerticle(applicationContext))
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//vertx.deployVerticle(new ProcessVerticle(applicationContext))
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//vertx.deployVerticle(new PingVerticle(applicationContext))
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//vertx.deployVerticle(new PongVerticle(applicationContext))
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">def</span> verticles <span style="color:#f92672">=</span> vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">deploymentIDs</span><span style="color:#f92672">()</span>
+    println <span style="color:#e6db74">&#34;Verticles: ${verticles.dump()}&#34;</span>
 
-    def server = vertx.createHttpServer()
-    def router = Router.router(vertx)
+    <span style="color:#66d9ef">def</span> server <span style="color:#f92672">=</span> vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">createHttpServer</span><span style="color:#f92672">()</span>
+    <span style="color:#66d9ef">def</span> router <span style="color:#f92672">=</span> Router<span style="color:#f92672">.</span><span style="color:#a6e22e">router</span><span style="color:#f92672">(</span>vertx<span style="color:#f92672">)</span>
 
-    BridgeOptions bridgeOptions = new BridgeOptions()
-    bridgeOptions.addOutboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.create.course&quot;))
-    .addOutboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.list.course&quot;))
+    BridgeOptions bridgeOptions <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> BridgeOptions<span style="color:#f92672">()</span>
+    bridgeOptions<span style="color:#f92672">.</span><span style="color:#a6e22e">addOutboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.create.course&#34;</span><span style="color:#f92672">))</span>
+    <span style="color:#f92672">.</span><span style="color:#a6e22e">addOutboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.list.course&#34;</span><span style="color:#f92672">))</span>
 
-    bridgeOptions.addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.create.course&quot;))
-    .addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.list.course&quot;))
+    bridgeOptions<span style="color:#f92672">.</span><span style="color:#a6e22e">addInboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.create.course&#34;</span><span style="color:#f92672">))</span>
+    <span style="color:#f92672">.</span><span style="color:#a6e22e">addInboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.list.course&#34;</span><span style="color:#f92672">))</span>
 
-    bridgeOptions.addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.warn.course&quot;))
-    bridgeOptions.addInboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.finish&quot;))
-    .addOutboundPermitted(new PermittedOptions().setAddress(&quot;mx.edu.ebc.moodle.finish&quot;));
+    bridgeOptions<span style="color:#f92672">.</span><span style="color:#a6e22e">addInboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.warn.course&#34;</span><span style="color:#f92672">))</span>
+    bridgeOptions<span style="color:#f92672">.</span><span style="color:#a6e22e">addInboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.finish&#34;</span><span style="color:#f92672">))</span>
+    <span style="color:#f92672">.</span><span style="color:#a6e22e">addOutboundPermitted</span><span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> PermittedOptions<span style="color:#f92672">().</span><span style="color:#a6e22e">setAddress</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.finish&#34;</span><span style="color:#f92672">));</span>
 
 
 
-    def ebHandler = SockJSHandler.create(vertx).bridge(bridgeOptions)
+    <span style="color:#66d9ef">def</span> ebHandler <span style="color:#f92672">=</span> SockJSHandler<span style="color:#f92672">.</span><span style="color:#a6e22e">create</span><span style="color:#f92672">(</span>vertx<span style="color:#f92672">).</span><span style="color:#a6e22e">bridge</span><span style="color:#f92672">(</span>bridgeOptions<span style="color:#f92672">)</span>
 
-    router.route(&quot;/eventbus/*&quot;).handler(ebHandler)
+    router<span style="color:#f92672">.</span><span style="color:#a6e22e">route</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;/eventbus/*&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">handler</span><span style="color:#f92672">(</span>ebHandler<span style="color:#f92672">)</span>
 
-    server.requestHandler(router.&amp;accept).listen(9090)
-    println &quot;Vert.x is deployed &quot;
-  }
+    server<span style="color:#f92672">.</span><span style="color:#a6e22e">requestHandler</span><span style="color:#f92672">(</span>router<span style="color:#f92672">.&amp;</span>accept<span style="color:#f92672">).</span><span style="color:#a6e22e">listen</span><span style="color:#f92672">(</span><span style="color:#ae81ff">9090</span><span style="color:#f92672">)</span>
+    println <span style="color:#e6db74">&#34;Vert.x is deployed &#34;</span>
+  <span style="color:#f92672">}</span>
 
-}
-</code></pre>
-
-<p>Servidor para web sockets js</p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Servidor para web sockets js</p>
 <p>Si deseas levantar un servidor para la comunicación de tu front deberás hacerlo en la clase mencionada antes como se muestra en el código.</p>
-
 <p>Ejemplo de clase para desplegar:</p>
-
 <p>Importante mencionar que estas clases deberán llevar la anotación  @Scope(SCOPE_PROTOTYPE)
 para que Spring logre hacer múltiples instancias ya que así lo requiere vertx.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy"><span style="color:#f92672">package</span> mx<span style="color:#f92672">.</span><span style="color:#a6e22e">edu</span><span style="color:#f92672">.</span><span style="color:#a6e22e">ebc</span><span style="color:#f92672">.</span><span style="color:#a6e22e">core</span><span style="color:#f92672">.</span><span style="color:#a6e22e">verticle</span>
 
-<pre><code class="language-groovy">package mx.edu.ebc.core.verticle
-
-import io.vertx.core.AbstractVerticle
+<span style="color:#f92672">import</span> io.vertx.core.AbstractVerticle
 
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Scope
-import org.springframework.stereotype.Component
-import groovy.json.JsonSlurper
-import mx.edu.ebc.api.service.EnrollmentService
-import mx.edu.ebc.moodle.model.MoodleCourse
+<span style="color:#f92672">import</span> org.springframework.beans.factory.annotation.Autowired
+<span style="color:#f92672">import</span> org.springframework.context.annotation.Scope
+<span style="color:#f92672">import</span> org.springframework.stereotype.Component
+<span style="color:#f92672">import</span> groovy.json.JsonSlurper
+<span style="color:#f92672">import</span> mx.edu.ebc.api.service.EnrollmentService
+<span style="color:#f92672">import</span> mx.edu.ebc.moodle.model.MoodleCourse
 
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.*
+<span style="color:#f92672">import</span> static org<span style="color:#f92672">.</span><span style="color:#a6e22e">springframework</span><span style="color:#f92672">.</span><span style="color:#a6e22e">beans</span><span style="color:#f92672">.</span><span style="color:#a6e22e">factory</span><span style="color:#f92672">.</span><span style="color:#a6e22e">config</span><span style="color:#f92672">.</span><span style="color:#a6e22e">ConfigurableBeanFactory</span><span style="color:#f92672">.*</span>
 
-import io.vertx.core.DeploymentOptions
+<span style="color:#f92672">import</span> io.vertx.core.DeploymentOptions
 
-@Component
-@Scope(SCOPE_PROTOTYPE)
-class EnrollmentCourseVerticle extends AbstractVerticle {
+<span style="color:#a6e22e">@Component</span>
+<span style="color:#a6e22e">@Scope</span><span style="color:#f92672">(</span>SCOPE_PROTOTYPE<span style="color:#f92672">)</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EnrollmentCourseVerticle</span> <span style="color:#66d9ef">extends</span> AbstractVerticle <span style="color:#f92672">{</span>
 
-  @Autowired
+  <span style="color:#a6e22e">@Autowired</span>
   EnrollmentService enrollmentService
 
-  @Override
-  void start() throws Exception {
-    super.start()
-    vertx.eventBus().consumer(&quot;mx.edu.ebc.moodle.enrollment.course&quot;) { message -&gt;
-      println message.body().shortname
-      List&lt;MoodleCourse&gt; moodleCourse = []
-        moodleCourse &lt;&lt; new MoodleCourse(
-          shortname: &quot;${message.body().shortname}+T10&quot;,
-          idnumber:&quot;${message.body().shortname}+T10&quot;,
-          category: &quot;Vertx-test&quot;,
-          fullname: message.body().subject,
-          summary:&quot;&quot;,
-          format:&quot;&quot;,
-          startdate:&quot;&quot;,
-          groupmode:&quot;&quot;,
-          enablecompletion:&quot;&quot;,
-          coursetemplate:&quot;MER23432-P&quot;
-        )
-       enrollmentService.createCoursesInMoodle(moodleCourse)
-       vertx.eventBus().send(&quot;mx.edu.ebc.moodle.bulid&quot;,&quot;Termine el curso ${message.body().shortname} &quot;)
-    }
-  }
+  <span style="color:#a6e22e">@Override</span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">start</span><span style="color:#f92672">()</span> <span style="color:#66d9ef">throws</span> Exception <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">super</span><span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">()</span>
+    vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">eventBus</span><span style="color:#f92672">().</span><span style="color:#a6e22e">consumer</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.enrollment.course&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span> message <span style="color:#f92672">-&gt;</span>
+      println message<span style="color:#f92672">.</span><span style="color:#a6e22e">body</span><span style="color:#f92672">().</span><span style="color:#a6e22e">shortname</span>
+      List<span style="color:#f92672">&lt;</span>MoodleCourse<span style="color:#f92672">&gt;</span> moodleCourse <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
+        moodleCourse <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">new</span> MoodleCourse<span style="color:#f92672">(</span>
+          shortname: <span style="color:#e6db74">&#34;${message.body().shortname}+T10&#34;</span><span style="color:#f92672">,</span>
+          idnumber:<span style="color:#e6db74">&#34;${message.body().shortname}+T10&#34;</span><span style="color:#f92672">,</span>
+          category: <span style="color:#e6db74">&#34;Vertx-test&#34;</span><span style="color:#f92672">,</span>
+          fullname: message<span style="color:#f92672">.</span><span style="color:#a6e22e">body</span><span style="color:#f92672">().</span><span style="color:#a6e22e">subject</span><span style="color:#f92672">,</span>
+          summary:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span>
+          format:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span>
+          startdate:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span>
+          groupmode:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span>
+          enablecompletion:<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">,</span>
+          coursetemplate:<span style="color:#e6db74">&#34;MER23432-P&#34;</span>
+        <span style="color:#f92672">)</span>
+       enrollmentService<span style="color:#f92672">.</span><span style="color:#a6e22e">createCoursesInMoodle</span><span style="color:#f92672">(</span>moodleCourse<span style="color:#f92672">)</span>
+       vertx<span style="color:#f92672">.</span><span style="color:#a6e22e">eventBus</span><span style="color:#f92672">().</span><span style="color:#a6e22e">send</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;mx.edu.ebc.moodle.bulid&#34;</span><span style="color:#f92672">,</span><span style="color:#e6db74">&#34;Termine el curso ${message.body().shortname} &#34;</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+  <span style="color:#f92672">}</span>
 
-}
-</code></pre>
-
-<p><strong>Conclusión</strong></p>
-
+<span style="color:#f92672">}</span>
+</code></pre></div><p><strong>Conclusión</strong></p>
 <p>La verdad es que esta implementan me agrado bastante ya que al principio tuve muchas complicaciones para hacer las instancias de vertx ya que todo se ejecutaba de manera secuencial, lo cual no era el punto de la tecnología. Pero finalmente una vez ya trabajando me sorprendió su funcionamiento.</p>
-
 <p>Pd: Si usas java, ya dejalo!!! usa groovy y descubre una forma más divertida de programar 😃</p>
               
             </div>
@@ -630,7 +597,7 @@ class EnrollmentCourseVerticle extends AbstractVerticle {
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 
@@ -733,7 +700,7 @@ class EnrollmentCourseVerticle extends AbstractVerticle {
     
     <h4 id="about-card-name">Brandon Vergara</h4>
     
-      <div id="about-card-bio">Pasión por la programación y el analisis</div>
+      <div id="about-card-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></div>
     
     
       <div id="about-card-job">
@@ -770,6 +737,70 @@ class EnrollmentCourseVerticle extends AbstractVerticle {
       <div class="no-result text-color-light text-center"></div>
       <div class="results">
         
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/api_sinatra_ruby/">
+                <h3 class="media-heading">Api con Sinatra y ruby</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/">
+                <h3 class="media-heading">Ueberauth_cas with Phoenix (Elixir)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
         
           <div class="media">
             
@@ -838,9 +869,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather"><p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)</p>
-
-<p></p></div>
+(Spring 4.3, Vertx 3.5)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -857,9 +886,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Dec 12, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p></div>
+              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -893,65 +920,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Oct 10, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-                <h3 class="media-heading">Mapear lista dinámica con spring 4</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"><p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-                <h3 class="media-heading">Experiencia con Wonder Code</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-                <h3 class="media-heading">Groovy Programming</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</div>
+              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -964,7 +933,7 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
          data-message-zero=""
          data-message-one=""
          data-message-other="">
-         15 posts found
+         17 posts found
       </p>
     </div>
   </div>

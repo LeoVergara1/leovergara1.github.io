@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.39">
+    <meta name="generator" content="Hugo 0.65.3">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>Groovy Programming</title>
     <meta name="author" content="Brandon Vergara">
@@ -69,14 +69,17 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-90564886-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90564886-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -114,7 +117,7 @@ ga('send', 'pageview');
         </a>
         <h4 class="sidebar-profile-name">Brandon Vergara</h4>
         
-          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis</h5>
+          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></h5>
         
       </div>
     
@@ -261,56 +264,41 @@ ga('send', 'pageview');
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              
-
-<p>Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, <em>“Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)</em></p>
-
+              <p>Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, <em>“Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)</em></p>
 <p>La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</p>
-
 <p>Realmente es increíble la simplificación que se logra hacer al lenguaje java, agilizando nuestros proyectos y dando un mejor entendimiento al problema para así realizar una óptima solución.</p>
-
 <p>Al principio estuve un poco desconcertado, por lo complejo que pudiera ser aprender este nuevo lenguaje, sin embargo con un poco de explicación entendí que prácticamente es lo mismo que java pero suprimiendo partes del código innecesario.</p>
-
 <p>Un claro ejemplo es el siguiente.</p>
-
 <h2 id="hola-mundo-en-java">Hola Mundo en JAVA</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HolaMundo</span> <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">private</span> String nombre<span style="color:#f92672">;</span>
+  <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">getNombre</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> nombre<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setNombre</span><span style="color:#f92672">(</span>String nombre<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">nombre</span> <span style="color:#f92672">=</span> nombre<span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">public</span> String <span style="color:#a6e22e">saluda</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;Hola &#34;</span> <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">nombre</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; !!!&#34;</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    HolaMundo objeto <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HolaMundo<span style="color:#f92672">();</span>
+    objeto<span style="color:#f92672">.</span><span style="color:#a6e22e">setNombre</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;@grailsmx&#34;</span><span style="color:#f92672">);</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>objeto<span style="color:#f92672">.</span><span style="color:#a6e22e">saluda</span><span style="color:#f92672">());</span>
+  <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 
-<pre><code class="language-java">    public class HolaMundo {
-  private String nombre;
-  public String getNombre() {
-    return nombre;
-  }
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-  public String saluda() {
-    return &quot;Hola &quot; + this.nombre + &quot; !!!&quot;;
-  }
-  public static void main(String[] args) {
-    HolaMundo objeto = new HolaMundo();
-    objeto.setNombre(&quot;@grailsmx&quot;);
-    System.out.println(objeto.saluda());
-  }
-}
-
-</code></pre>
-
-<h2 id="hola-mundo-en-groovy">Hola Mundo en GROOVY</h2>
-
-<pre><code class="language-groovy">class HolaMundo {
+</code></pre></div><h2 id="hola-mundo-en-groovy">Hola Mundo en GROOVY</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HolaMundo</span> <span style="color:#f92672">{</span>
   String nombre
-  def saluda() { &quot;Hola  ${this.nombre} !!!&quot; }
-}
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">saluda</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span> <span style="color:#e6db74">&#34;Hola  ${this.nombre} !!!&#34;</span> <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
 
-def objeto = new HolaMundo(nombre:&quot;@grailsmx&quot;)
-println(objeto.saluda())
+<span style="color:#66d9ef">def</span> objeto <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HolaMundo<span style="color:#f92672">(</span>nombre:<span style="color:#e6db74">&#34;@grailsmx&#34;</span><span style="color:#f92672">)</span>
+println<span style="color:#f92672">(</span>objeto<span style="color:#f92672">.</span><span style="color:#a6e22e">saluda</span><span style="color:#f92672">())</span>
 
-</code></pre>
-
-<p>Realmente después de una series de pasos es impresionante la cantidad de código que nos logramos ahorrar con el uso de este lenguaje.</p>
-
+</code></pre></div><p>Realmente después de una series de pasos es impresionante la cantidad de código que nos logramos ahorrar con el uso de este lenguaje.</p>
 <p>Para finalizar es importante mencionar las siguientes características del lenguaje.</p>
-
 <ul>
 <li>Admite el lenguaje tal cual de java dentro del código en caso de que no sepamos cómo escribirlo en groovy.</li>
 <li>Groovy es capaz de emigrar todo el proyecto al código de java junto consus “.class” necesarios para correr desde la consola.</li>
@@ -411,7 +399,7 @@ println(objeto.saluda())
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 
@@ -514,7 +502,7 @@ println(objeto.saluda())
     
     <h4 id="about-card-name">Brandon Vergara</h4>
     
-      <div id="about-card-bio">Pasión por la programación y el analisis</div>
+      <div id="about-card-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></div>
     
     
       <div id="about-card-job">
@@ -551,6 +539,70 @@ println(objeto.saluda())
       <div class="no-result text-color-light text-center"></div>
       <div class="results">
         
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/api_sinatra_ruby/">
+                <h3 class="media-heading">Api con Sinatra y ruby</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/">
+                <h3 class="media-heading">Ueberauth_cas with Phoenix (Elixir)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
         
           <div class="media">
             
@@ -619,9 +671,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather"><p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)</p>
-
-<p></p></div>
+(Spring 4.3, Vertx 3.5)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -638,9 +688,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Dec 12, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p></div>
+              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -674,65 +722,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Oct 10, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-                <h3 class="media-heading">Mapear lista dinámica con spring 4</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"><p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-                <h3 class="media-heading">Experiencia con Wonder Code</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-                <h3 class="media-heading">Groovy Programming</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</div>
+              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -745,7 +735,7 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
          data-message-zero=""
          data-message-one=""
          data-message-other="">
-         15 posts found
+         17 posts found
       </p>
     </div>
   </div>

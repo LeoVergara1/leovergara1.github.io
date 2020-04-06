@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Spring on Brandon Vergara</title>
@@ -6,10 +6,24 @@
     <description>Recent content in Spring on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Api con Sinatra y ruby</title>
+      <link>https://leovergara1.github.io/post/api_sinatra_ruby/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/api_sinatra_ruby/</guid>
+      <description>Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &amp;gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</description>
+    </item>
     
     <item>
       <title>Spring con vertx</title>
@@ -18,9 +32,7 @@
       
       <guid>https://leovergara1.github.io/post/springwithvertx/</guid>
       <description>&lt;p&gt;Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&amp;hellip;.
-(Spring 4.3, Vertx 3.5)&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+(Spring 4.3, Vertx 3.5)&lt;/p&gt;</description>
     </item>
     
     <item>

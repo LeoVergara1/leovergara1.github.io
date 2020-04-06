@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.39">
+    <meta name="generator" content="Hugo 0.65.3">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>WebScokets con Vertx</title>
     <meta name="author" content="Brandon Vergara">
@@ -76,14 +76,17 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-90564886-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90564886-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -121,7 +124,7 @@ ga('send', 'pageview');
         </a>
         <h4 class="sidebar-profile-name">Brandon Vergara</h4>
         
-          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis</h5>
+          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></h5>
         
       </div>
     
@@ -297,153 +300,109 @@ ga('send', 'pageview');
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.</p>
-
 <p>¿Que es un WebSocket?</p>
-
 <p>Es un API con una tecnología que busca establecer una conexión entre el usuario cliente (Navegador) y el servidor mediante esta funcionalidad se permite el envió de mensajes y respuestas constroladas atravez de un único canal de comunicación ya previamente establecido</p>
-
 <p>Por ejemplo en el caso de las peticiones por AJAX del método HTTP ya sea GET o POST pasa lo siguiente, cada vez que uno de ellos trata de comunicarse necesitan establecer comunicación lo cual vuelve lento la transferencia de información entre ellos, a diferencia de un socket que sólo hace una única vez para establecer la comunicación y el canal permanece abierto para así manejar la comunicación de la información de una forma rápida y transparente.</p>
-
 <p>Una vez sabido un poco de lo que se refiere con websocket pasaremos a ver un sencillo ejemplo donde aprovecharemos todo el potencial de ello, así mismo lo que nos ofrece la tecnología de vertx para resolver ciertas cosas.</p>
-
 <p>Problema: Simular la compra de boletos de manera simultanea donde el boleto estará disponible en tiempo real para N clientes, y así mismo la persona que logre comprarlo primero sera el ganador de él, de tal manera que los demás clientes sepan que ocurre con el boleto en tiempo real.</p>
-
 <p>Lo necesario:</p>
-
 <pre><code>* Conocimientos previo en vertx
 * Dependencias para js, SocketJs y Vertx-event-bus
 </code></pre>
-
 <p>Primero que nada explicare un pequeño archivo donde tendremos una pequeña configuración para iniciar nuestra aplicación en vertx.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">package com<span style="color:#f92672">.</span>makingdevs<span style="color:#f92672">.</span>ticket
 
-<pre><code class="language-ruby">package com.makingdevs.ticket
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>web<span style="color:#f92672">.</span>handler<span style="color:#f92672">.</span>StaticHandler
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>web<span style="color:#f92672">.</span>Router
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>core<span style="color:#f92672">.</span>Vertx
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>web<span style="color:#f92672">.</span>handler<span style="color:#f92672">.</span>sockjs<span style="color:#f92672">.</span>SockJSHandler
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>dropwizard<span style="color:#f92672">.</span>MetricsService
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>core<span style="color:#f92672">.</span>DeploymentOptions
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>shell<span style="color:#f92672">.</span>ShellService
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>shell<span style="color:#f92672">.</span>ShellServiceOptions
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>shell<span style="color:#f92672">.</span>term<span style="color:#f92672">.</span>TelnetTermOptions
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>web<span style="color:#f92672">.</span>handler<span style="color:#f92672">.</span>sockjs<span style="color:#f92672">.</span>BridgeOptions
+import io<span style="color:#f92672">.</span>vertx<span style="color:#f92672">.</span>ext<span style="color:#f92672">.</span>web<span style="color:#f92672">.</span>handler<span style="color:#f92672">.</span>sockjs<span style="color:#f92672">.</span>PermittedOptions
 
-import io.vertx.ext.web.handler.StaticHandler
-import io.vertx.ext.web.Router
-import io.vertx.core.Vertx
-import io.vertx.ext.web.handler.sockjs.SockJSHandler
-import io.vertx.ext.dropwizard.MetricsService
-import io.vertx.core.DeploymentOptions
-import io.vertx.ext.shell.ShellService
-import io.vertx.ext.shell.ShellServiceOptions
-import io.vertx.ext.shell.term.TelnetTermOptions
-import io.vertx.ext.web.handler.sockjs.BridgeOptions
-import io.vertx.ext.web.handler.sockjs.PermittedOptions
+println <span style="color:#e6db74">&#34;Webserver ok&#34;</span>
 
-println &quot;Webserver ok&quot;
+<span style="color:#66d9ef">DeploymentOptions</span> opts_1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">DeploymentOptions</span>()
+opts_1<span style="color:#f92672">.</span>setWorker(<span style="color:#66d9ef">true</span>)
+opts_1<span style="color:#f92672">.</span>setInstances(<span style="color:#ae81ff">10</span>)
+vertx<span style="color:#f92672">.</span>deployVerticle(<span style="color:#e6db74">&#34;TicketOffice.groovy&#34;</span>, opts_1)
+vertx<span style="color:#f92672">.</span>deployVerticle(<span style="color:#e6db74">&#34;ComunicateVerticle.groovy&#34;</span>, opts_1)
 
-DeploymentOptions opts_1 = new DeploymentOptions()
-opts_1.setWorker(true)
-opts_1.setInstances(10)
-vertx.deployVerticle(&quot;TicketOffice.groovy&quot;, opts_1)
-vertx.deployVerticle(&quot;ComunicateVerticle.groovy&quot;, opts_1)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">service</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">MetricsService</span><span style="color:#f92672">.</span>create(vertx)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">server</span> <span style="color:#f92672">=</span> vertx<span style="color:#f92672">.</span>createHttpServer()
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">router</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Router</span><span style="color:#f92672">.</span>router(vertx)
 
-def service = MetricsService.create(vertx)
-def server = vertx.createHttpServer()
-def router = Router.router(vertx)
+<span style="color:#66d9ef">BridgeOptions</span> bridgeOptions <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">BridgeOptions</span>()
+bridgeOptions<span style="color:#f92672">.</span>addInboundPermitted(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">PermittedOptions</span>()<span style="color:#f92672">.</span>setAddressRegex(<span style="color:#e6db74">&#34;com.makingdevs.comunicate.*&#34;</span>))
+<span style="color:#f92672">.</span>addOutboundPermitted(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">PermittedOptions</span>()<span style="color:#f92672">.</span>setAddressRegex(<span style="color:#e6db74">&#34;com.makingdevs.comunicate.*&#34;</span>)); <span style="color:#e6db74">//</span> <span style="color:#66d9ef">Expresión</span> para comunicar todo lo que sea después de los <span style="color:#66d9ef">Asteriscos</span> 
 
-BridgeOptions bridgeOptions = new BridgeOptions()
-bridgeOptions.addInboundPermitted(new PermittedOptions().setAddressRegex(&quot;com.makingdevs.comunicate.*&quot;))
-.addOutboundPermitted(new PermittedOptions().setAddressRegex(&quot;com.makingdevs.comunicate.*&quot;)); // Expresión para comunicar todo lo que sea después de los Asteriscos 
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ebHandler</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">SockJSHandler</span><span style="color:#f92672">.</span>create(vertx)<span style="color:#f92672">.</span>bridge(bridgeOptions)
 
-def ebHandler = SockJSHandler.create(vertx).bridge(bridgeOptions)
+router<span style="color:#f92672">.</span>route(<span style="color:#e6db74">&#34;/eventbus/*&#34;</span>)<span style="color:#f92672">.</span>handler(ebHandler)
+router<span style="color:#f92672">.</span>route()<span style="color:#f92672">.</span>handler(<span style="color:#66d9ef">StaticHandler</span><span style="color:#f92672">.</span>create()<span style="color:#f92672">.</span>setCachingEnabled(<span style="color:#66d9ef">false</span>))
 
-router.route(&quot;/eventbus/*&quot;).handler(ebHandler)
-router.route().handler(StaticHandler.create().setCachingEnabled(false))
+Integer counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-Integer counter = 0
-
-vertx.setPeriodic(30000){ t -&gt;
-println &quot;Trabajando..&quot;
-vertx.eventBus().send(&quot;com.makingdevs.web.monitor&quot;, counter)
-counter++
+vertx<span style="color:#f92672">.</span>setPeriodic(<span style="color:#ae81ff">30000</span>){ t <span style="color:#f92672">-&gt;</span>
+println <span style="color:#e6db74">&#34;Trabajando..&#34;</span>
+vertx<span style="color:#f92672">.</span>eventBus()<span style="color:#f92672">.</span>send(<span style="color:#e6db74">&#34;com.makingdevs.web.monitor&#34;</span>, counter)
+counter<span style="color:#f92672">++</span>
 }
 
-def serviceShell = ShellService.create(vertx,
-new ShellServiceOptions().setTelnetOptions(
-new TelnetTermOptions().
-setHost(&quot;localhost&quot;).
-setPort(4000)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">serviceShell</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">ShellService</span><span style="color:#f92672">.</span>create(vertx,
+<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">ShellServiceOptions</span>()<span style="color:#f92672">.</span>setTelnetOptions(
+<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">TelnetTermOptions</span>()<span style="color:#f92672">.</span>
+setHost(<span style="color:#e6db74">&#34;localhost&#34;</span>)<span style="color:#f92672">.</span>
+setPort(<span style="color:#ae81ff">4000</span>)
 )
 );
-serviceShell.start();
+serviceShell<span style="color:#f92672">.</span>start();
 
-server.requestHandler(router.&amp;accept).listen(8080)
-</code></pre>
-
-<p>En esta configuración solo estamos desplegando una pequeña apliación para escuchar nuestro router en un puerto.</p>
-
+server<span style="color:#f92672">.</span>requestHandler(router<span style="color:#f92672">.</span>&amp;accept)<span style="color:#f92672">.</span>listen(<span style="color:#ae81ff">8080</span>)
+</code></pre></div><p>En esta configuración solo estamos desplegando una pequeña apliación para escuchar nuestro router en un puerto.</p>
 <p>BridgeOtions</p>
-
 <p>Clase encarga de iniciar la comunicación con un cliente con cierto parámetros como las rutas permitidas para entablar comunicación ya sean por un string o una expresión regular, así mismo es una de las partes esenciales del Event Bus.</p>
-
 <p>SockJSHandler</p>
-
 <p>Nos proporciona encabezado para las llamadas que tendremos desde el cliente en JS, este mismo necesitara la configuración del BridgeOptios.</p>
-
 <p>Ahora realizaremos la parte del JS para entablar la comunicación.</p>
-
 <p>Como recomendación se realizara un js de la forma de una clase para que está nos entregue una instancia de vertx y así lograr realizar un &ldquo;Send&rdquo; o &ldquo;Consumer&rdquo; según sea el caso</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/Image.png" style="width: 80%; height: 80%"></p>
-
-<p>Constructor:
- Inicia nuestro Eventbus js con la url y el puerto de nuestra aplicación, así mismo genera los métodos que harán referencia a nuestro objeto principal.</p>
-
-<p>Send:
+<!-- raw HTML omitted -->
+<p>Constructor: 
+Inicia nuestro Eventbus js con la url y el puerto de nuestra aplicación, así mismo genera los métodos que harán referencia a nuestro objeto principal.</p>
+<p>Send: 
 Recibe una dirección la cual será la que deberá hacer match con el consumer creado del lado del servidor, el segundó mensaje que mandaremos sera nuestro mensaje, siempre debe de ser un string.</p>
-
-<p>Consumer:
+<p>Consumer: 
 Serán las funciones que estarán disponibles del lado del cliente para que el servidor se comunique con ellos.</p>
-
 <p>Esta instancia podremos crearla en otro archivo de la siguiente manera:</p>
-
 <pre><code>varticleManagerSend = VerticleManager.getInstance();
-</code></pre>
-
-<p>Ahora crearemos un botón en el html para ser escuchado y que este envié un mensaje de prueba a nuestro cliente.</p>
-
+</code></pre><p>Ahora crearemos un botón en el html para ser escuchado y que este envié un mensaje de prueba a nuestro cliente.</p>
 <p>Para el ejemplo estará bien de la siguiente forma:</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/buttonClick.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>usaremos nuestra instancia para mandar un mensaje al servidor</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/buttonSend.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>Para que nuestro mensaje sea escuchado deberemos tener un consumer del lado del servidor como lo siguiente:</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/consumer.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>De tal manera que cuando demos click a el botón pasara lo siguiente:</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/servidorMsg.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>Por ultimo nos falta ver como mandar un mensaje del servidor al cliente y usaremos el mismo ejemplo.
 Primero declararemos un consumer del lado del cliente:</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/consumerVer.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>Este lleva dos parámetros el primero es la dirección y el segundó es una función donde en ella se ejecutara todo lo deseado una vez que se recibe un mensaje.</p>
-
 <p>Finalmente regresaremos al consumer creado en el servidor para agregar lo siguiente:</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/consumerReturn.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>Y se mostrara lo siguiente en la consola de nuestro navegador:</p>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/ChromeCOnsole.PNG" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>Cosas importantes que se deben saber:</p>
-
 <ul>
 <li>Para un consumer en js siempre se deberá crear una nueva instancia ya que si se usa la misma tendrá conflictos con los demás consumers ya que los sobrescribe</li>
 <li>Siempre se deberán mandar mensajes, si deseas un objeto mándalo en forma de JSON y transformalo del lado del cliente.</li>
 <li>Este ejemplo es una parta de un mini proyecto, y se deja una demostración del mismo así como el repo.</li>
 </ul>
-
-<p><img src="https://leovergara1.github.io/images/WebSockets/exampleVertx.gif" style="width: 80%; height: 80%"></p>
-
+<!-- raw HTML omitted -->
 <p>GitHub del Proyecto: <a href="https://github.com/LeoVergara1/tickets/tree/feature/TestBlog">https://github.com/LeoVergara1/tickets/tree/feature/TestBlog</a></p>
 
               
@@ -546,7 +505,7 @@ Primero declararemos un consumer del lado del cliente:</p>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 
@@ -649,7 +608,7 @@ Primero declararemos un consumer del lado del cliente:</p>
     
     <h4 id="about-card-name">Brandon Vergara</h4>
     
-      <div id="about-card-bio">Pasión por la programación y el analisis</div>
+      <div id="about-card-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></div>
     
     
       <div id="about-card-job">
@@ -686,6 +645,70 @@ Primero declararemos un consumer del lado del cliente:</p>
       <div class="no-result text-color-light text-center"></div>
       <div class="results">
         
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/api_sinatra_ruby/">
+                <h3 class="media-heading">Api con Sinatra y ruby</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/">
+                <h3 class="media-heading">Ueberauth_cas with Phoenix (Elixir)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
         
           <div class="media">
             
@@ -754,9 +777,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather"><p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)</p>
-
-<p></p></div>
+(Spring 4.3, Vertx 3.5)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -773,9 +794,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Dec 12, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p></div>
+              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -809,65 +828,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Oct 10, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-                <h3 class="media-heading">Mapear lista dinámica con spring 4</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"><p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-                <h3 class="media-heading">Experiencia con Wonder Code</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-                <h3 class="media-heading">Groovy Programming</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</div>
+              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -880,7 +841,7 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
          data-message-zero=""
          data-message-one=""
          data-message-other="">
-         15 posts found
+         17 posts found
       </p>
     </div>
   </div>

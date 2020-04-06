@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.39">
+    <meta name="generator" content="Hugo 0.65.3">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>Desplegar Elixir con edeliver Phoenix (Deploy Elixir with edeliver Phoenix)</title>
     <meta name="author" content="Brandon Vergara">
@@ -76,14 +76,17 @@ Virtual Box Vagrant Ansible (Manejador de tareas)  Esto lo necesitamos porque te
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-90564886-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90564886-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -121,7 +124,7 @@ ga('send', 'pageview');
         </a>
         <h4 class="sidebar-profile-name">Brandon Vergara</h4>
         
-          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis</h5>
+          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></h5>
         
       </div>
     
@@ -293,179 +296,124 @@ ga('send', 'pageview');
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>Primero que nada es muy importante saber que elixir, construye sobre la maquina virtual de erlang por lo tanto esta trabja en base al hardware que se usa.</p>
-
 <p>Una vez sambiendo esto lo que debemos hacer es crear una maquina virtual, en este caso la realizaré con vagrant, para realizar los siguiente tenemos que tener instalado:</p>
-
 <pre><code>Virtual Box
 Vagrant
 Ansible (Manejador de tareas)
 </code></pre>
-
 <p>Esto lo necesitamos porque tenemos que hacer la construcción del proyecto desde la maquina virtual, la cual debe tener la misma arquitectura que nuestro servidor para este caso usaremos centos 7.</p>
-
 <p>Vagrant</p>
-
 <p>Para la maquina virtual usaremos una que previmente ya ha sido configurada por Felipe Juarez, para ello descargaremos el siguiente repositorío:</p>
-
 <p><a href="https://github.com/sohjiro/ansible_elixir">https://github.com/sohjiro/ansible_elixir</a></p>
-
 <p>Entraremos al repositorío y ejecutaremos el siguiente comando:</p>
-
 <p>vagrant up</p>
-
 <p>podemos confimar las maquinas corriendo en VB: ansible_elixir_buid-host y ansible_elixir_test-host</p>
-
-<p><img src="https://leovergara1.github.io/images/deployElixir/virtualBox.png"></p>
-
+<!-- raw HTML omitted -->
 <p>Si todo esta en orden, deberemos poder conectarnos a la maquina mediante lo siguiente:</p>
-
-<p><strong>ssh vagrant@192.168.60.7</strong></p>
-
+<p><strong>ssh <a href="mailto:vagrant@192.168.60.7">vagrant@192.168.60.7</a></strong></p>
 <p>Está es la maquina donde construiremos nuestro proyecto para posteriormente mandar el release a producción</p>
-
-<p><strong>ssh vagrant@192.168.60.8</strong></p>
-
+<p><strong>ssh <a href="mailto:vagrant@192.168.60.8">vagrant@192.168.60.8</a></strong></p>
 <p>Maquina de prueba en el caso de que querer simular producción</p>
-
 <p>Ya que nos sercioramos de que todo esto está en correcto orden pasaremos a la configuración de nuestro proyecto</p>
-
 <p>En el archivo mix.exs de tu proyecto agregar edeliver and distullery como dependencias</p>
-
 <pre><code>  {:edeliver, &quot;~&gt; 1.5.0&quot;}
   {:distillery, &quot;~&gt; 1.4&quot;, runtime: false}
 </code></pre>
-
-<p><img src="https://leovergara1.github.io/images/deployElixir/depedences.png"></p>
-
+<!-- raw HTML omitted -->
 <p>Posterior a ese paso sólo deberemos verificar que el proyecto siga en orden compilando las dependencias:</p>
-
-<pre><code class="language-java"> mix do deps.get, compile
-</code></pre>
-
-<p>Ahora continuaremos con el archivo de configuración edelivery</p>
-
-<pre><code class="language-java"># .deliver/config
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> mix <span style="color:#66d9ef">do</span> deps<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">,</span> compile
+</code></pre></div><p>Ahora continuaremos con el archivo de configuración edelivery</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#f92672">.</span><span style="color:#a6e22e">deliver</span><span style="color:#f92672">/</span>config
 
 	 
 
-	APP=&quot;nombre-de-tu-app&quot;
+	APP<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nombre-de-tu-app&#34;</span>
 
-	BUILD_HOST=&quot;192.168.60.7&quot;
-	BUILD_USER=&quot;vagrant&quot;
-	BUILD_AT=&quot;/home/vagrant/builds&quot;
+	BUILD_HOST<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;192.168.60.7&#34;</span>
+	BUILD_USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vagrant&#34;</span>
+	BUILD_AT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/home/vagrant/builds&#34;</span>
 
-	STAGING_HOSTS=&quot;192.168.60.8&quot;
-	STAGING_USER=&quot;vagrant&quot;
-	TEST_AT=&quot;/home/vagrant/releases&quot;
+	STAGING_HOSTS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;192.168.60.8&#34;</span>
+	STAGING_USER<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;vagrant&#34;</span>
+	TEST_AT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/home/vagrant/releases&#34;</span>
 
-	pre_erlang_get_and_update_deps() {
+	pre_erlang_get_and_update_deps<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
 
-	local _prod_secret_path=&quot;$WORKSPACE/$APP/config/prod.secret.exs&quot;
-	if [ &quot;$TARGET_MIX_ENV&quot; = &quot;prod&quot; ]; then
-	status &quot;Copying '$_prod_secret_path' file to build host&quot;
-	scp &quot;$_prod_secret_path&quot; &quot;$BUILD_USER@$BUILD_HOST:$BUILD_AT/config/prod.secret.exs&quot;
+	local _prod_secret_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$WORKSPACE/$APP/config/prod.secret.exs&#34;</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;$TARGET_MIX_ENV&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;prod&#34;</span> <span style="color:#f92672">];</span> then
+	status <span style="color:#e6db74">&#34;Copying &#39;$_prod_secret_path&#39; file to build host&#34;</span>
+	scp <span style="color:#e6db74">&#34;$_prod_secret_path&#34;</span> <span style="color:#e6db74">&#34;$BUILD_USER@$BUILD_HOST:$BUILD_AT/config/prod.secret.exs&#34;</span>
 	fi
 
-	}
-	pre_erlang_clean_compile() {
-	local _profile_path=&quot;$WORKSPACE/$APP/config/profile&quot;
-	if [ &quot;$TARGET_MIX_ENV&quot; = &quot;prod&quot; ]; then
-	status &quot;Copying '$_profile_path' file to build host&quot;
-	scp &quot;$_profile_path&quot; &quot;$BUILD_USER@$BUILD_HOST:$BUILD_AT/../.profile&quot;
-	status &quot;Preparing assets with: brunch build and phoenix.digest&quot;
-	__sync_remote &quot;
-	set -e
-	cd '$BUILD_AT/assets'
-
-	npm install
-
-	node_modules/brunch/bin/brunch build --production
-
-	cd '$BUILD_AT'
-
-	APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $BUILD_CMD phoenix.digest $SILENCE
-	&quot;
+	<span style="color:#f92672">}</span>
+	pre_erlang_clean_compile<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+	local _profile_path<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;$WORKSPACE/$APP/config/profile&#34;</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;$TARGET_MIX_ENV&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;prod&#34;</span> <span style="color:#f92672">];</span> then
+	status <span style="color:#e6db74">&#34;Copying &#39;$_profile_path&#39; file to build host&#34;</span>
+	scp <span style="color:#e6db74">&#34;$_profile_path&#34;</span> <span style="color:#e6db74">&#34;$BUILD_USER@$BUILD_HOST:$BUILD_AT/../.profile&#34;</span>
+	status <span style="color:#e6db74">&#34;Preparing assets with: brunch build and phoenix.digest&#34;</span>
+	__sync_remote <span style="color:#e6db74">&#34;
+</span><span style="color:#e6db74">	set -e
+</span><span style="color:#e6db74">	cd &#39;$BUILD_AT/assets&#39;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">	npm install
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">	node_modules/brunch/bin/brunch build --production
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">	cd &#39;$BUILD_AT&#39;
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">	APP=&#39;$APP&#39; MIX_ENV=&#39;$TARGET_MIX_ENV&#39; $BUILD_CMD phoenix.digest $SILENCE
+</span><span style="color:#e6db74">	&#34;</span>
 	fi
-	}
+	<span style="color:#f92672">}</span>
 
-</code></pre>
-
-<p>Ahora exportaremos la varibales necesrias para nuestra configuracion
+</code></pre></div><p>Ahora exportaremos la varibales necesrias para nuestra configuracion
 Sustituye por la ruta de tu proyecto</p>
-
 <pre><code>export WORKSPACE=/Users/brandonvergara/ProjectsMakingdevs
 export APP=ex_typeracer
 </code></pre>
-
 <p>De esta manera nuestro archivo de producción deberá quedar de la siguiente forma &ldquo;prod.secret.exs&rdquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">config <span style="color:#f92672">:</span>ex_typeracer<span style="color:#f92672">,</span> ExTyperacer<span style="color:#f92672">.</span><span style="color:#a6e22e">Repo</span><span style="color:#f92672">,</span>
+  adapter<span style="color:#f92672">:</span> Ecto<span style="color:#f92672">.</span><span style="color:#a6e22e">Adapters</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Postgres</span><span style="color:#f92672">,</span>
+  username<span style="color:#f92672">:</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">get_env</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;DATABASE_USERNAME&#34;</span><span style="color:#f92672">),</span>
+  password<span style="color:#f92672">:</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">get_env</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;DATABASE_PASSWORD&#34;</span><span style="color:#f92672">),</span>
+  database<span style="color:#f92672">:</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">get_env</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;DATABASE_NAME&#34;</span><span style="color:#f92672">),</span>
+  hostname<span style="color:#f92672">:</span> System<span style="color:#f92672">.</span><span style="color:#a6e22e">get_env</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;DATABASE_HOST&#34;</span><span style="color:#f92672">),</span>
+  port<span style="color:#f92672">:</span>     System<span style="color:#f92672">.</span><span style="color:#a6e22e">get_env</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;DATABASE_PORT&#34;</span><span style="color:#f92672">),</span>
+  pool_size<span style="color:#f92672">:</span> 15
+</code></pre></div><p>Dicho archivo obtendra la configuración desde el profile, archivo que debe de estar en &ldquo;config/profile&rdquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">export DATABASE_USERNAME<span style="color:#f92672">=</span>postgres
+export DATABASE_PASSWORD<span style="color:#f92672">=</span>postgres
+export DATABASE_NAME<span style="color:#f92672">=</span>ex_typeracer_dev
+<span style="color:#960050;background-color:#1e0010">#</span> local machine
+export DATABASE_HOST<span style="color:#f92672">=</span>localhost
+export DATABASE_PORT<span style="color:#f92672">=</span>5432
+</code></pre></div><p>Para esto necesitas actualizar tu archivo de &ldquo;prod.exs&rdquo;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">config <span style="color:#f92672">:</span>ex_typeracer<span style="color:#f92672">,</span> ExTyperacerWeb<span style="color:#f92672">.</span><span style="color:#a6e22e">Endpoint</span><span style="color:#f92672">,</span>
+  load_from_system_env<span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">,</span>
+  url<span style="color:#f92672">:</span> <span style="color:#f92672">[</span>host<span style="color:#f92672">:</span> <span style="color:#f92672">{:</span>system<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;HOST&#34;</span><span style="color:#f92672">},</span> port<span style="color:#f92672">:</span> <span style="color:#f92672">{:</span>system<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;PORT&#34;</span><span style="color:#f92672">}],</span>
+  cache_static_manifest<span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;priv/static/cache_manifest.json&#34;</span>
 
-<pre><code class="language-java">config :ex_typeracer, ExTyperacer.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: System.get_env(&quot;DATABASE_USERNAME&quot;),
-  password: System.get_env(&quot;DATABASE_PASSWORD&quot;),
-  database: System.get_env(&quot;DATABASE_NAME&quot;),
-  hostname: System.get_env(&quot;DATABASE_HOST&quot;),
-  port:     System.get_env(&quot;DATABASE_PORT&quot;),
-  pool_size: 15
-</code></pre>
+<span style="color:#960050;background-color:#1e0010">#</span> Do not print debug messages in production
+config <span style="color:#f92672">:</span>logger<span style="color:#f92672">,</span> level<span style="color:#f92672">:</span> <span style="color:#f92672">:</span>info
 
-<p>Dicho archivo obtendra la configuración desde el profile, archivo que debe de estar en &ldquo;config/profile&rdquo;</p>
-
-<pre><code class="language-java">export DATABASE_USERNAME=postgres
-export DATABASE_PASSWORD=postgres
-export DATABASE_NAME=ex_typeracer_dev
-# local machine
-export DATABASE_HOST=localhost
-export DATABASE_PORT=5432
-</code></pre>
-
-<p>Para esto necesitas actualizar tu archivo de &ldquo;prod.exs&rdquo;</p>
-
-<pre><code class="language-java">config :ex_typeracer, ExTyperacerWeb.Endpoint,
-  load_from_system_env: true,
-  url: [host: {:system, &quot;HOST&quot;}, port: {:system, &quot;PORT&quot;}],
-  cache_static_manifest: &quot;priv/static/cache_manifest.json&quot;
-
-# Do not print debug messages in production
-config :logger, level: :info
-
-config :phoenix, :serve_endpoints, true # es importante esta linea ya que es quien da acceso para exponer el server
-</code></pre>
-
-<p>Una vez terminado todo esto sólo deberemos ejecutar los siguientes comandos</p>
-
-<pre><code class="language-java">mix edeliver build release
-</code></pre>
-
-<p><img src="https://leovergara1.github.io/images/deployElixir/build.png"></p>
-
-<pre><code class="language-java">mix edeliver deploy release to production
-</code></pre>
-
-<p><img src="https://leovergara1.github.io/images/deployElixir/deploy.png"></p>
-
-<pre><code class="language-java">mix edeliver start production
-</code></pre>
-
-<p><img src="https://leovergara1.github.io/images/deployElixir/start.png"></p>
-
+config <span style="color:#f92672">:</span>phoenix<span style="color:#f92672">,</span> <span style="color:#f92672">:</span>serve_endpoints<span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span> <span style="color:#960050;background-color:#1e0010">#</span> es importante esta linea ya que es quien da acceso para exponer el server
+</code></pre></div><p>Una vez terminado todo esto sólo deberemos ejecutar los siguientes comandos</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver build release
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver deploy release to production
+</code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver start production
+</code></pre></div><!-- raw HTML omitted -->
 <p>Con este comando pueden comprobar el funcionamiento de su servidor
 mix edeliver ping production
 Asegurense de terner abierto el puerto 4000 en su server ya que es donde por default hace deploy elixir</p>
-
 <p>En caso de tener migraciones de base de datos deberemos ejecutar el siguiente comando</p>
-
-<pre><code class="language-java">mix edeliver migrate production
-</code></pre>
-
-<p>Conslusion:</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver migrate production
+</code></pre></div><p>Conslusion:</p>
 <p>Realmente no parece ser complicado realizar estos pasos, pero si es necesario tener como al menos bien entendidos los conceptos de vagrant y ansible, así como conocimientos basicos de sus configuraciones o comandos. Me sorprede y me agrada mucho que la elixir compile el proyecto basandose en la maquina que se esta ejecutando para así poder aprovechar el hardware al máximo.</p>
-
 <p>Si quisieran implementar continuso delivery por medio de un jeinkins como consejo se debera tener un script que por medio se ssh sea ejecutado a nuestro servidor de despliegue para evitar cualquier tipo de problema en la comunicación de los comandos y esto es más que nada por el hardware entre las dos maquinas.</p>
-
 <p>Referencias:</p>
-
 <p>Está información la logré aprender tomando como guía de Felipe Juárez (<a href="https://medium.com/@Sohjiro">https://medium.com/@Sohjiro</a>)
 Repositorio: <a href="https://medium.com/@Sohjiro/deploying-an-elixir-application-with-edeliver-76a1bb2b4c9e">https://medium.com/@Sohjiro/deploying-an-elixir-application-with-edeliver-76a1bb2b4c9e</a></p>
 
@@ -563,7 +511,7 @@ Repositorio: <a href="https://medium.com/@Sohjiro/deploying-an-elixir-applicatio
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 
@@ -666,7 +614,7 @@ Repositorio: <a href="https://medium.com/@Sohjiro/deploying-an-elixir-applicatio
     
     <h4 id="about-card-name">Brandon Vergara</h4>
     
-      <div id="about-card-bio">Pasión por la programación y el analisis</div>
+      <div id="about-card-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></div>
     
     
       <div id="about-card-job">
@@ -703,6 +651,70 @@ Repositorio: <a href="https://medium.com/@Sohjiro/deploying-an-elixir-applicatio
       <div class="no-result text-color-light text-center"></div>
       <div class="results">
         
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/api_sinatra_ruby/">
+                <h3 class="media-heading">Api con Sinatra y ruby</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/">
+                <h3 class="media-heading">Ueberauth_cas with Phoenix (Elixir)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
         
           <div class="media">
             
@@ -771,9 +783,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather"><p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)</p>
-
-<p></p></div>
+(Spring 4.3, Vertx 3.5)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -790,9 +800,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Dec 12, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p></div>
+              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -826,65 +834,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Oct 10, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-                <h3 class="media-heading">Mapear lista dinámica con spring 4</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"><p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-                <h3 class="media-heading">Experiencia con Wonder Code</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-                <h3 class="media-heading">Groovy Programming</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</div>
+              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -897,7 +847,7 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
          data-message-zero=""
          data-message-one=""
          data-message-other="">
-         15 posts found
+         17 posts found
       </p>
     </div>
   </div>

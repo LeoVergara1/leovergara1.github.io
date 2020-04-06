@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Elixir on Brandon Vergara</title>
@@ -6,10 +6,27 @@
     <description>Recent content in Elixir on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/categories/elixir/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ueberauth_cas with Phoenix (Elixir)</title>
+      <link>https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/</guid>
+      <description>How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&amp;rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</description>
+    </item>
     
     <item>
       <title>Timer with elixir</title>

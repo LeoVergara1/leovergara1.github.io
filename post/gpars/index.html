@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.39">
+    <meta name="generator" content="Hugo 0.65.3">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>Gpars Paralelismo con Groovy (Java)</title>
     <meta name="author" content="Brandon Vergara">
@@ -29,21 +29,15 @@
     
 
     
-    <meta name="description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)
-
-">
-    <meta property="og:description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)
-
-">
+    <meta name="description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)">
+    <meta property="og:description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Gpars Paralelismo con Groovy (Java)">
     <meta property="og:url" content="/post/gpars/">
     <meta property="og:site_name" content="Brandon Vergara">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
-    <meta name="twitter:description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)
-
-">
+    <meta name="twitter:description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)">
     
     
 
@@ -76,14 +70,17 @@
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-90564886-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90564886-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -121,7 +118,7 @@ ga('send', 'pageview');
         </a>
         <h4 class="sidebar-profile-name">Brandon Vergara</h4>
         
-          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis</h5>
+          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></h5>
         
       </div>
     
@@ -293,70 +290,36 @@ ga('send', 'pageview');
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p>
-
 <p>Como ya sabemos uno de los principales problemas de la programación, es el hecho de que la mayoría de las funciones son ejecutadas con forma de sincronía siempre resolviendo uno por uno, en este post no profundizare sobre ningún tema en especial, pero si buscare causarte la inquietud sobre como una vez más groovy es la mejor alternativa si no te quieres despegar de java jeje.</p>
-
 <p>Ahora imagina que tienes un problema donde necesitas hacer mil peticiones, y piensas que no hay problema porque el servicio web contesta muy rápido, suponiendo que tienes una super maquina que lo resolvería en 5 minutos, ahora plantea 1 millón de peticiones creo que la persona se cansara de esperar a que termine el proceso jeje, lo primero que se vendrá a tu mente sera el manejos de hilos en java, aunque es una soluciones no suele ser muy fácil aplicarlo ya que siempre tendremos un gran problema a la hora de ver los resultados, ya que perdemos el comportamiento de los mismos.</p>
-
 <p>Y parece sencillo entender el comportamiento de los hilos, ya que solo tenemos que verlos como procesos independientes.</p>
-
 <p>Ahora Gpars se basa en el modelo de actores el cual nos dice que cada objeto debe de verse como un actor, el cual sera una entidad que se constituirá por cola de mensajes o buzón y un comportamiento, pero si desean saber mas sobre esto aquí les dejo la referencia: <a href="http://www.gpars.org/webapp/quickstart/index.html">http://www.gpars.org/webapp/quickstart/index.html</a></p>
-
 <p>Sin mas concepto empiezo con un sencillo ejemplo de uno de los grandes potenciales de GPARS y como así de una manera tan sencilla podemos manejar paralelismo en nuestras aplicaciones.</p>
-
 <p>Primero creamos una lista con los siguientes números</p>
-
-<pre><code class="language-java">lista = [5000,100,200,300,400,100,900,300,6000]
-// Cada elemento de la lista representará un tiempo en milisegundos
-</code></pre>
-
-<p>Posterior a esto crearemos un &ldquo;whitPool(&lsquo;Instancias o hilos&rsquo;)&rdquo; para esto debemos tener bien conocido la potencia de nuestro equipo ya que de esta forma trataremos de usar todo su potencial.</p>
-
-<pre><code class="language-java">withPool(10){}
-</code></pre>
-
-<p>dentro del withPool necesitamos hacer un eachParallel para que este sepa que puede hacer concurrencia en el método</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">lista <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>5000<span style="color:#f92672">,</span>100<span style="color:#f92672">,</span>200<span style="color:#f92672">,</span>300<span style="color:#f92672">,</span>400<span style="color:#f92672">,</span>100<span style="color:#f92672">,</span>900<span style="color:#f92672">,</span>300<span style="color:#f92672">,</span>6000<span style="color:#f92672">]</span>
+<span style="color:#75715e">// Cada elemento de la lista representará un tiempo en milisegundos
+</span></code></pre></div><p>Posterior a esto crearemos un &ldquo;whitPool(&lsquo;Instancias o hilos&rsquo;)&rdquo; para esto debemos tener bien conocido la potencia de nuestro equipo ya que de esta forma trataremos de usar todo su potencial.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">withPool<span style="color:#f92672">(</span>10<span style="color:#f92672">){}</span>
+</code></pre></div><p>dentro del withPool necesitamos hacer un eachParallel para que este sepa que puede hacer concurrencia en el método</p>
 <p>Para que esto sea interpretado no debemos olvidad incluir la librería de gpars.</p>
-
-<pre><code class="language-java">import static groovyx.gpars.GParsPool.withPool
-</code></pre>
-
-<p>Ahora pasemos a los ejemplos:</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import static</span> groovyx.gpars.GParsPool.withPool
+</code></pre></div><p>Ahora pasemos a los ejemplos:</p>
 <p>Forma convencional (Sincronía)</p>
-
-<p><img src="https://leovergara1.github.io/images/gpars/simpleExample.PNG"></p>
-
+<!-- raw HTML omitted -->
 <p>En este primer ejemplo observamos que el tiempo total fue de 13363 mili segundos - &gt; 13 segundos  ya que todo fue ejecutado de forma sincrónica. ahora pasaremos al primer ejemplo con gpars para mirar los resultados.</p>
-
-<p><img src="https://leovergara1.github.io/images/gpars/gparsEachParallel.PNG"></p>
-
+<!-- raw HTML omitted -->
 <p>Como podemos ver el tiempo se redujo el doble con este sencillo ejemplo, aunque aquí no sabemos cuantos hilos fueron creados en este ultimo ejemplo indicaremos en numero en el pool que sea el mismo numero de elementos de la lista.</p>
-
-<p><img src="https://leovergara1.github.io/images/gpars/gparsEachParallelPool.PNG"></p>
-
+<!-- raw HTML omitted -->
 <p>Aquí podemos observar como cada uno de los elementos de la lista fue procesado de manera independiente obteniendo como resultado final 6.3 segundos y como podemos observar hay elementos en la lista que son los que marcan el mayor tiempo como esta el caso del primero en el cual son 5 segundo y el ultimo que son 6 segundos.</p>
-
 <p>Por ultimo mostraré el mismo ejemplo pero viendo el control de un hilo con un sencillo paso mas.</p>
-
-<p><img src="https://leovergara1.github.io/images/gpars/gparsEachParallelPool1.PNG"></p>
-
+<!-- raw HTML omitted -->
 <p>Sin más les dejo el link del código:</p>
-
 <p><a href="https://github.com/LeoVergara1/exampleGpars">https://github.com/LeoVergara1/exampleGpars</a></p>
-
 <p>Conclusión</p>
-
 <p>Tal vez este es un caso muy sencillo pero si dejan volar a su imaginación, imaginen a cuantos problemas de concurrencia podemos darle soluciones, leyendo y entendiendo bien lo que es GPARS sin embargo no lo veo como la única solución ya que para ello existe otra forma como lo es vertx el cual también se enfoca en el tema de modelos de actores, pero eso sera otro tema.
 Finalmente creo que esto podemos dar un gran impulso a nuestras aplicaciones en pequeños algoritmos que a veces requieran bastante tiempo y hacer la implementación ya que siempre demos pensar en la escala de la aplicación cuando es usada por una infinidad de usuarios.</p>
-
 <p>Agradecimiento</p>
-
 <p>Realmente estoy seguro que el gran impulso que ha tenido mi aprendizaje es gracias al equipo de makingdevs donde nuestro mentor es Juan Reyes Zúñiga @neodevelop</p>
-
 <p><a href="http://makingdevs.com/">http://makingdevs.com/</a></p>
               
             </div>
@@ -458,7 +421,7 @@ Finalmente creo que esto podemos dar un gran impulso a nuestras aplicaciones en 
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 
@@ -561,7 +524,7 @@ Finalmente creo que esto podemos dar un gran impulso a nuestras aplicaciones en 
     
     <h4 id="about-card-name">Brandon Vergara</h4>
     
-      <div id="about-card-bio">Pasión por la programación y el analisis</div>
+      <div id="about-card-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></div>
     
     
       <div id="about-card-job">
@@ -598,6 +561,70 @@ Finalmente creo que esto podemos dar un gran impulso a nuestras aplicaciones en 
       <div class="no-result text-color-light text-center"></div>
       <div class="results">
         
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/api_sinatra_ruby/">
+                <h3 class="media-heading">Api con Sinatra y ruby</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/">
+                <h3 class="media-heading">Ueberauth_cas with Phoenix (Elixir)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
         
           <div class="media">
             
@@ -666,9 +693,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather"><p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)</p>
-
-<p></p></div>
+(Spring 4.3, Vertx 3.5)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -685,9 +710,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Dec 12, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p></div>
+              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -721,65 +744,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Oct 10, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-                <h3 class="media-heading">Mapear lista dinámica con spring 4</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"><p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-                <h3 class="media-heading">Experiencia con Wonder Code</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-                <h3 class="media-heading">Groovy Programming</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</div>
+              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -792,7 +757,7 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
          data-message-zero=""
          data-message-one=""
          data-message-other="">
-         15 posts found
+         17 posts found
       </p>
     </div>
   </div>

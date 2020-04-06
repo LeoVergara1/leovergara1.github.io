@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Brandon Vergara</title>
@@ -6,33 +6,69 @@
     <description>Recent content in Categories on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Agil</title>
-      <link>https://leovergara1.github.io/categories/agil/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      <title>Api</title>
+      <link>https://leovergara1.github.io/categories/api/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://leovergara1.github.io/categories/agil/</guid>
+      <guid>https://leovergara1.github.io/categories/api/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Code</title>
-      <link>https://leovergara1.github.io/categories/code/</link>
-      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      <title>projects</title>
+      <link>https://leovergara1.github.io/categories/projects/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://leovergara1.github.io/categories/code/</guid>
+      <guid>https://leovergara1.github.io/categories/projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>releases</title>
+      <link>https://leovergara1.github.io/categories/releases/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/releases/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ruby</title>
+      <link>https://leovergara1.github.io/categories/ruby/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/ruby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sinatra</title>
+      <link>https://leovergara1.github.io/categories/sinatra/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/sinatra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cas</title>
+      <link>https://leovergara1.github.io/categories/cas/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/cas/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Elixir</title>
       <link>https://leovergara1.github.io/categories/elixir/</link>
-      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/elixir/</guid>
       <description></description>
@@ -41,18 +77,27 @@
     <item>
       <title>Erlang</title>
       <link>https://leovergara1.github.io/categories/erlang/</link>
-      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/erlang/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Gpars</title>
-      <link>https://leovergara1.github.io/categories/gpars/</link>
-      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      <title>Help</title>
+      <link>https://leovergara1.github.io/categories/help/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://leovergara1.github.io/categories/gpars/</guid>
+      <guid>https://leovergara1.github.io/categories/help/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ueberauth_cas</title>
+      <link>https://leovergara1.github.io/categories/ueberauth_cas/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/ueberauth_cas/</guid>
       <description></description>
     </item>
     
@@ -66,74 +111,11 @@
     </item>
     
     <item>
-      <title>Help</title>
-      <link>https://leovergara1.github.io/categories/help/</link>
-      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/help/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Java</title>
       <link>https://leovergara1.github.io/categories/java/</link>
       <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/java/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>https://leovergara1.github.io/categories/projects/</link>
-      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/projects/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Quartz</title>
-      <link>https://leovergara1.github.io/categories/quartz/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/quartz/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Releases</title>
-      <link>https://leovergara1.github.io/categories/releases/</link>
-      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/releases/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Scrummaster</title>
-      <link>https://leovergara1.github.io/categories/scrummaster/</link>
-      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/scrummaster/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Spring</title>
-      <link>https://leovergara1.github.io/categories/spring/</link>
-      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/spring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tutorial</title>
-      <link>https://leovergara1.github.io/categories/tutorial/</link>
-      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://leovergara1.github.io/categories/tutorial/</guid>
       <description></description>
     </item>
     
@@ -147,11 +129,74 @@
     </item>
     
     <item>
-      <title>Websockets</title>
+      <title>WebSockets</title>
       <link>https://leovergara1.github.io/categories/websockets/</link>
       <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/categories/websockets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gpars</title>
+      <link>https://leovergara1.github.io/categories/gpars/</link>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/gpars/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://leovergara1.github.io/categories/tutorial/</link>
+      <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Agil</title>
+      <link>https://leovergara1.github.io/categories/agil/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/agil/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Quartz</title>
+      <link>https://leovergara1.github.io/categories/quartz/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/quartz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ScrumMaster</title>
+      <link>https://leovergara1.github.io/categories/scrummaster/</link>
+      <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/scrummaster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>code</title>
+      <link>https://leovergara1.github.io/categories/code/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>spring</title>
+      <link>https://leovergara1.github.io/categories/spring/</link>
+      <pubDate>Wed, 14 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/categories/spring/</guid>
       <description></description>
     </item>
     

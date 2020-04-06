@@ -19,7 +19,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.39">
+    <meta name="generator" content="Hugo 0.65.3">
     <meta name="theme" content="Tranquilpeak 0.3.1-BETA">
     <title>Mapear lista dinámica con spring 4</title>
     <meta name="author" content="Brandon Vergara">
@@ -30,15 +30,9 @@
 
     
     <meta name="description" content="Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.
-
-Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.
-
-">
+Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.">
     <meta property="og:description" content="Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.
-
-Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.
-
-">
+Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Mapear lista dinámica con spring 4">
     <meta property="og:url" content="/post/bindinglistspring/">
@@ -46,10 +40,7 @@ Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu f
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
     <meta name="twitter:description" content="Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.
-
-Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.
-
-">
+Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.">
     
     
 
@@ -82,14 +73,17 @@ Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu f
 
     
       
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-90564886-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-90564886-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -127,7 +121,7 @@ ga('send', 'pageview');
         </a>
         <h4 class="sidebar-profile-name">Brandon Vergara</h4>
         
-          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis</h5>
+          <h5 class="sidebar-profile-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></h5>
         
       </div>
     
@@ -297,85 +291,67 @@ ga('send', 'pageview');
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
 <p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> mx.edu.ebc.api.pojo
 
-<p></p>
-
-<pre><code class="language-java">package mx.edu.ebc.api.pojo
-
-class Commissions{
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Commissions</span><span style="color:#f92672">{</span>
   Integer rolId
   Integer credit
   Integer cash
-}
-</code></pre>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Posteriormente a esto crearemos un segundo pojo donde crearemos a lista de comandos.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> mx.edu.ebc.api.command
+<span style="color:#f92672">import</span> mx.edu.ebc.api.pojo.Commissions
 
-<p>Posteriormente a esto crearemos un segundo pojo donde crearemos a lista de comandos.</p>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ListCommissionsCommand</span> <span style="color:#f92672">{</span>
+  List<span style="color:#f92672">&lt;</span>Commissions<span style="color:#f92672">&gt;</span> commands <span style="color:#f92672">=</span> <span style="color:#f92672">[]</span>
 
-<pre><code class="language-java">package mx.edu.ebc.api.command
-import mx.edu.ebc.api.pojo.Commissions
-
-class ListCommissionsCommand {
-  List&lt;Commissions&gt; commands = []
-
-}
-</code></pre>
-
-<p>Una vez tenido esto pasaremos al mapeo de la lista en con controller, lo cual debe quedar de la siguiente manera, para que spring sepa que va recibir una lista de comandos que hemos ya declarado con anterioridad.</p>
-
-<pre><code class="language-java">@RequestMapping(value = &quot;/update&quot;, method = RequestMethod.POST )
-  ModelAndView saveCommission(@ModelAttribute(&quot;commissions&quot;) ListCommissionsCommand commissionsList) {
-  commissionsList.commands.each{ commission -&gt;
-  commissionsService.update(commission)
-  }
-  return new ModelAndView(&quot;redirect:&quot;);
-}
-</code></pre>
-
-<p>Es necesario que cuando declaremos el modelo de atributo este sea el mismo que utilizemos en el formulario para que así pueda ser ligado(Binding) de mandera exitosa, de tal forma que dicho formulario quede de la siguiente manera.</p>
-
-<pre><code class="language-html">  &lt;form th:object=&quot;${commissionsList}&quot; th:action=&quot;@{/commissions/update}&quot; method=&quot;post&quot; id=&quot;formCommissions&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot;&gt;
-  &lt;table class=&quot;table table-bordered&quot;&gt;
-  &lt;tbody&gt;
-  &lt;tr style=&quot;background-color:#0b6c99; color:white;&quot;&gt;
-  &lt;th&gt;Rol&lt;/th&gt;
-  &lt;th colspan=&quot;2&quot; class=&quot;text-center&quot;&gt;Porcentaje de comisión&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-  &lt;td&gt;&lt;/td&gt;
-  &lt;td style=&quot;background-color:#f9f9f9;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Crédito&lt;/b&gt;&lt;/td&gt;
-  &lt;td style=&quot;background-color:#f2f2f2;&quot; class=&quot;text-center&quot;&gt;&lt;b&gt;Contado&lt;/b&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr th:each= &quot;commission, element: ${commissionsList.commands}&quot; &gt;
-  &lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
-  &lt;td style=&quot;background-color:#f9f9f9;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].credit|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.credit}&quot; pattern=&quot;[0-9]{1,2}&quot; /&gt;&lt;/td&gt;
-  &lt;td style=&quot;background-color:#f2f2f2;&quot;&gt;&lt;input th:name=&quot;|commands[${element.index}].cash|&quot; type=&quot;number&quot; max=&quot;99&quot; maxlength=&quot;2&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; th:value=&quot;${commission.cash}&quot;/&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;/tbody&gt;
-  &lt;/table&gt;
-  &lt;/div&gt;
-  &lt;br class=&quot;clear&quot;/&gt;
-  &lt;hr/&gt;
-  &lt;div class=&quot;col-md-9 col-lg-9&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;col-md-3 col-lg-3&quot;&gt;
-  &lt;button class=&quot;btn btn-success btn-block btn-sm&quot; id=&quot;buttonSave&quot;&gt;&lt;i class=&quot;fa fa-check&quot; aria-hidden=&quot;true&quot; &gt;&lt;/i&gt; Guardar&lt;/button&gt;
-  &lt;/div&gt;
-  &lt;/form&gt;
-</code></pre>
-
-<p>Como se puede apreciar indicamos nuestro objeto al cual hace referencia y en el each vamos hacer referencia a la lista que tenemos declarada en este pojo en cual es commissionsList.commands,  es importante destacar que el nombre de nuestros inputs debe ser exactamente igual a cada elemento de la lista ejemplo -&gt;</p>
-
-<pre><code class="language-html">&lt;td&gt;&lt;input th:name=&quot;|commands[${element.index}].rolId|&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; th:value=&quot;${commission.rolId}&quot; type=&quot;hidden&quot; /&gt;&lt;b th:text=&quot;${mapRol[commission.rolId]}&quot; &gt;&lt;/b&gt;&lt;/td&gt;
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Una vez tenido esto pasaremos al mapeo de la lista en con controller, lo cual debe quedar de la siguiente manera, para que spring sepa que va recibir una lista de comandos que hemos ya declarado con anterioridad.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@RequestMapping</span><span style="color:#f92672">(</span>value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/update&#34;</span><span style="color:#f92672">,</span> method <span style="color:#f92672">=</span> RequestMethod<span style="color:#f92672">.</span><span style="color:#a6e22e">POST</span> <span style="color:#f92672">)</span>
+  ModelAndView <span style="color:#a6e22e">saveCommission</span><span style="color:#f92672">(</span><span style="color:#a6e22e">@ModelAttribute</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;commissions&#34;</span><span style="color:#f92672">)</span> ListCommissionsCommand commissionsList<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  commissionsList<span style="color:#f92672">.</span><span style="color:#a6e22e">commands</span><span style="color:#f92672">.</span><span style="color:#a6e22e">each</span><span style="color:#f92672">{</span> commission <span style="color:#f92672">-&gt;</span>
+  commissionsService<span style="color:#f92672">.</span><span style="color:#a6e22e">update</span><span style="color:#f92672">(</span>commission<span style="color:#f92672">)</span>
+  <span style="color:#f92672">}</span>
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> ModelAndView<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;redirect:&#34;</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>Es necesario que cuando declaremos el modelo de atributo este sea el mismo que utilizemos en el formulario para que así pueda ser ligado(Binding) de mandera exitosa, de tal forma que dicho formulario quede de la siguiente manera.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">  &lt;<span style="color:#f92672">form</span> <span style="color:#a6e22e">th:object</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${commissionsList}&#34;</span> <span style="color:#a6e22e">th:action</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;@{/commissions/update}&#34;</span> <span style="color:#a6e22e">method</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;post&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;formCommissions&#34;</span>&gt;
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-lg-12&#34;</span>&gt;
+  &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;table table-bordered&#34;</span>&gt;
+  &lt;<span style="color:#f92672">tbody</span>&gt;
+  &lt;<span style="color:#f92672">tr</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;background-color:#0b6c99; color:white;&#34;</span>&gt;
+  &lt;<span style="color:#f92672">th</span>&gt;Rol&lt;/<span style="color:#f92672">th</span>&gt;
+  &lt;<span style="color:#f92672">th</span> <span style="color:#a6e22e">colspan</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;Porcentaje de comisión&lt;/<span style="color:#f92672">th</span>&gt;
+  &lt;/<span style="color:#f92672">tr</span>&gt;
+  &lt;<span style="color:#f92672">tr</span>&gt;
+  &lt;<span style="color:#f92672">td</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+  &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;background-color:#f9f9f9;&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;&lt;<span style="color:#f92672">b</span>&gt;Crédito&lt;/<span style="color:#f92672">b</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+  &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;background-color:#f2f2f2;&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-center&#34;</span>&gt;&lt;<span style="color:#f92672">b</span>&gt;Contado&lt;/<span style="color:#f92672">b</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+  &lt;/<span style="color:#f92672">tr</span>&gt;
+  &lt;<span style="color:#f92672">tr</span> <span style="color:#a6e22e">th:each</span><span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;commission, element: ${commissionsList.commands}&#34;</span> &gt;
+  &lt;<span style="color:#f92672">td</span>&gt;&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">th:name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;|commands[${element.index}].rolId|&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;exampleInputAmount&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${commission.rolId}&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> /&gt;&lt;<span style="color:#f92672">b</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${mapRol[commission.rolId]}&#34;</span> &gt;&lt;/<span style="color:#f92672">b</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+  &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;background-color:#f9f9f9;&#34;</span>&gt;&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">th:name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;|commands[${element.index}].credit|&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;number&#34;</span> <span style="color:#a6e22e">max</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;99&#34;</span> <span style="color:#a6e22e">maxlength</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${commission.credit}&#34;</span> <span style="color:#a6e22e">pattern</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;[0-9]{1,2}&#34;</span> /&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+  &lt;<span style="color:#f92672">td</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;background-color:#f2f2f2;&#34;</span>&gt;&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">th:name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;|commands[${element.index}].cash|&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;number&#34;</span> <span style="color:#a6e22e">max</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;99&#34;</span> <span style="color:#a6e22e">maxlength</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${commission.cash}&#34;</span>/&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+  &lt;/<span style="color:#f92672">tr</span>&gt;
+  &lt;/<span style="color:#f92672">tbody</span>&gt;
+  &lt;/<span style="color:#f92672">table</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">br</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;clear&#34;</span>/&gt;
+  &lt;<span style="color:#f92672">hr</span>/&gt;
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-9 col-lg-9&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;col-md-3 col-lg-3&#34;</span>&gt;
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;btn btn-success btn-block btn-sm&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;buttonSave&#34;</span>&gt;&lt;<span style="color:#f92672">i</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fa fa-check&#34;</span> <span style="color:#a6e22e">aria-hidden</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;true&#34;</span> &gt;&lt;/<span style="color:#f92672">i</span>&gt; Guardar&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;/<span style="color:#f92672">form</span>&gt;
+</code></pre></div><p>Como se puede apreciar indicamos nuestro objeto al cual hace referencia y en el each vamos hacer referencia a la lista que tenemos declarada en este pojo en cual es commissionsList.commands,  es importante destacar que el nombre de nuestros inputs debe ser exactamente igual a cada elemento de la lista ejemplo -&gt;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">td</span>&gt;&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">th:name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;|commands[${element.index}].rolId|&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;exampleInputAmount&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">th:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${commission.rolId}&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> /&gt;&lt;<span style="color:#f92672">b</span> <span style="color:#a6e22e">th:text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;${mapRol[commission.rolId]}&#34;</span> &gt;&lt;/<span style="color:#f92672">b</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
 
 En el navegador se vería de la siguiente manera:
 
-&lt;td&gt;&lt;input name=&quot;commands[0].rolId&quot; class=&quot;form-control&quot; id=&quot;exampleInputAmount&quot; placeholder=&quot;&quot; value=&quot;764&quot; type=&quot;hidden&quot; /&gt;&lt;b  text=&quot;Un mapa que no es importante&quot; &gt;&lt;/b&gt;&lt;/td&gt;
-</code></pre>
-
-<p>Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.
-<!--more--></p>
+&lt;<span style="color:#f92672">td</span>&gt;&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;commands[0].rolId&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;form-control&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;exampleInputAmount&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;764&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hidden&#34;</span> /&gt;&lt;<span style="color:#f92672">b</span>  <span style="color:#a6e22e">text</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Un mapa que no es importante&#34;</span> &gt;&lt;/<span style="color:#f92672">b</span>&gt;&lt;/<span style="color:#f92672">td</span>&gt;
+</code></pre></div><p>Lo importante es que cada elemento vaya aumentando según el index para que obtengamos un comando por cada ciclo del objeto.</p>
+<!-- raw HTML omitted -->
               
             </div>
           </div>
@@ -472,7 +448,7 @@ En el navegador se vería de la siguiente manera:
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2018 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 
@@ -575,7 +551,7 @@ En el navegador se vería de la siguiente manera:
     
     <h4 id="about-card-name">Brandon Vergara</h4>
     
-      <div id="about-card-bio">Pasión por la programación y el analisis</div>
+      <div id="about-card-bio">Pasión por la programación y el analisis <strong>(<a href="mailto:leovergara.dark@gmail.com">leovergara.dark@gmail.com</a>)</strong></div>
     
     
       <div id="about-card-job">
@@ -612,6 +588,70 @@ En el navegador se vería de la siguiente manera:
       <div class="no-result text-color-light text-center"></div>
       <div class="results">
         
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/api_sinatra_ruby/">
+                <h3 class="media-heading">Api con Sinatra y ruby</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/">
+                <h3 class="media-heading">Posts</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2020
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/">
+                <h3 class="media-heading">Ueberauth_cas with Phoenix (Elixir)</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
         
           <div class="media">
             
@@ -680,9 +720,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather"><p>Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&hellip;.
-(Spring 4.3, Vertx 3.5)</p>
-
-<p></p></div>
+(Spring 4.3, Vertx 3.5)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -699,9 +737,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Dec 12, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p>
-
-<p></p></div>
+              <div class="media-content hide-xs font-merryweather"><p>Una forma sencilla de manejar el paralelismo en groovy (Java)</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -735,65 +771,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
                   Oct 10, 2017
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/bindinglistspring/">
-                <h3 class="media-heading">Mapear lista dinámica con spring 4</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jun 6, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"><p>Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.</p>
-
-<p>Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.</p>
-
-<p></p></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/wonderwoman/">
-                <h3 class="media-heading">Experiencia con Wonder Code</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather"></div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://leovergara1.github.io/post/groovy/">
-                <h3 class="media-heading">Groovy Programming</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2017
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Primero que nada daré una breve descripción de lo que es groovy. Es un lenguaje ágil y dinámico para la máquina virtual de java, “Construido sobre las fortalezas de Java pero tiene características adicionales de poder inspiradas por lenguajes como Python, Ruby y Smalltalk” (MakingDevs)
-La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta que eso es realmente triste ya que cuenta con un gran potencial al ser un lenguaje dinamico y ademas cuenta con closures, builders y tipado dinámico.</div>
+              <div class="media-content hide-xs font-merryweather"><p>Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶</p></div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -806,7 +784,7 @@ La verdad es que jamás había escuchado sobre este lenguaje, y me doy cuenta qu
          data-message-zero=""
          data-message-one=""
          data-message-other="">
-         15 posts found
+         17 posts found
       </p>
     </div>
   </div>

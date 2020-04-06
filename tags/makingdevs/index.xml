@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Makingdevs on Brandon Vergara</title>
@@ -6,10 +6,41 @@
     <description>Recent content in Makingdevs on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://leovergara1.github.io/tags/makingdevs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Api con Sinatra y ruby</title>
+      <link>https://leovergara1.github.io/post/api_sinatra_ruby/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/api_sinatra_ruby/</guid>
+      <description>Api simple con sinatra y ruby
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
+Requerimientos
+ Sólo ruby &amp;gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
+Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo</description>
+    </item>
+    
+    <item>
+      <title>Ueberauth_cas with Phoenix (Elixir)</title>
+      <link>https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/ueberauth_cas_with_phoenix/</guid>
+      <description>How do a connection between cas and phoenix?
+This post I want to talk about :ueberauth_cas, since I haven&amp;rsquo;t found a example to be used.
+ueberauth_cas
+Is a central Authentication for a ticket from any cas authentication View github: https://github.com/marceldegraaf/ueberauth_cas
+Install dependencies
+You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
+First Step
+Add dependencies
+## Application def application do[mod: {ExampleUeberauthCas.</description>
+    </item>
     
     <item>
       <title>Timer with elixir</title>
@@ -49,9 +80,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
       
       <guid>https://leovergara1.github.io/post/springwithvertx/</guid>
       <description>&lt;p&gt;Si quires hacer tus aplicaciones con procesos en múlti-hilo, esté es el primer paso&amp;hellip;.
-(Spring 4.3, Vertx 3.5)&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+(Spring 4.3, Vertx 3.5)&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -60,9 +89,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
       <pubDate>Sat, 30 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/post/gpars/</guid>
-      <description>&lt;p&gt;Una forma sencilla de manejar el paralelismo en groovy (Java)&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;Una forma sencilla de manejar el paralelismo en groovy (Java)&lt;/p&gt;</description>
     </item>
     
     <item>

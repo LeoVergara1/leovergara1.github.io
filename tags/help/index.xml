@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Help on Brandon Vergara</title>
+    <title>help on Brandon Vergara</title>
     <link>https://leovergara1.github.io/tags/help/</link>
-    <description>Recent content in Help on Brandon Vergara</description>
+    <description>Recent content in help on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 14 Jun 2017 00:00:00 +0000</lastBuildDate>
@@ -18,10 +18,7 @@
       
       <guid>https://leovergara1.github.io/post/bindinglistspring/</guid>
       <description>&lt;p&gt;Este problema lo planteo para cuando nos encontramos en una situación donde deseamos mapear un formulario dinamico y sus datos sean ligados (binding) con un controller, de esta manera nos evitamos tener que estar capturando cada elemento de un formulario conforme va creciendo.&lt;/p&gt;
-
-&lt;p&gt;Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;p&gt;Lo primero es tener bien definidos los nombres de un pojo con los inpust de tu formulario como se muestra en el siguiente ejemplo.&lt;/p&gt;</description>
     </item>
     
   </channel>
