@@ -30,13 +30,13 @@
 
     
     <meta name="description" content="Api simple con sinatra y ruby
-¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocolos HTTP.
 En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
 Requerimientos
  Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
 Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo">
     <meta property="og:description" content="Api simple con sinatra y ruby
-¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocolos HTTP.
 En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
 Requerimientos
  Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
@@ -48,7 +48,7 @@ Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Brandon Vergara">
     <meta name="twitter:description" content="Api simple con sinatra y ruby
-¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocolos HTTP.
 En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
 Requerimientos
  Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
@@ -64,10 +64,10 @@ Instalar Sinatra  gem install sinatra  Si, otro paso muy sencillo">
     
 
     
-      <meta property="og:image" content="https://leovergara1.github.io/images/Quartz/quartz.png">
+      <meta property="og:image" content="https://leovergara1.github.io/images/apiSinatra/Sinatra_tiny.png">
     
     
-      <meta property="og:image" content="https://leovergara1.github.io/images/Quartz/java.png">
+      <meta property="og:image" content="https://leovergara1.github.io/images/apiSinatra/Sinatra_tiny.png">
     
     
 
@@ -253,7 +253,7 @@ if (!doNotTrack) {
   <div class="post-header-cover
               text-center
               "
-       style="background-image:url('/images/Quartz/java.png')"
+       style="background-image:url('/images/apiSinatra/Sinatra_tiny.png')"
        data-behavior="4">
     
       <div class="post-header main-content-wrap text-center">
@@ -306,7 +306,7 @@ if (!doNotTrack) {
             <div class="main-content-wrap">
               <p><strong>Api simple con sinatra y ruby</strong></p>
 <h2 id="que-es-sinatra">¿Que es Sinatra?</h2>
-<p>Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.</p>
+<p>Es un framework de desarrollo para servicios web por medio de ruby usando protocolos HTTP.</p>
 <p>En resumen: <strong>Es simple, pero poderoso</strong>. =) Y esta apoyado y motivado por Heroku y Github</p>
 <p>Requerimientos</p>
 <ul>
@@ -333,13 +333,31 @@ get '/' do
 end
 </code></pre><p>Ahora en la terminal colocar</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ruby server.rb
-</code></pre></div><p>Listo podremos verificar nuestra aplicación en el navegador</p>
+</code></pre></div><p>Listo, podremos verificar nuestra aplicación en el navegador</p>
 <h2 id="mysql">Mysql</h2>
+<p>Usar código sólo si es necesario, ya que la aplicación conecta y crea la tabla con un usuario si no existe.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-mysql" data-lang="mysql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#a6e22e">users</span> ( id <span style="color:#66d9ef">smallint</span> <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">auto_increment</span>, name <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>, username <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">constraint</span> pk_example <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span> (id) );
 
 <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#a6e22e">users</span> ( id, name, username ) <span style="color:#66d9ef">VALUES</span> ( <span style="color:#66d9ef">null</span>, <span style="color:#e6db74">&#39;Sample data&#39;</span> , <span style="color:#e6db74">&#34;brandonVergara&#34;</span>);
-</code></pre></div><h2 id="helpers">Helpers</h2>
-<p>Estos son para el manejo de errores en las slicitudes que llegan por ejemplo un json corrupto</p>
+</code></pre></div><h2 id="creando-usuario-y-validado-json">Creando usuario y validado JSON</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  post <span style="color:#e6db74">&#39;/users&#39;</span> <span style="color:#66d9ef">do</span>
+    user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>new(json_params)
+    <span style="color:#66d9ef">if</span> user<span style="color:#f92672">.</span>save
+      status <span style="color:#ae81ff">201</span>
+    <span style="color:#66d9ef">else</span>
+      status <span style="color:#ae81ff">422</span>
+      body <span style="color:#66d9ef">UserSerializer</span><span style="color:#f92672">.</span>new(user)<span style="color:#f92672">.</span>to_json
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+</code></pre></div><p>Ejemplo: borrar un usuario desde la consola.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -i -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> -X DELETE http://localhost:4567/api/v1/users/2
+</code></pre></div><h3 id="json-no-valido">Json no valido</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> -X POST http://localhost:4567/api/v1/users -d <span style="color:#e6db74">&#39;{&#34;name&#34;: &#34;brandon&#34;, &#34;username&#34;: &#34;postman&#34;&#39;</span>
+</code></pre></div><p>En seguida deberemos recibir la siguiente respuesta</p>
+<pre><code>{&quot;message&quot;:&quot;Invalid JSON&quot;}
+</code></pre><h2 id="helpers">Helpers</h2>
+<p>Son funciones desginadas por sinatra para ser utilizadas.</p>
+<p>Estos son para el manejo de errores en las solicitudes que llegan, por ejemplo un json corrupto.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  helpers <span style="color:#66d9ef">do</span>
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">base_url</span>
       @base_url <span style="color:#f92672">||=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>request<span style="color:#f92672">.</span>env<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;rack.url_scheme&#39;</span><span style="color:#f92672">]</span><span style="color:#e6db74">}</span><span style="color:#e6db74">://{request.env[&#39;HTTP_HOST&#39;]}&#34;</span>
@@ -354,21 +372,25 @@ end
     <span style="color:#66d9ef">end</span>
   <span style="color:#66d9ef">end</span>
 </code></pre></div><h2 id="serializable">Serializable</h2>
-<p>Serializamos el objeto para que pueda ser leido por el error
+<p>Serializamos el objeto para que pueda ser leído por el error
 <a href="http://sinatrarb.com/extensions.html">http://sinatrarb.com/extensions.html</a></p>
-<h2 id="creando-usuario-y-validado-json">Creando usuario y validado JSON</h2>
-<h3 id="json-no-valido">Json no valido</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> -X POST http://localhost:4567/api/v1/users -d <span style="color:#e6db74">&#39;{&#34;name&#34;: &#34;brandon&#34;, &#34;username&#34;: &#34;postman&#34;&#39;</span>
-</code></pre></div><p>En seguida deberemos recibir la siguiente respuesta</p>
-<pre><code>{&quot;message&quot;:&quot;Invalid JSON&quot;}
-</code></pre><h2 id="borrando-un-usuario">Borrando un usuario</h2>
+<h2 id="borrando-un-usuario">Borrando un usuario</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  delete <span style="color:#e6db74">&#39;/users/:id&#39;</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>id<span style="color:#f92672">|</span>
     user <span style="color:#f92672">=</span> <span style="color:#66d9ef">User</span><span style="color:#f92672">.</span>where(id)<span style="color:#f92672">.</span>first
     user<span style="color:#f92672">.</span>destroy <span style="color:#66d9ef">if</span> user
     status <span style="color:#ae81ff">204</span>
   <span style="color:#66d9ef">end</span>
-</code></pre></div><p>Ejemplo</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -i -H <span style="color:#e6db74">&#34;Content-Type: application/json&#34;</span> -X DELETE http://localhost:4567/api/v1/users/2
+</code></pre></div><h2 id="como-regalo-por-llegar-al-final-del-post-">Como regalo por llegar al final del post 🤭</h2>
+<p>Agregar a nuestro Gemfile la siguiente dependencia:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">gem <span style="color:#e6db74">&#39;sinatra-reloader&#39;</span>
+</code></pre></div><p>Y finalmente a nuestra aplicación añadir:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e">#Code..</span>
+require <span style="color:#e6db74">&#39;sinatra/reloader&#39;</span>
+
+<span style="color:#75715e">#Code..</span>
+
+
+
 </code></pre></div>
               
             </div>
@@ -621,7 +643,7 @@ end
                 </span>
               </span>
               <div class="media-content hide-xs font-merryweather">Api simple con sinatra y ruby
-¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocoles HTTP.
+¿Que es Sinatra? Es un framework de desarrollo para servicios web por medio de ruby usando protocolos HTTP.
 En resumen: Es simple, pero poderoso. =) Y esta apoyado y motivado por Heroku y Github
 Requerimientos
  Sólo ruby &gt;= 2.0  Crear proyecto  mkdir api_sinatra touch server.rb  Si, así de sencillo.
