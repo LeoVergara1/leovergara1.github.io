@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="Brandon Vergara">
 <meta name="keywords" content="">
 <meta name="description" content="De momento puede parecer que los comandos de Unix y Linux son iguales ya que convergen en términos de funcionalidad, el medio ambiente, facilidad de uso, así como las áreas en Unix y Linux son diferentes.
@@ -170,7 +170,7 @@ if (!doNotTrack) {
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://leovergara1.github.io/">
+      <a class="sidebar-button-link " href="https://leovergara1.github.io/post">
     
       <i class="sidebar-button-icon fa fa-lg fa-home"></i>
       
@@ -465,13 +465,16 @@ En Unix es conocido como bash y en linux como ksh</p>
     
   
     
-      <div id="cover" style="background-image:url('https://leovergara1.github.io/cover.jpg');"></div>
+      
+      <div id="cover" style="background-image:url('https://leovergara1.github.io/images/coverMin.jpg');"></div>
     
   
 
 
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
 
@@ -492,6 +495,18 @@ function updateMinWidth() {
   var w3 = getComputedStyle(sidebar).getPropertyValue("left");
   main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
 }
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
 </script>
 
 
