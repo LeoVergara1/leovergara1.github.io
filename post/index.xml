@@ -6,10 +6,16 @@
     <description>Recent content in Posts on Brandon Vergara</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://leovergara1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://leovergara1.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Comparativa entre Ruby, Groovy y Java</title>
+      <link>https://leovergara1.github.io/post/comparative_jvm_rb/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://leovergara1.github.io/post/comparative_jvm_rb/</guid>
+      <description>Comparativa entre Ruby, Groovy y Java
+La verdad es que esto empieza de una simple curiosidad, actualmente desarrollo un proyecto, en el cual he hecho uso de la concurrencia usando groovy con spring boot, con el paso del desarrollo el logrado mejorar los resultados sin embargo no me sentí satisfecho con ello en algunos casos, por ejemplo, logró trabajar 2.6 millones de datos en 5 minutos, sin embargo, si los datos son de un tamaño un poco mayor, el proceso haciende exponencialmente hasta las 2 horas para 1.</description>
+    </item>
     
     <item>
       <title>Api con Sinatra y ruby</title>
@@ -39,7 +45,7 @@ Install dependencies
 You should know, this dependency needs to ueberauth to its functio, than you have a little information about this dependency (ueberauth): https://github.com/ueberauth/ueberauth
 First Step
 Add dependencies
-## Application def application do[mod: {ExampleUeberauthCas.</description>
+## Application def application do [ mod: {ExampleUeberauthCas.</description>
     </item>
     
     <item>
@@ -107,7 +113,7 @@ Es un API con una tecnología que busca establecer una conexión entre el usuari
       <pubDate>Thu, 05 Oct 2017 00:00:00 +0000</pubDate>
       
       <guid>https://leovergara1.github.io/post/scrum_master_agil/</guid>
-      <description>&lt;p&gt;Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 🕶&lt;/p&gt;</description>
+      <description>&lt;p&gt;Primero que nada quiero decir que este post, tendrá un poco de teoría y más que nada mi opinión de los conocimientos adquiridos durante el curso y debo aclarar que no soy ningún experto en el tema 😎&lt;/p&gt;</description>
     </item>
     
     <item>

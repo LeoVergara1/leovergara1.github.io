@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="Brandon Vergara">
 <meta name="keywords" content="disqus, google, gravatar, Groovy, Vertx, SocketJs, Hepl">
 <meta name="description" content="En este post trataré de dar un ejemplo sencillo de como hacer websockets con vertx y así mismo tratar de que se entienda como es que funcionan los websockets y su gran ventaja.
@@ -419,7 +419,7 @@ server<span style="color:#f92672">.</span>requestHandler(router<span style="colo
 <p>Nos proporciona encabezado para las llamadas que tendremos desde el cliente en JS, este mismo necesitara la configuración del BridgeOptios.</p>
 <p>Ahora realizaremos la parte del JS para entablar la comunicación.</p>
 <p>Como recomendación se realizara un js de la forma de una clase para que está nos entregue una instancia de vertx y así lograr realizar un &ldquo;Send&rdquo; o &ldquo;Consumer&rdquo; según sea el caso</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/Image.png" style="width: 80%; height: 80%">
 <p>Constructor: 
 Inicia nuestro Eventbus js con la url y el puerto de nuestra aplicación, así mismo genera los métodos que harán referencia a nuestro objeto principal.</p>
 <p>Send: 
@@ -430,28 +430,28 @@ Serán las funciones que estarán disponibles del lado del cliente para que el s
 <pre><code>varticleManagerSend = VerticleManager.getInstance();
 </code></pre><p>Ahora crearemos un botón en el html para ser escuchado y que este envié un mensaje de prueba a nuestro cliente.</p>
 <p>Para el ejemplo estará bien de la siguiente forma:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/buttonClick.PNG" style="width: 80%; height: 80%">
 <p>usaremos nuestra instancia para mandar un mensaje al servidor</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/buttonSend.PNG" style="width: 80%; height: 80%">
 <p>Para que nuestro mensaje sea escuchado deberemos tener un consumer del lado del servidor como lo siguiente:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/consumer.PNG" style="width: 80%; height: 80%">
 <p>De tal manera que cuando demos click a el botón pasara lo siguiente:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/servidorMsg.PNG" style="width: 80%; height: 80%">
 <p>Por ultimo nos falta ver como mandar un mensaje del servidor al cliente y usaremos el mismo ejemplo.
 Primero declararemos un consumer del lado del cliente:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/consumerVer.PNG" style="width: 80%; height: 80%">
 <p>Este lleva dos parámetros el primero es la dirección y el segundó es una función donde en ella se ejecutara todo lo deseado una vez que se recibe un mensaje.</p>
 <p>Finalmente regresaremos al consumer creado en el servidor para agregar lo siguiente:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/consumerReturn.PNG" style="width: 80%; height: 80%">
 <p>Y se mostrara lo siguiente en la consola de nuestro navegador:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/ChromeCOnsole.PNG" style="width: 80%; height: 80%">
 <p>Cosas importantes que se deben saber:</p>
 <ul>
 <li>Para un consumer en js siempre se deberá crear una nueva instancia ya que si se usa la misma tendrá conflictos con los demás consumers ya que los sobrescribe</li>
 <li>Siempre se deberán mandar mensajes, si deseas un objeto mándalo en forma de JSON y transformalo del lado del cliente.</li>
 <li>Este ejemplo es una parta de un mini proyecto, y se deja una demostración del mismo así como el repo.</li>
 </ul>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/WebSockets/exampleVertx.gif" style="width: 80%; height: 80%">
 <p>GitHub del Proyecto: <a href="https://github.com/LeoVergara1/tickets/tree/feature/TestBlog">https://github.com/LeoVergara1/tickets/tree/feature/TestBlog</a></p>
 
               
@@ -541,7 +541,7 @@ Primero declararemos un consumer del lado del cliente:</p>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2021 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 

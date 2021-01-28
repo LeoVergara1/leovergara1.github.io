@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="Brandon Vergara">
 <meta name="keywords" content="disqus, google, gravatar- Java, Groovy, Gpars, Hepl, Parallel">
 <meta name="description" content="Una forma sencilla de manejar el paralelismo en groovy (Java)">
@@ -348,14 +348,14 @@ if (!doNotTrack) {
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import static</span> groovyx.gpars.GParsPool.withPool
 </code></pre></div><p>Ahora pasemos a los ejemplos:</p>
 <p>Forma convencional (Sincronía)</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/gpars/simpleExample.PNG">
 <p>En este primer ejemplo observamos que el tiempo total fue de 13363 mili segundos - &gt; 13 segundos  ya que todo fue ejecutado de forma sincrónica. ahora pasaremos al primer ejemplo con gpars para mirar los resultados.</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/gpars/gparsEachParallel.PNG">
 <p>Como podemos ver el tiempo se redujo el doble con este sencillo ejemplo, aunque aquí no sabemos cuantos hilos fueron creados en este ultimo ejemplo indicaremos en numero en el pool que sea el mismo numero de elementos de la lista.</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/gpars/gparsEachParallelPool.PNG">
 <p>Aquí podemos observar como cada uno de los elementos de la lista fue procesado de manera independiente obteniendo como resultado final 6.3 segundos y como podemos observar hay elementos en la lista que son los que marcan el mayor tiempo como esta el caso del primero en el cual son 5 segundo y el ultimo que son 6 segundos.</p>
 <p>Por ultimo mostraré el mismo ejemplo pero viendo el control de un hilo con un sencillo paso mas.</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/gpars/gparsEachParallelPool1.PNG">
 <p>Sin más les dejo el link del código:</p>
 <p><a href="https://github.com/LeoVergara1/exampleGpars">https://github.com/LeoVergara1/exampleGpars</a></p>
 <p>Conclusión</p>
@@ -451,7 +451,7 @@ Finalmente creo que esto podemos dar un gran impulso a nuestras aplicaciones en 
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2021 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 

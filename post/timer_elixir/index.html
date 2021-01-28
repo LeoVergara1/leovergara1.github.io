@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="Brandon Vergara">
 <meta name="keywords" content="disqus, elixir, delivery, edeliver, distillery">
 <meta name="description" content="How do a simple timer with proccess?">
@@ -328,54 +328,54 @@ if (!doNotTrack) {
             <div class="main-content-wrap">
               <p><strong>How do a simple timer with proccess?</strong></p>
 <p>This timer should have to GenServer to take away the management of the timer, In this timer we will have a counter to know how many seconds we want during the timer.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir">defmodule <span style="color:#a6e22e">ExTyperacer.TimerServer</span> do
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir"><span style="color:#66d9ef">defmodule</span> <span style="color:#a6e22e">ExTyperacer.TimerServer</span> <span style="color:#66d9ef">do</span>
 
-  use <span style="color:#a6e22e">GenServer</span>
-  require <span style="color:#a6e22e">Kernel</span>
-  alias <span style="color:#a6e22e">ExTyperacer.Logic</span><span style="color:#f92672">.</span>{<span style="color:#a6e22e">Game</span>, <span style="color:#a6e22e">Player</span>}
+  <span style="color:#f92672">use</span> <span style="color:#a6e22e">GenServer</span>
+  <span style="color:#f92672">require</span> <span style="color:#a6e22e">Kernel</span>
+  <span style="color:#f92672">alias</span> <span style="color:#a6e22e">ExTyperacer.Logic</span><span style="color:#f92672">.</span>{<span style="color:#a6e22e">Game</span>, <span style="color:#a6e22e">Player</span>}
   
-  def start_link() do
+  <span style="color:#66d9ef">def</span> start_link() <span style="color:#66d9ef">do</span>
     <span style="color:#a6e22e">GenServer</span><span style="color:#f92672">.</span>start_link(__MODULE__, %{})
-  end
+  <span style="color:#66d9ef">end</span>
   
-  def init(state) do
+  <span style="color:#66d9ef">def</span> init(state) <span style="color:#66d9ef">do</span>
     <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts <span style="color:#e6db74">&#34;Init timer&#34;</span>
     <span style="color:#75715e">#timer = Process.send_after(self(), {:work, counter, uuid}, 1_000)</span>
     {<span style="color:#e6db74">:ok</span>, state}
-  end
+  <span style="color:#66d9ef">end</span>
 
-  def handle_call({<span style="color:#e6db74">:reset_timer</span>, counter, uuid}, _from, %{<span style="color:#e6db74">timer</span>: timer}) do
+  <span style="color:#66d9ef">def</span> handle_call({<span style="color:#e6db74">:reset_timer</span>, counter, uuid}, _from, %{<span style="color:#e6db74">timer</span>: timer}) <span style="color:#66d9ef">do</span>
     <span style="color:#e6db74">:timer</span><span style="color:#f92672">.</span>cancel(timer)
     timer <span style="color:#f92672">=</span> <span style="color:#a6e22e">Process</span><span style="color:#f92672">.</span>send_after(self(), {<span style="color:#e6db74">:work</span>, counter, uuid}, <span style="color:#ae81ff">1_000</span>)
     {<span style="color:#e6db74">:reply</span>, <span style="color:#e6db74">:ok</span>, %{<span style="color:#e6db74">timer</span>: timer}}
-  end
+  <span style="color:#66d9ef">end</span>
 
-  def handle_info({<span style="color:#e6db74">:work</span>, <span style="color:#ae81ff">0</span>, uuid}, state) do
+  <span style="color:#66d9ef">def</span> handle_info({<span style="color:#e6db74">:work</span>, <span style="color:#ae81ff">0</span>, uuid}, state) <span style="color:#66d9ef">do</span>
     <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts <span style="color:#e6db74">&#34;Finished proccess&#34;</span>
     {<span style="color:#e6db74">:noreply</span>, state}
-  end
+  <span style="color:#66d9ef">end</span>
 
-  def handle_info({<span style="color:#e6db74">:work</span>, counter, uuid}, state) do
+  <span style="color:#66d9ef">def</span> handle_info({<span style="color:#e6db74">:work</span>, counter, uuid}, state) <span style="color:#66d9ef">do</span>
     <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts <span style="color:#e6db74">&#34;Counting...&#34;</span>
     <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>inspect counter
     counter <span style="color:#f92672">=</span> counter <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
     timer <span style="color:#f92672">=</span> <span style="color:#a6e22e">Process</span><span style="color:#f92672">.</span>send_after(self(), {<span style="color:#e6db74">:work</span>, counter, uuid},<span style="color:#ae81ff">1_000</span>)
     {<span style="color:#e6db74">:noreply</span>, %{<span style="color:#e6db74">timer</span>: timer}}
-  end
+  <span style="color:#66d9ef">end</span>
 
 
-  def handle_info({<span style="color:#e6db74">:start_timer</span>, counter, uuid}, state) do
+  <span style="color:#66d9ef">def</span> handle_info({<span style="color:#e6db74">:start_timer</span>, counter, uuid}, state) <span style="color:#66d9ef">do</span>
     timer <span style="color:#f92672">=</span> <span style="color:#a6e22e">Process</span><span style="color:#f92672">.</span>send_after(self(), {<span style="color:#e6db74">:work</span>, counter, uuid}, <span style="color:#ae81ff">1_000</span>)
     {<span style="color:#e6db74">:noreply</span>, %{<span style="color:#e6db74">timer</span>: timer}}
-  end
+  <span style="color:#66d9ef">end</span>
     <span style="color:#75715e"># So that unhanded messages don&#39;t error</span>
-  def handle_info(_, state) do
+  <span style="color:#66d9ef">def</span> handle_info(_, state) <span style="color:#66d9ef">do</span>
       {<span style="color:#e6db74">:ok</span>, state}
-  end
+  <span style="color:#66d9ef">end</span>
 
-end
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p><strong>Demo</strong></p>
-<!-- raw HTML omitted -->
+<script src="https://asciinema.org/a/nNmUebs1toWoPjybvhVWSljwV.js" id="asciicast-nNmUebs1toWoPjybvhVWSljwV" async></script>
 <p>If you want to add one communicate for broadcast to channel, you should have to like this:</p>
 <ul>
 <li>Subscribe timer server to channel</li>
@@ -384,41 +384,41 @@ end
 </code></pre></div><ul>
 <li>Created a private function to use broadcast</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir">defp broadcast(time, response) do
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir"><span style="color:#66d9ef">defp</span> broadcast(time, response) <span style="color:#66d9ef">do</span>
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>inspect response
   <span style="color:#a6e22e">ExTyperacerWeb.Endpoint</span><span style="color:#f92672">.</span>broadcast! <span style="color:#e6db74">&#34;timer:update&#34;</span>, <span style="color:#e6db74">&#34;new_time_</span><span style="color:#e6db74">#{</span>response<span style="color:#f92672">.</span>uuid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>, %{ <span style="color:#e6db74">response</span>: response<span style="color:#f92672">.</span>message, <span style="color:#e6db74">time</span>: time}
-end
+<span style="color:#66d9ef">end</span>
 </code></pre></div><p>For example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir">defmodule <span style="color:#a6e22e">ExTyperacer.TimerServer</span> do
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-elixir" data-lang="elixir"><span style="color:#66d9ef">defmodule</span> <span style="color:#a6e22e">ExTyperacer.TimerServer</span> <span style="color:#66d9ef">do</span>
 
-use <span style="color:#a6e22e">GenServer</span>
-require <span style="color:#a6e22e">Kernel</span>
-alias <span style="color:#a6e22e">ExTyperacer.Logic</span><span style="color:#f92672">.</span>{<span style="color:#a6e22e">Game</span>, <span style="color:#a6e22e">Player</span>}
+<span style="color:#f92672">use</span> <span style="color:#a6e22e">GenServer</span>
+<span style="color:#f92672">require</span> <span style="color:#a6e22e">Kernel</span>
+<span style="color:#f92672">alias</span> <span style="color:#a6e22e">ExTyperacer.Logic</span><span style="color:#f92672">.</span>{<span style="color:#a6e22e">Game</span>, <span style="color:#a6e22e">Player</span>}
 
-def start_link() do
+<span style="color:#66d9ef">def</span> start_link() <span style="color:#66d9ef">do</span>
   <span style="color:#a6e22e">GenServer</span><span style="color:#f92672">.</span>start_link(__MODULE__, %{})
-end
+<span style="color:#66d9ef">end</span>
 
-def init(state) do
+<span style="color:#66d9ef">def</span> init(state) <span style="color:#66d9ef">do</span>
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts <span style="color:#e6db74">&#34;Init timer&#34;</span>
   <span style="color:#a6e22e">ExTyperacerWeb.Endpoint</span><span style="color:#f92672">.</span>subscribe <span style="color:#e6db74">&#34;timer:start&#34;</span>, []
   <span style="color:#75715e">#timer = Process.send_after(self(), {:work, counter, uuid}, 1_000)</span>
   {<span style="color:#e6db74">:ok</span>, state}
-end
+<span style="color:#66d9ef">end</span>
 
-def handle_call({<span style="color:#e6db74">:reset_timer</span>, counter, uuid}, _from, %{<span style="color:#e6db74">timer</span>: timer}) do
+<span style="color:#66d9ef">def</span> handle_call({<span style="color:#e6db74">:reset_timer</span>, counter, uuid}, _from, %{<span style="color:#e6db74">timer</span>: timer}) <span style="color:#66d9ef">do</span>
   <span style="color:#e6db74">:timer</span><span style="color:#f92672">.</span>cancel(timer)
   timer <span style="color:#f92672">=</span> <span style="color:#a6e22e">Process</span><span style="color:#f92672">.</span>send_after(self(), {<span style="color:#e6db74">:work</span>, counter, uuid}, <span style="color:#ae81ff">1_000</span>)
   {<span style="color:#e6db74">:reply</span>, <span style="color:#e6db74">:ok</span>, %{<span style="color:#e6db74">timer</span>: timer}}
-end
+<span style="color:#66d9ef">end</span>
 
-def handle_info({<span style="color:#e6db74">:work</span>, <span style="color:#ae81ff">0</span>, uuid}, state) do
+<span style="color:#66d9ef">def</span> handle_info({<span style="color:#e6db74">:work</span>, <span style="color:#ae81ff">0</span>, uuid}, state) <span style="color:#66d9ef">do</span>
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts <span style="color:#e6db74">&#34;Finished proccess&#34;</span>
   broadcast <span style="color:#ae81ff">0</span>, %{<span style="color:#e6db74">message</span>: <span style="color:#e6db74">&#34;Counting&#34;</span>, <span style="color:#e6db74">uuid</span>: uuid}
   {<span style="color:#e6db74">:noreply</span>, state}
-end
+<span style="color:#66d9ef">end</span>
 
-def handle_info({<span style="color:#e6db74">:work</span>, counter, uuid}, state) do
+<span style="color:#66d9ef">def</span> handle_info({<span style="color:#e6db74">:work</span>, counter, uuid}, state) <span style="color:#66d9ef">do</span>
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>puts <span style="color:#e6db74">&#34;Counting...&#34;</span>
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>inspect uuid
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>inspect counter
@@ -426,24 +426,24 @@ def handle_info({<span style="color:#e6db74">:work</span>, counter, uuid}, state
   counter <span style="color:#f92672">=</span> counter <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
   timer <span style="color:#f92672">=</span> <span style="color:#a6e22e">Process</span><span style="color:#f92672">.</span>send_after(self(), {<span style="color:#e6db74">:work</span>, counter, uuid},<span style="color:#ae81ff">1_000</span>)
   {<span style="color:#e6db74">:noreply</span>, %{<span style="color:#e6db74">timer</span>: timer}}
-end
+<span style="color:#66d9ef">end</span>
 
 
-def handle_info({<span style="color:#e6db74">:start_timer</span>, counter, uuid}, state) do
+<span style="color:#66d9ef">def</span> handle_info({<span style="color:#e6db74">:start_timer</span>, counter, uuid}, state) <span style="color:#66d9ef">do</span>
   timer <span style="color:#f92672">=</span> <span style="color:#a6e22e">Process</span><span style="color:#f92672">.</span>send_after(self(), {<span style="color:#e6db74">:work</span>, counter, uuid}, <span style="color:#ae81ff">1_000</span>)
   {<span style="color:#e6db74">:noreply</span>, %{<span style="color:#e6db74">timer</span>: timer}}
-end
+<span style="color:#66d9ef">end</span>
   <span style="color:#75715e"># So that unhanded messages don&#39;t error</span>
-def handle_info(_, state) do
+<span style="color:#66d9ef">def</span> handle_info(_, state) <span style="color:#66d9ef">do</span>
     {<span style="color:#e6db74">:ok</span>, state}
-end
+<span style="color:#66d9ef">end</span>
 
-defp broadcast(time, response) do
+<span style="color:#66d9ef">defp</span> broadcast(time, response) <span style="color:#66d9ef">do</span>
   <span style="color:#a6e22e">IO</span><span style="color:#f92672">.</span>inspect response
   <span style="color:#a6e22e">ExTyperacerWeb.Endpoint</span><span style="color:#f92672">.</span>broadcast! <span style="color:#e6db74">&#34;timer:update&#34;</span>,<span style="color:#e6db74">&#34;new_time&#34;</span>, %{ <span style="color:#e6db74">time</span>: time, <span style="color:#e6db74">response</span>: response<span style="color:#f92672">.</span>message}
-end
+<span style="color:#66d9ef">end</span>
 
-end
+<span style="color:#66d9ef">end</span>
 </code></pre></div>
               
             </div>
@@ -526,7 +526,7 @@ end
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2021 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 

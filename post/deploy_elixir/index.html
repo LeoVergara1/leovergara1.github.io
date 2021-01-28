@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="Brandon Vergara">
 <meta name="keywords" content="disqus, elixir, delivery, edeliver, distillery">
 <meta name="description" content="Primero que nada es muy importante saber que elixir, construye sobre la maquina virtual de erlang por lo tanto esta trabja en base al hardware que se usa.
@@ -347,7 +347,7 @@ Ansible (Manejador de tareas)
 <p>Entraremos al repositorío y ejecutaremos el siguiente comando:</p>
 <p>vagrant up</p>
 <p>podemos confimar las maquinas corriendo en VB: ansible_elixir_buid-host y ansible_elixir_test-host</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/deployElixir/virtualBox.png">
 <p>Si todo esta en orden, deberemos poder conectarnos a la maquina mediante lo siguiente:</p>
 <p><strong>ssh <a href="mailto:vagrant@192.168.60.7">vagrant@192.168.60.7</a></strong></p>
 <p>Está es la maquina donde construiremos nuestro proyecto para posteriormente mandar el release a producción</p>
@@ -358,7 +358,7 @@ Ansible (Manejador de tareas)
 <pre><code>  {:edeliver, &quot;~&gt; 1.5.0&quot;}
   {:distillery, &quot;~&gt; 1.4&quot;, runtime: false}
 </code></pre>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/deployElixir/depedences.png">
 <p>Posterior a ese paso sólo deberemos verificar que el proyecto siga en orden compilando las dependencias:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> mix <span style="color:#66d9ef">do</span> deps<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">,</span> compile
 </code></pre></div><p>Ahora continuaremos con el archivo de configuración edelivery</p>
@@ -439,11 +439,11 @@ config <span style="color:#f92672">:</span>logger<span style="color:#f92672">,</
 config <span style="color:#f92672">:</span>phoenix<span style="color:#f92672">,</span> <span style="color:#f92672">:</span>serve_endpoints<span style="color:#f92672">,</span> <span style="color:#66d9ef">true</span> <span style="color:#960050;background-color:#1e0010">#</span> es importante esta linea ya que es quien da acceso para exponer el server
 </code></pre></div><p>Una vez terminado todo esto sólo deberemos ejecutar los siguientes comandos</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver build release
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><img src="https://leovergara1.github.io/images/deployElixir/build.png">
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver deploy release to production
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><img src="https://leovergara1.github.io/images/deployElixir/deploy.png">
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">mix edeliver start production
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><img src="https://leovergara1.github.io/images/deployElixir/start.png">
 <p>Con este comando pueden comprobar el funcionamiento de su servidor
 mix edeliver ping production
 Asegurense de terner abierto el puerto 4000 en su server ya que es donde por default hace deploy elixir</p>
@@ -537,7 +537,7 @@ Repositorio: <a href="https://medium.com/@Sohjiro/deploying-an-elixir-applicatio
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2021 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 

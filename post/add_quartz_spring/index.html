@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Hugo 0.68.3 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="generator" content="Hugo 0.76.5 with theme Tranquilpeak 0.4.8-BETA">
 <meta name="author" content="Brandon Vergara">
 <meta name="keywords" content="disqus, google, gravatar, Java, Quartz, Spring, Hepl">
 <meta name="description" content="Tarea que se ejecutan automáticamente en algún momento del día.">
@@ -334,7 +334,7 @@ if (!doNotTrack) {
 <p>Quartz nos sirve para cuando queremos ejecutar ciertas tareas en algún momento de manera automática, en este caso se usaran las expresiones cron, para darle seguimiento.</p>
 <p>Al final del post dejo algunas referencias para agregar la dependencia en caso de que aún no la tengan instalada</p>
 <p>Al nivel del proyecto en el que estamos trabajando deberíamos crear dentro de la carpeta de config una clase que administre los jobs a ejecutar, por lo cual tendríamos que tener algo como lo siguiente:</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/Quartz/Manu.PNG">
 <p>En la cual hemos creado un archivo con el nombre JobConfig.java para tener la configuración de nuestro timer el código de nuestra clase debería quedar de la siguiente manera.
 Es importante tener en cuanta que importamos las librerías correspondientes a cada anotación de spring</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">package</span> mx.edu.inee.oic.config<span style="color:#f92672">;</span>
@@ -391,7 +391,7 @@ Se deberá ver como lo siguiente.</p>
 <span style="color:#f92672">}</span>
 
 </code></pre></div><p>Finalmente esto lleva de una expresión cron donde le estamos indicando que se ejecute cada 20 segundo y así mismo podremos verlo en nuestro log.</p>
-<!-- raw HTML omitted -->
+<img src="https://leovergara1.github.io/images/Quartz/logTimer.PNG">
 <p>Es importante mencionar que nuestro proyecto deberá contener la siguiente dependencia.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">&lt;</span>dependency<span style="color:#f92672">&gt;</span>
 <span style="color:#f92672">&lt;</span>groupId<span style="color:#f92672">&gt;</span>org<span style="color:#f92672">.</span><span style="color:#a6e22e">quartz</span><span style="color:#f92672">-</span>scheduler<span style="color:#f92672">&lt;/</span>groupId<span style="color:#f92672">&gt;</span>
@@ -486,7 +486,7 @@ Se deberá ver como lo siguiente.</p>
         </article>
         <footer id="footer" class="main-content-wrap">
   <span class="copyrights">
-    &copy; 2020 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
+    &copy; 2021 <a href="https://github.com/Leovergara1">Brandon Vergara</a>. 
   </span>
 </footer>
 

@@ -3,6 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://leovergara1.github.io/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/post/comparative_jvm_rb/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/experience/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/groovy/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/java/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/categories/learn/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/makingdevs/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/post/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/ruby/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://leovergara1.github.io/tags/</loc>
+    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://leovergara1.github.io/categories/api/</loc>
     <lastmod>2020-04-01T00:00:00+00:00</lastmod>
   </url>
@@ -13,42 +68,12 @@
   </url>
   
   <url>
-    <loc>https://leovergara1.github.io/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/categories/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/experience/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/makingdevs/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/post/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://leovergara1.github.io/categories/projects/</loc>
     <lastmod>2020-04-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://leovergara1.github.io/categories/releases/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/ruby/</loc>
     <lastmod>2020-04-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -64,11 +89,6 @@
   
   <url>
     <loc>https://leovergara1.github.io/tags/spring/</loc>
-    <lastmod>2020-04-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/</loc>
     <lastmod>2020-04-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -110,11 +130,6 @@
   <url>
     <loc>https://leovergara1.github.io/post/deploy_elixir/</loc>
     <lastmod>2018-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/groovy/</loc>
-    <lastmod>2018-04-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -169,11 +184,6 @@
   
   <url>
     <loc>https://leovergara1.github.io/post/gpars/</loc>
-    <lastmod>2017-12-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://leovergara1.github.io/tags/java/</loc>
     <lastmod>2017-12-30T00:00:00+00:00</lastmod>
   </url>
   
